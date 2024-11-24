@@ -28,6 +28,7 @@ freely, subject to the following restrictions:
 #ifndef TB_CORE_H
 #define TB_CORE_H
 
+#include "tb_export.h"
 #include "tb_types.h"
 #include "tb_hash.h"
 #include "tb_debug.h"
@@ -52,13 +53,13 @@ extern TBLanguage *g_tb_lng;
 extern TBFontManager *g_font_manager;
 
 /** Initialize turbo badger. Call this before using any turbo badger API. */
-bool tb_core_init(TBRenderer *renderer);
+bool TB_DLLCLASS tb_core_init(TBRenderer *renderer);
 
 /** Shutdown turbo badger. Call this after deleting the last widget, to free turbo badger internals. */
-void tb_core_shutdown();
+void TB_DLLCLASS tb_core_shutdown();
 
 /** Returns true if turbo badger is initialized. */
-bool tb_core_is_initialized();
+bool TB_DLLCLASS tb_core_is_initialized();
 
 } // namespace tb
 

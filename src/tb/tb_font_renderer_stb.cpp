@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_export.h"
 #include "tb_font_renderer.h"
 #include "tb_renderer.h"
 #include "tb_system.h"
@@ -117,7 +118,7 @@ TBFontFace *STBFontRenderer::Create(TBFontManager *font_manager, const char *fil
 	return nullptr;
 }
 
-void register_stb_font_renderer()
+TB_DLLCLASS void register_stb_font_renderer()
 {
 	if (STBFontRenderer *fr = new STBFontRenderer)
 		g_font_manager->AddRenderer(fr);
