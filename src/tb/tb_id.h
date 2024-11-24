@@ -6,6 +6,7 @@
 #ifndef TB_ID_H
 #define TB_ID_H
 
+#include "tb_export.h"
 #include "tb_types.h"
 #include "tb_hash.h"
 #include "tb_str.h"
@@ -15,7 +16,7 @@ namespace tb {
 /** TBID is a wrapper for a uint32 to be used as ID.
 	The uint32 can be set directly to any uint32, or it can be
 	set from a string which will be hashed into the uint32. */
-class TBID
+class TB_DLLCLASS TBID
 {
 public:
 	TBID(uint32 id = 0)				{ Set(id); }

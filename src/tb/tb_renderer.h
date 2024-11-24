@@ -6,6 +6,7 @@
 #ifndef TB_RENDERER_H
 #define TB_RENDERER_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_geometry.h"
 #include "tb_color.h"
@@ -16,7 +17,7 @@ namespace tb {
 class TBBitmapFragment;
 
 /** TBRendererListener is a listener for TBRenderer. */
-class TBRendererListener : public TBLinkOf<TBRendererListener>
+class TB_DLLCLASS TBRendererListener : public TBLinkOf<TBRendererListener>
 {
 public:
 	virtual ~TBRendererListener() {}

@@ -6,6 +6,7 @@
 #ifndef TB_SKIN_H
 #define TB_SKIN_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_renderer.h"
 #include "tb_bitmap_fragment.h"
@@ -283,7 +284,7 @@ public:
 };
 
 /** TBSkin contains a list of TBSkinElement. */
-class TBSkin : private TBRendererListener
+class TB_DLLCLASS TBSkin : private TBRendererListener
 {
 public:
 	TBSkin();

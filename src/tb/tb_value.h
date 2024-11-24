@@ -6,6 +6,7 @@
 #ifndef TB_VALUE_H
 #define TB_VALUE_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_list.h"
 
@@ -54,7 +55,7 @@ private:
 	its internal representation to that type. Exceptions are for array and
 	object, which will return 0 when getting as numbers, or "" or object name
 	when getting as string. */
-class TBValue
+class TB_DLLCLASS TBValue
 {
 public:
 	/** The current type of the value.

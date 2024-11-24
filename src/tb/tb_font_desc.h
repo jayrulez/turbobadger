@@ -6,6 +6,7 @@
 #ifndef TB_FONT_DESC_H
 #define TB_FONT_DESC_H
 
+#include "tb_export.h"
 #include "tb_types.h"
 #include "tb_id.h"
 
@@ -15,7 +16,7 @@ namespace tb {
 	By default when nothing is set, the font is unspecified and means it should be inherited
 	from a parent widget that specifies a font, or use the default font if no parent does. */
 
-class TBFontDescription
+class TB_DLLCLASS TBFontDescription
 {
 public:
 	/** Set the font ID of the font to use.

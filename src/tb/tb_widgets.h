@@ -6,6 +6,7 @@
 #ifndef TB_WIDGETS_H
 #define TB_WIDGETS_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_geometry.h"
 #include "tb_skin.h"
@@ -108,7 +109,7 @@ enum SPECIAL_KEY
 	TB_KEY_F7, TB_KEY_F8, TB_KEY_F9, TB_KEY_F10, TB_KEY_F11, TB_KEY_F12
 };
 
-class TBWidgetEvent : public TBTypedObject
+class TB_DLLCLASS TBWidgetEvent : public TBTypedObject
 {
 public:
 	TBWidget *target;	///< The widget that invoked the event
@@ -153,7 +154,7 @@ public:
 
 /** TBWidgetEventFileDrop is a event of type EVENT_TYPE_FILE_DROP.
 	It contains a list of filenames of the files that was dropped. */
-class TBWidgetEventFileDrop : public TBWidgetEvent
+class TB_DLLCLASS TBWidgetEventFileDrop : public TBWidgetEvent
 {
 public:
 	TBListAutoDeleteOf<TBStr> files;
@@ -222,7 +223,7 @@ MAKE_ENUM_FLAG_COMBO(SIZE_DEP);
 	This is calculated during layout for each widget from
 	the current skin, widget preferences and LayoutParams. */
 
-class PreferredSize
+class TB_DLLCLASS PreferredSize
 {
 public:
 	PreferredSize() : min_w(0), min_h(0)
@@ -266,7 +267,7 @@ public:
 };
 
 /** Specifies size constraints used during size calculations. */
-class SizeConstraints
+class TB_DLLCLASS SizeConstraints
 {
 public:
 	static const int NO_RESTRICTION = 10000;
@@ -357,7 +358,7 @@ enum WIDGET_HIT_STATUS {
 	Note: When you subclass a widget, use the TBOBJECT_SUBCLASS macro to define the type
 	casting functions instead of implementing those manually. */
 
-class TBWidget : public TBTypedObject, public TBLinkOf<TBWidget>
+class TB_DLLCLASS TBWidget : public TBTypedObject, public TBLinkOf<TBWidget>
 {
 public:
 	// For safe typecasting

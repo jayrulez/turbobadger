@@ -6,6 +6,7 @@
 #ifndef TB_HASHTABLE_H
 #define TB_HASHTABLE_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include <assert.h>
 
@@ -13,7 +14,7 @@ namespace tb {
 
 /** TBHashTable is a minimal hash table, for hashing anything using a uint32 key. */
 
-class TBHashTable
+class TB_DLLCLASS TBHashTable
 {
 public:
 	TBHashTable();
@@ -77,7 +78,7 @@ private:
 
 /** TBHashTableIterator is a iterator for stepping through all content stored in a TBHashTable. */
 //FIX: make it safe in case the current item is removed from the hashtable
-class TBHashTableIterator
+class TB_DLLCLASS TBHashTableIterator
 {
 public:
 	TBHashTableIterator(TBHashTable *hash_table);
@@ -90,7 +91,7 @@ private:
 
 /** TBHashTableIteratorOf is a TBHashTableIterator which auto cast to the class type. */
 template<class T>
-class TBHashTableIteratorOf : private TBHashTableIterator
+class TB_DLLCLASS TBHashTableIteratorOf : private TBHashTableIterator
 {
 public:
 	TBHashTableIteratorOf(TBHashTable *hash_table) : TBHashTableIterator(hash_table) {}
@@ -99,7 +100,7 @@ public:
 
 /** TBHashTableOf is a TBHashTable with the given class type as content. */
 template<class T>
-class TBHashTableOf : public TBHashTable
+class TB_DLLCLASS TBHashTableOf : public TBHashTable
 {
 // FIX: Don't do public inheritance! Either inherit privately and forward, or use a private member backend!
 public:
@@ -112,7 +113,7 @@ protected:
 /** TBHashTableOf is a TBHashTable with the given class type as content.
 	It will delete all content automaticallt on destruction. */
 template<class T>
-class TBHashTableAutoDeleteOf : public TBHashTable
+class TB_DLLCLASS TBHashTableAutoDeleteOf : public TBHashTable
 {
 public:
 	~TBHashTableAutoDeleteOf() { DeleteAll(); }

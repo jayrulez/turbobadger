@@ -6,13 +6,14 @@
 #ifndef TB_GEOMETRY_H
 #define TB_GEOMETRY_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 
 namespace tb {
 
 /** Simple point class. */
 
-class TBPoint
+class TB_DLLCLASS TBPoint
 {
 public:
 	int x, y;
@@ -22,7 +23,7 @@ public:
 
 /** Simple rectangle class. */
 
-class TBRect
+class TB_DLLCLASS TBRect
 {
 public:
 	int x, y, w, h;
@@ -57,7 +58,7 @@ public:
 
 /** TBRegion does calculations on regions represented by a list of rectangles. */
 
-class TBRegion
+class TB_DLLCLASS TBRegion
 {
 public:
 	TBRegion();

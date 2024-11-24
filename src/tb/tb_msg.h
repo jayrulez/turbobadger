@@ -6,6 +6,7 @@
 #ifndef TB_MSG_H
 #define TB_MSG_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_linklist.h"
 #include "tb_value.h"
@@ -69,7 +70,7 @@ private:
 	Immediate messages are put on a queue and delivered as soon as possible, after any delayed
 	messages that has passed their delivery time. This queue is global (among all TBMessageHandlers) */
 
-class TBMessageHandler
+class TB_DLLCLASS TBMessageHandler
 {
 public:
 	TBMessageHandler();

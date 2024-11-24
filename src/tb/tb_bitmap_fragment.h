@@ -6,6 +6,7 @@
 #ifndef TB_BITMAP_FRAGMENT_H
 #define TB_BITMAP_FRAGMENT_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_geometry.h"
 #include "tb_hashtable.h"
@@ -25,7 +26,7 @@ int TBGetNearestPowerOfTwo(int val);
 /** TBImageloader is a class used to load skin images. It can be implemented
 	in any way the system wants, but the system has to provide a image loader
 	capable of handling all image formats used in the skin. */
-class TBImageLoader
+class TB_DLLCLASS TBImageLoader
 {
 public:
 	/** Static method used to create an image loader. The system must implement this
@@ -172,7 +173,7 @@ public:
 	It also makes sure that only one instance of each file is loaded,
 	so f.ex loading "foo.png" many times still load and allocate one
 	TBBitmapFragment. */
-class TBBitmapFragmentManager
+class TB_DLLCLASS TBBitmapFragmentManager
 {
 public:
 	TBBitmapFragmentManager();

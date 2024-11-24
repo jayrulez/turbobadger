@@ -6,6 +6,9 @@
 #ifndef TB_TEMP_BUFFER_H
 #define TB_TEMP_BUFFER_H
 
+#include "tb_export.h"
+#include <tb_config.h>
+
 namespace tb {
 
 /** TBTempBuffer manages a buffer that will be deleted on destruction.
@@ -13,7 +16,7 @@ namespace tb {
 	The buffer size can grow by calling Reserve or Append, but it
 	will never shrink during the lifetime of the object.
 */
-class TBTempBuffer
+class TB_DLLCLASS TBTempBuffer
 {
 public:
 	TBTempBuffer();

@@ -6,6 +6,7 @@
 #ifndef TB_WIDGETS_COMMON_H
 #define TB_WIDGETS_COMMON_H
 
+#include "tb_export.h"
 #include "tb_widgets.h"
 #include "tb_layout.h"
 #include "tb_msg.h"
@@ -20,7 +21,7 @@ enum TB_TEXT_ALIGN {
 };
 
 /** TBWidgetString holds a string that can be painted as one line with the set alignment. */
-class TBWidgetString
+class TB_DLLCLASS TBWidgetString
 {
 public:
 	TBWidgetString();
@@ -51,7 +52,7 @@ private:
 
 /** TBTextField is a one line text field that is not editable. */
 
-class TBTextField : public TBWidget
+class TB_DLLCLASS TBTextField : public TBWidget
 {
 public:
 	// For safe typecasting
@@ -90,7 +91,7 @@ protected:
 	Has a text field in its internal layout by default. Other widgets can be added
 	under GetContentRoot(). */
 
-class TBButton : public TBWidget, protected TBMessageHandler
+class TB_DLLCLASS TBButton : public TBWidget, protected TBMessageHandler
 {
 public:
 	// For safe typecasting
@@ -139,7 +140,7 @@ public:
 protected:
 	void UpdateTextFieldVisibility();
 	bool CanToggle() { return m_toggle_mode || GetGroupID(); }
-	class ButtonLayout : public TBLayout
+	class TB_DLLCLASS ButtonLayout : public TBLayout
 	{
 		virtual void OnChildAdded(TBWidget *child);
 		virtual void OnChildRemove(TBWidget *child);
@@ -154,7 +155,7 @@ protected:
 	text field will be redirected to another child widget (that you add) to it.
 	Typically useful for creating check boxes, radio buttons with labels. */
 
-class TBClickLabel : public TBWidget
+class TB_DLLCLASS TBClickLabel : public TBWidget
 {
 public:
 	// For safe typecasting
@@ -186,7 +187,7 @@ protected:
 	If you need to load and show images dynamically (i.e. not always loaded as the skin),
 	you can use TBImageWidget. */
 
-class TBSkinImage : public TBWidget
+class TB_DLLCLASS TBSkinImage : public TBWidget
 {
 public:
 	// For safe typecasting
@@ -200,7 +201,7 @@ public:
 
 /** TBSeparator is a widget only showing a skin.
 	It is disabled by default. */
-class TBSeparator : public TBWidget
+class TB_DLLCLASS TBSeparator : public TBWidget
 {
 public:
 	// For safe typecasting
@@ -211,7 +212,7 @@ public:
 
 /** TBProgressSpinner is a animation that is running while its value is 1.
 	Typically used to indicate that the application is working. */
-class TBProgressSpinner : public TBWidget, protected TBMessageHandler
+class TB_DLLCLASS TBProgressSpinner : public TBWidget, protected TBMessageHandler
 {
 public:
 	// For safe typecasting
@@ -244,7 +245,7 @@ protected:
 };
 
 /** TBRadioCheckBox has shared functionality for TBCheckBox and TBRadioButton. */
-class TBRadioCheckBox : public TBWidget
+class TB_DLLCLASS TBRadioCheckBox : public TBWidget
 {
 public:
 	// For safe typecasting
@@ -266,7 +267,7 @@ protected:
 
 /** TBCheckBox is a box toggling a check mark on click.
 	For a labeled checkbox, use a TBClickLabel containing a TBCheckBox. */
-class TBCheckBox : public TBRadioCheckBox
+class TB_DLLCLASS TBCheckBox : public TBRadioCheckBox
 {
 public:
 	// For safe typecasting
@@ -278,7 +279,7 @@ public:
 /** TBRadioButton is a button which unselects other radiobuttons of the same
 	group number when clicked.
 	For a labeled radio button, use a TBClickLabel containing a TBRadioButton. */
-class TBRadioButton : public TBRadioCheckBox
+class TB_DLLCLASS TBRadioButton : public TBRadioCheckBox
 {
 public:
 	// For safe typecasting
@@ -289,7 +290,7 @@ public:
 
 /** TBScrollBar is a scroll bar in the given axis. */
 
-class TBScrollBar : public TBWidget
+class TB_DLLCLASS TBScrollBar : public TBWidget
 {
 public:
 	// For safe typecasting
@@ -344,7 +345,7 @@ protected:
 
 // FIX: Add a "track value" showing as a line within the track (to be used for buffering etc).
 // FIX: Also add a auto track that keeps it up to date with value (default).
-class TBSlider : public TBWidget
+class TB_DLLCLASS TBSlider : public TBWidget
 {
 public:
 	// For safe typecasting
@@ -386,7 +387,7 @@ protected:
 };
 
 /** TBContainer is just a TBWidget with border and padding (using skin "TBContainer") */
-class TBContainer : public TBWidget
+class TB_DLLCLASS TBContainer : public TBWidget
 {
 public:
 	// For safe typecasting
@@ -396,7 +397,7 @@ public:
 };
 
 /** TBMover is moving its parent widget when dragged. */
-class TBMover : public TBWidget
+class TB_DLLCLASS TBMover : public TBWidget
 {
 public:
 	// For safe typecasting
@@ -408,7 +409,7 @@ public:
 };
 
 /** TBResizer is a lower right corner resize grip. It will resize its parent widget. */
-class TBResizer : public TBWidget
+class TB_DLLCLASS TBResizer : public TBWidget
 {
 public:
 	// For safe typecasting
@@ -420,7 +421,7 @@ public:
 };
 
 /** TBDimmer dim widgets in the background and block input. */
-class TBDimmer : public TBWidget
+class TB_DLLCLASS TBDimmer : public TBWidget
 {
 public:
 	// For safe typecasting

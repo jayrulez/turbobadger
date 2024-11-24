@@ -6,13 +6,14 @@
 #ifndef TB_LIST_H
 #define TB_LIST_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 namespace tb {
 
 /** TBList is a list (array) of pointers to any kind of objects.
 	This is the backend for TBListOf and TBListAutoDeleteOf.
 	You should use the typed TBListOf or TBListAutoDeleteOf for object storing! */
-class TBListBackend
+class TB_DLLCLASS TBListBackend
 {
 public:
 	TBListBackend() : m_data(nullptr) {}
@@ -44,7 +45,7 @@ private:
 	Note: The objects won't be deleted automatically. If you want that,
 	use TBListAutoDeleteOf! */
 template<class T>
-class TBListOf
+class TB_DLLCLASS TBListOf
 {
 public:
 	/** Make sure there is space for at least num items in the list. Returns false on OOM failure. */
@@ -115,7 +116,7 @@ private:
 /** TBListAutoDeleteOf is a list (array) of pointers to the specified object type.
 	The objects will be deleted automatically on destruction. */
 template<class T>
-class TBListAutoDeleteOf : public TBListOf<T>
+class TB_DLLCLASS TBListAutoDeleteOf : public TBListOf<T>
 {
 public:
 	~TBListAutoDeleteOf() { TBListOf<T>::DeleteAll(); }

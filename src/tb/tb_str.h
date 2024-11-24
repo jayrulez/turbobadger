@@ -6,6 +6,7 @@
 #ifndef TB_STR_H
 #define TB_STR_H
 
+#include "tb_export.h"
 #include "tb_types.h"
 #include <string.h>
 
@@ -20,7 +21,7 @@ const char *stristr(const char *arg1, const char *arg2);
 
 /** Simple string class that doesn't own or change the string pointer. */
 
-class TBStrC
+class TB_DLLCLASS TBStrC
 {
 protected:
 	char *s;
@@ -50,7 +51,7 @@ public:
 	out of memory, its storage will be a empty ("") const string.
 */
 
-class TBStr : public TBStrC
+class TB_DLLCLASS TBStr : public TBStrC
 {
 public:
 	~TBStr();

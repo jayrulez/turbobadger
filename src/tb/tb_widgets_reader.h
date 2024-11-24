@@ -6,6 +6,7 @@
 #ifndef TBWIDGETS_READER_H
 #define TBWIDGETS_READER_H
 
+#include "tb_export.h"
 #include "tb_linklist.h"
 #include "tb_widgets.h"
 
@@ -136,7 +137,7 @@ public:
 	font>name			Font name
 	font>size			Font size
 */
-class TBWidgetsReader
+class TB_DLLCLASS TBWidgetsReader
 {
 public:
 	static TBWidgetsReader *Create();

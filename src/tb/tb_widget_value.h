@@ -6,6 +6,7 @@
 #ifndef TB_WIDGET_VALUE_H
 #define TB_WIDGET_VALUE_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_linklist.h"
 #include "tb_hashtable.h"
@@ -20,7 +21,7 @@ class TBValueGroup;
 
 /** TBWidgetValueConnection maintains a connection between TBWidget and TBWidgetValue. */
 
-class TBWidgetValueConnection : public TBLinkOf<TBWidgetValueConnection>
+class TB_DLLCLASS TBWidgetValueConnection : public TBLinkOf<TBWidgetValueConnection>
 {
 public:
 	TBWidgetValueConnection() : m_value(nullptr) {}

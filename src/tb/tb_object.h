@@ -6,6 +6,7 @@
 #ifndef TB_OBJECT_H
 #define TB_OBJECT_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_linklist.h"
 
@@ -18,7 +19,7 @@ typedef void* TB_TYPE_ID;
 
 	Each subclass is expected to define TBOBJECT_SUBCLASS to get the
 	necessary implementations, instead of implementing those manually. */
-class TBTypedObject
+class TB_DLLCLASS TBTypedObject
 {
 public:
 	virtual ~TBTypedObject() {}

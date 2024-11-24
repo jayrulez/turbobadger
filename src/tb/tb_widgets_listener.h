@@ -6,6 +6,7 @@
 #ifndef TB_WIDGETSLISTENER_H
 #define TB_WIDGETSLISTENER_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_linklist.h"
 #include "tb_widgets.h"
@@ -17,7 +18,7 @@ class TBWidget;
 /** TBWidgetListenerGlobalLink should never be created or subclassed anywhere except
 	in TBWidgetListener. It's only purpose is to add a extra typed link for
 	TBWidgetListener, since it needs to be added in multiple lists. */
-class TBWidgetListenerGlobalLink : public TBLinkOf<TBWidgetListenerGlobalLink> { };
+class TB_DLLCLASS TBWidgetListenerGlobalLink : public TBLinkOf<TBWidgetListenerGlobalLink> { };
 
 /** TBWidgetListener listens to some callbacks from TBWidget.
 	It may either listen to all widgets globally, or one specific widget.
@@ -25,7 +26,7 @@ class TBWidgetListenerGlobalLink : public TBLinkOf<TBWidgetListenerGlobalLink> {
 	Local listeners (added with TBWidget:AddListener) will be invoked before
 	global listeners (added with TBWidgetListener::AddGlobalListener). */
 
-class TBWidgetListener : public TBLinkOf<TBWidgetListener>, public TBWidgetListenerGlobalLink
+class TB_DLLCLASS TBWidgetListener : public TBLinkOf<TBWidgetListener>, public TBWidgetListenerGlobalLink
 {
 public:
 	/** Add a listener to all widgets. */
@@ -71,7 +72,7 @@ private:
 
 /** TBWidgetSafePointer keeps a pointer to a widget that will be set to
 	nullptr if the widget is removed. */
-class TBWidgetSafePointer : private TBWidgetListener
+class TB_DLLCLASS TBWidgetSafePointer : private TBWidgetListener
 {
 public:
 	TBWidgetSafePointer() : m_widget(nullptr)					{ }

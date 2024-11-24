@@ -6,6 +6,7 @@
 #ifndef TB_LAYOUT_H
 #define TB_LAYOUT_H
 
+#include "tb_export.h"
 #include "tb_widgets.h"
 
 namespace tb {
@@ -75,7 +76,7 @@ enum LAYOUT_OVERFLOW {
 	Each widget is also separated by the specified spacing (See SetSpacing).
 */
 
-class TBLayout : public TBWidget
+class TB_DLLCLASS TBLayout : public TBWidget
 {
 public:
 	// For safe typecasting

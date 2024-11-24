@@ -6,6 +6,7 @@
 #ifndef TB_FONT_RENDERER_H
 #define TB_FONT_RENDERER_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_bitmap_fragment.h"
 #include "tb_renderer.h"
@@ -21,7 +22,7 @@ class TBFontFace;
 
 /** TBFontGlyphData is rendering info used during glyph rendering by TBFontRenderer.
 	It does not own the data pointers. */
-class TBFontGlyphData
+class TB_DLLCLASS TBFontGlyphData
 {
 public:
 	TBFontGlyphData() : data8(nullptr), data32(nullptr), w(0), h(0), stride(0), rgb(false) {}
@@ -34,7 +35,7 @@ public:
 };
 
 /** TBGlyphMetrics contains metrics for a font glyph. */
-class TBGlyphMetrics
+class TB_DLLCLASS TBGlyphMetrics
 {
 public:
 	TBGlyphMetrics() : advance(0), x(0), y(0) {}
@@ -42,7 +43,7 @@ public:
 };
 
 /** TBFontMetrics contains metrics for a font face. */
-class TBFontMetrics
+class TB_DLLCLASS TBFontMetrics
 {
 public:
 	TBFontMetrics() : ascent(0), descent(0), height(0) {}
@@ -52,7 +53,7 @@ public:
 };
 
 /** TBFontRenderer renders glyphs from a font file. */
-class TBFontRenderer : public TBLinkOf<TBFontRenderer>
+class TB_DLLCLASS TBFontRenderer : public TBLinkOf<TBFontRenderer>
 {
 public:
 	virtual ~TBFontRenderer() {}
@@ -71,7 +72,7 @@ public:
 /** TBFontGlyph holds glyph metrics and bitmap fragment.
 	There's one of these for all rendered (both successful
 	and missing) glyphs in TBFontFace. */
-class TBFontGlyph : public TBLinkOf<TBFontGlyph>
+class TB_DLLCLASS TBFontGlyph : public TBLinkOf<TBFontGlyph>
 {
 public:
 	TBFontGlyph(const TBID &hash_id, UCS4 cp);
@@ -84,7 +85,7 @@ public:
 
 /** TBFontGlyphCache caches glyphs for font faces.
 	Rendered glyphs use bitmap fragments from its fragment manager. */
-class TBFontGlyphCache : private TBRendererListener
+class TB_DLLCLASS TBFontGlyphCache : private TBRendererListener
 {
 public:
 	TBFontGlyphCache();
@@ -116,7 +117,7 @@ private:
 };
 
 /** TBFontEffect applies an effect on each glyph that is rendered in a TBFontFace. */
-class TBFontEffect
+class TB_DLLCLASS TBFontEffect
 {
 public:
 	TBFontEffect() : m_blur_radius(0) {}
@@ -139,7 +140,7 @@ private:
 };
 
 /** TBFontFace represents a loaded font that can measure and render strings. */
-class TBFontFace
+class TB_DLLCLASS TBFontFace
 {
 public:
 	TBFontFace(TBFontGlyphCache *glyph_cache, TBFontRenderer *renderer, const TBFontDescription &font_desc);
@@ -203,7 +204,7 @@ private:
 };
 
 /** TBFontInfo provides information about a font file associated with a font id. */
-class TBFontInfo
+class TB_DLLCLASS TBFontInfo
 {
 public:
 	/** Get the font filename. */
@@ -236,7 +237,7 @@ private:
 	no font backend implemented yet. Since there is always at least the test font, no
 	nullptr checks are needed.
 */
-class TBFontManager
+class TB_DLLCLASS TBFontManager
 {
 public:
 	TBFontManager();

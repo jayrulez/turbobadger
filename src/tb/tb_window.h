@@ -6,6 +6,7 @@
 #ifndef TB_WINDOW_H
 #define TB_WINDOW_H
 
+#include "tb_export.h"
 #include "tb_widgets_common.h"
 #include "tb_widgets_listener.h"
 
@@ -30,7 +31,7 @@ MAKE_ENUM_FLAG_COMBO(WINDOW_SETTINGS);
 	It will activate and deactivate other windows on click (which will restore
 	focus to the last focused child widget). */
 
-class TBWindow : public TBWidget
+class TB_DLLCLASS TBWindow : public TBWidget
 {
 public:
 	// For safe typecasting

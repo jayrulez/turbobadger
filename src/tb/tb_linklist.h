@@ -6,6 +6,7 @@
 #ifndef TB_LINKLIST_H
 #define TB_LINKLIST_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include <assert.h>
 
@@ -22,7 +23,7 @@ class TBLink;
 	Safe iteration means that if a link is removed from a linked list, _all_ iterators that currently
 	point to that link will automatically step to the next link in the iterators direction. */
 
-class TBLinkListIterator
+class TB_DLLCLASS TBLinkListIterator
 {
 public:
 	TBLinkListIterator(const TBLinkListIterator &iter);
@@ -66,7 +67,7 @@ private:
 /** TBLink - The backend class to be inserted in TBLinkList.
 	Use the typed TBLinkOf for object storing! */
 
-class TBLink
+class TB_DLLCLASS TBLink
 {
 public:
 	TBLink() : prev(nullptr), next(nullptr), linklist(nullptr) {}
@@ -80,7 +81,7 @@ public:
 };
 
 template<class T>
-class TBLinkOf : public TBLink
+class TB_DLLCLASS TBLinkOf : public TBLink
 {
 public:
 	inline T *GetPrev() const { return (T *) prev; }
@@ -90,7 +91,7 @@ public:
 /** TBLinkList - This is the backend for TBLinkListOf and TBLinkListAutoDeleteOf.
 	You should use the typed TBLinkListOf or TBLinkListAutoDeleteOf for object storing! */
 
-class TBLinkList
+class TB_DLLCLASS TBLinkList
 {
 public:
 	TBLinkList() : first(nullptr), last(nullptr), first_iterator(nullptr) {}
@@ -119,7 +120,7 @@ public:
 /** TBLinkListOf is a double linked linklist. */
 
 template<class T>
-class TBLinkListOf
+class TB_DLLCLASS TBLinkListOf
 {
 public:
 	/** Remove link from this linklist. */
@@ -191,7 +192,7 @@ private:
 /** TBLinkListAutoDeleteOf is a double linked linklist that deletes all links on destruction. */
 
 template<class T>
-class TBLinkListAutoDeleteOf : public TBLinkListOf<T>
+class TB_DLLCLASS TBLinkListAutoDeleteOf : public TBLinkListOf<T>
 {
 public:
 	~TBLinkListAutoDeleteOf() { TBLinkListOf<T>::DeleteAll(); }

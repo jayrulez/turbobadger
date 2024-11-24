@@ -6,6 +6,7 @@
 #ifndef TB_LANGUAGE_H
 #define TB_LANGUAGE_H
 
+#include "tb_export.h"
 #include "tb_core.h"
 #include "tb_hashtable.h"
 #include "tb_id.h"
@@ -24,7 +25,7 @@ namespace tb {
 	Ex: TBButton: text: @close   (Create a button with text from lookup of "close")
 */
 
-class TBLanguage
+class TB_DLLCLASS TBLanguage
 {
 public:
 	~TBLanguage();

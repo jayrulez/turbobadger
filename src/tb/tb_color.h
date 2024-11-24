@@ -6,13 +6,14 @@
 #ifndef TB_COLOR_H
 #define TB_COLOR_H
 
+#include "tb_export.h"
 #include "tb_types.h"
 
 namespace tb {
 
 /** TBColor contains a 32bit color. */
 
-class TBColor
+class TB_DLLCLASS TBColor
 {
 public:
 	TBColor() : b(0), g(0), r(0), a(255) {}
