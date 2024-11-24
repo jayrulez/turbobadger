@@ -18,8 +18,9 @@
 #endif
 
 #undef TB_DLLCLASS
-#if !defined(TB_EXPORT)
-#define TB_DLLCLASS TB_DLLEXPORT
+
+#if !defined(TB_STATIC)
+#	define TB_DLLCLASS TB_DLLEXPORT
 #else
-#define TB_DLLCLASS TB_DLLIMPORT
+#	define TB_DLLCLASS TB_DLLIMPORT
 #endif

@@ -11,6 +11,10 @@ aux_source_directory(utf8 LOCAL_SRCS)
 
 add_library(TurboBadgerLib ${LOCAL_SRCS})
 
+if(TB_STATIC_LIB)
+    target_compile_definitions(TurboBadgerLib PRIVATE TB_STATIC=1)
+endif()
+
 install(TARGETS TurboBadgerLib
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib

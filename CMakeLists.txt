@@ -15,6 +15,7 @@ option(TB_RENDERER_BATCHER "Enable to get TBRendererBatcher" ON)
 option(TB_RENDERER_GL "Enable renderer using OpenGL. This renderer depends on TB_RENDERER_BATCHER." ON)
 option(TB_RENDERER_GLES_1 "Enable renderer using OpenGL ES. This renderer depends on TB_RENDERER_GL." OFF)
 option(TB_IMAGE "Enable support for TBImage, TBImageManager, TBImageWidget." ON)
+option(TB_STATIC_LIB "Builds TurboBadgerLib as a static library when on, otherwise as a shared library" ON)
 
 # Runtime/subsystem configurations
 # Needs further work
