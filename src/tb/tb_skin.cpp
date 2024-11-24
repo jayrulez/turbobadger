@@ -187,7 +187,7 @@ bool TBSkin::LoadInternal(const char *skin_file)
 
 	// Read skin constants
 	if (const char *color = node.GetValueString("defaults>text-color", nullptr))
-		m_default_text_color.SetFromString(color, strlen(color));
+		m_default_text_color.SetFromString(color, (int)strlen(color));
 	m_default_disabled_opacity = node.GetValueFloat("defaults>disabled>opacity",
 		m_default_disabled_opacity);
 	m_default_placeholder_opacity = node.GetValueFloat("defaults>placeholder>opacity",
@@ -378,7 +378,7 @@ void TBSkin::RasterizeShape(TBNode *node)
 
 			TBColor color;
 			const char *col_str = action_node->GetValue().GetString();
-			color.SetFromString(col_str, strlen(col_str));
+			color.SetFromString(col_str, (int)strlen(col_str));
 
 			shape.ColorRect(dst_rect, color);
 		}
@@ -870,13 +870,13 @@ void TBSkinElement::Load(TBNode *n, TBSkin *skin, const char *skin_path)
 	opacity = n->GetValueFloat("opacity", opacity);
 
 	if (const char *color = n->GetValueString("text-color", nullptr))
-		text_color.SetFromString(color, strlen(color));
+		text_color.SetFromString(color, (int)strlen(color));
 
 	if (const char *color = n->GetValueString("background-color", nullptr))
-		bg_color.SetFromString(color, strlen(color));
+		bg_color.SetFromString(color, (int)strlen(color));
 
 	if (const char *color = n->GetValueString("img-color", nullptr))
-		img_color.SetFromString(color, strlen(color));
+		img_color.SetFromString(color, (int)strlen(color));
 
 	if (const char *type_str = n->GetValueString("type", nullptr))
 		type = StringToType(type_str);

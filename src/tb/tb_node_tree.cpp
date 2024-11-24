@@ -167,7 +167,7 @@ public:
 	}
 	virtual int GetMoreData(char *buf, int buf_len)
 	{
-		return f->Read(buf, 1, buf_len);
+		return (int)f->Read(buf, 1, buf_len);
 	}
 private:
 	TBFile *f;
@@ -320,7 +320,7 @@ bool TBNode::ReadFile(const char *filename, TB_NODE_READ_FLAGS flags)
 
 bool TBNode::ReadData(const char *data, TB_NODE_READ_FLAGS flags)
 {
-	return ReadData(data, strlen(data), flags);
+	return ReadData(data, (int)strlen(data), flags);
 }
 
 bool TBNode::ReadData(const char *data, int data_len, TB_NODE_READ_FLAGS flags)
