@@ -17,17 +17,21 @@
 #define STBI_NO_FAILURE_STRINGS
 #define STBI_NO_HDR
 
+#if defined( __GNUC__ )
 // Disable unused function warnings for stb_image.h. Since STB_IMAGE_STATIC is
 // defined, it will contain a couple of unused static functions.
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-function"
+#endif
 
 // Include stb image - Tiny portable and reasonable fast image loader from http://nothings.org/
 // Should not be used for content not distributed with your app (May not be secure and doesn't
 // support all formats fully)
 #include "thirdparty/stb_image.h"
 
+#if defined( __GNUC__ )
 #pragma GCC diagnostic pop
+#endif
 
 namespace tb {
 
