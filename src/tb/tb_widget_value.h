@@ -57,7 +57,7 @@ private:
 	Note: The type that is synchronized changes if you request it in a different format!
 */
 
-class TBWidgetValue
+class TB_DLLCLASS TBWidgetValue
 {
 public:
 	TBWidgetValue(const TBID &name, TBValue::TYPE type = TBValue::TYPE_INT);

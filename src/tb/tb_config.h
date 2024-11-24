@@ -7,6 +7,7 @@
 // You may change these here, but to make upgrades easier it's better to create a
 // copy of this file in a include path that is searched before Turbo Badger during
 // build (F.ex the solution directory for Visual Studio).
+#pragma once
 
 #ifndef TB_CONFIG_H
 #define TB_CONFIG_H

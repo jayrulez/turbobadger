@@ -143,7 +143,7 @@ public:
 
 /** List of state elements in a TBSkinElement. */
 
-class TBSkinElementStateList
+class TB_DLLCLASS TBSkinElementStateList
 {
 public:
 	~TBSkinElementStateList();
@@ -165,7 +165,7 @@ private:
 /** Skin element.
 	Contains a bitmap fragment (or nullptr) and info specifying how it should be painted.
 	Also contains padding and other look-specific widget properties. */
-class TBSkinElement
+class TB_DLLCLASS TBSkinElement
 {
 public:
 	TBSkinElement();
