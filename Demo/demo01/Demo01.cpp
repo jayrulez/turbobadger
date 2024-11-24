@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "tests/tb_test.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include "tb_language.h"
 #include "tb_inline_select.h"
 #include "tb_select.h"
@@ -553,7 +553,7 @@ void MainWindow::OnMessageReceived(TBMessage *msg)
 		TBStr text;
 		text.SetFormatted("Delayed message received!\n\n"
 							"It was received %d ms after its intended fire time.",
-							(int)(TBSystem::GetTimeMS() - msg->GetFireTime()));
+							(int)(g_system_interface->GetTimeMS() - msg->GetFireTime()));
 		TBMessageWindow *msg_win = new TBMessageWindow(this, TBIDC(""));
 		msg_win->Show("Message window", text);
 	}
@@ -621,10 +621,10 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 		else if (ev.target->GetID() == TBIDC("reload skin bitmaps"))
 		{
 			int reload_count = 10;
-			double t1 = TBSystem::GetTimeMS();
+			double t1 = g_system_interface->GetTimeMS();
 			for (int i = 0; i < reload_count; i++)
 				g_tb_skin->ReloadBitmaps();
-			double t2 = TBSystem::GetTimeMS();
+			double t2 = g_system_interface->GetTimeMS();
 
 			TBStr message;
 			message.SetFormatted("Reloading the skin graphics %d times took %dms", reload_count, (int)(t2 - t1));
@@ -809,7 +809,7 @@ void DemoApplication::RenderFrame()
 	frame_counter_total++;
 
 	// Update the FPS counter
-	double time = TBSystem::GetTimeMS();
+	double time = g_system_interface->GetTimeMS();
 	if (time > frame_counter_reset_time + 1000)
 	{
 		fps = (int) ((frame_counter / (time - frame_counter_reset_time)) * 1000);

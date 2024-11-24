@@ -1,4 +1,4 @@
-#include "tb_system.h"
+#include "tb_system_interface.h"
 
 #if defined(TB_TARGET_LINUX) || defined(TB_TARGET_MACOSX)
 

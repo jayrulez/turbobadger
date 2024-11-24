@@ -4,10 +4,10 @@
 #include <stddef.h>
 #include <string.h>
 #include "tb_skin.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include "tb_msg.h"
 #include "tb_editfield.h"
-#include "renderers/tb_renderer_gl.h"
+#include "tb_gl/tb_renderer_gl.h"
 #include "tb_font_renderer.h"
 #include "Application.h"
 
@@ -246,7 +246,7 @@ static void mouse_button_callback(GLFWwindow *window, int button, int action, in
 			static int last_y = 0;
 			static int counter = 1;
 
-			double time = TBSystem::GetTimeMS();
+			double time = g_system_interface->GetTimeMS();
 			if (time < last_time + 600 && last_x == x && last_y == y)
 				counter++;
 			else
@@ -310,7 +310,7 @@ static void ReschedulePlatformTimer(double fire_time, bool force)
 	else if (fire_time != set_fire_time || force || fire_time == 0)
 	{
 		set_fire_time = fire_time;
-		double delay = fire_time - tb::TBSystem::GetTimeMS();
+		double delay = fire_time - tb::g_system_interface->GetTimeMS();
 		unsigned int idelay = (unsigned int) MAX(delay, 0.0);
 		glfwRescheduleTimer(idelay);
 	}
@@ -319,7 +319,7 @@ static void ReschedulePlatformTimer(double fire_time, bool force)
 static void timer_callback()
 {
 	double next_fire_time = TBMessageHandler::GetNextMessageFireTime();
-	double now = tb::TBSystem::GetTimeMS();
+	double now = tb::g_system_interface->GetTimeMS();
 	if (now < next_fire_time)
 	{
 		// We timed out *before* we were supposed to (the OS is not playing nice).
@@ -333,7 +333,7 @@ static void timer_callback()
 
 	// If we still have things to do (because we didn't process all messages,
 	// or because there are new messages), we need to rescedule, so call RescheduleTimer.
-	TBSystem::RescheduleTimer(TBMessageHandler::GetNextMessageFireTime());
+	g_system_interface->RescheduleTimer(TBMessageHandler::GetNextMessageFireTime());
 }
 
 // This doesn't really belong here (it belongs in tb_system_[linux/windows].cpp.

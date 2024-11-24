@@ -78,6 +78,7 @@ endif(MSVC)
 # Add TurboBadgerLib project
 include_directories("${PROJECT_SOURCE_DIR}/src/tb")
 add_subdirectory(src/tb)
+add_subdirectory(src/tb_gl)
 
 # Add Demo project
 if(TB_BUILD_DEMO)
