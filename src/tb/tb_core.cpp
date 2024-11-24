@@ -15,14 +15,14 @@
 
 namespace tb {
 
-TBRenderer *g_renderer = nullptr;
-TBSkin *g_tb_skin = nullptr;
-TBWidgetsReader *g_widgets_reader = nullptr;
-TBLanguage *g_tb_lng = nullptr;
-TBFontManager *g_font_manager = nullptr;
-TBSystemInterface *g_system_interface = nullptr;
+TB_DLLCLASS TBRenderer *g_renderer = nullptr;
+TB_DLLCLASS TBSkin *g_tb_skin = nullptr;
+TB_DLLCLASS TBWidgetsReader *g_widgets_reader = nullptr;
+TB_DLLCLASS TBLanguage *g_tb_lng = nullptr;
+TB_DLLCLASS TBFontManager *g_font_manager = nullptr;
+TB_DLLCLASS TBSystemInterface *g_system_interface = nullptr;
 
-bool tb_core_init(TBRenderer *renderer, TBSystemInterface* system_interface)
+TB_DLLCLASS bool tb_core_init(TBRenderer *renderer, TBSystemInterface* system_interface)
 {
 	system_interface->DebugPrint("Initiating Turbo Badger - version %s\n", TB_VERSION_STR);
 	g_renderer = renderer;
@@ -37,7 +37,7 @@ bool tb_core_init(TBRenderer *renderer, TBSystemInterface* system_interface)
 	return true;
 }
 
-void tb_core_shutdown()
+TB_DLLCLASS void tb_core_shutdown()
 {
 	TBAnimationManager::AbortAllAnimations();
 #ifdef TB_IMAGE
@@ -49,7 +49,7 @@ void tb_core_shutdown()
 	delete g_tb_lng;
 }
 
-bool tb_core_is_initialized()
+TB_DLLCLASS bool tb_core_is_initialized()
 {
 	return g_widgets_reader ? true : false;
 }

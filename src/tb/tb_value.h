@@ -34,7 +34,7 @@ bool is_number_only(const char *str);
 bool is_number_float(const char *str);
 
 /** TBValueArray is a array of TBValue */
-class TBValueArray
+class TB_DLLCLASS TBValueArray
 {
 public:
 	TBValueArray();

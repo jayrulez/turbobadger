@@ -52,7 +52,7 @@ public:
 
 /** TBRenderer is a minimal interface for painting strings and bitmaps. */
 
-class TBRenderer
+class TB_DLLCLASS TBRenderer
 {
 public:
 	virtual ~TBRenderer() {}

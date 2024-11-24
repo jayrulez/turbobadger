@@ -48,12 +48,12 @@ class TBFontManager;
 class TBFileInterface;
 class TBSystemInterface;
 
-extern TBRenderer *g_renderer;
-extern TBSkin *g_tb_skin;
-extern TBWidgetsReader *g_widgets_reader;
-extern TBLanguage *g_tb_lng;
-extern TBFontManager *g_font_manager;
-extern TBSystemInterface *g_system_interface;
+extern TB_DLLCLASS TBRenderer *g_renderer;
+extern TB_DLLCLASS TBSkin *g_tb_skin;
+extern TB_DLLCLASS TBWidgetsReader *g_widgets_reader;
+extern TB_DLLCLASS TBLanguage *g_tb_lng;
+extern TB_DLLCLASS TBFontManager *g_font_manager;
+extern TB_DLLCLASS TBSystemInterface *g_system_interface;
 
 /** Initialize turbo badger. Call this before using any turbo badger API. */
 bool TB_DLLCLASS tb_core_init(TBRenderer *renderer, TBSystemInterface *system_interface);

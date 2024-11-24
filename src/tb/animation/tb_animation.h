@@ -6,6 +6,7 @@
 #ifndef TB_ANIMATION_H
 #define TB_ANIMATION_H
 
+#include "tb_export.h"
 #include "tb_linklist.h"
 #include "tb_object.h"
 
@@ -49,7 +50,7 @@ enum ANIMATION_TIME {
 
 /** TBAnimationListener - Listens to the progress of TBAnimationObject. */
 
-class TBAnimationListener : public TBLinkOf<TBAnimationListener>
+class TB_DLLCLASS TBAnimationListener : public TBLinkOf<TBAnimationListener>
 {
 public:
 	virtual ~TBAnimationListener() {};
@@ -69,7 +70,7 @@ public:
 
 /** TBAnimationObject - Base class for all animated object */
 
-class TBAnimationObject : public TBTypedObject, public TBLinkOf<TBAnimationObject>
+class TB_DLLCLASS TBAnimationObject : public TBTypedObject, public TBLinkOf<TBAnimationObject>
 {
 public:
 	ANIMATION_CURVE animation_curve;
@@ -113,7 +114,7 @@ private:
 
 /** TBAnimationManager - System class that manages all animated object */
 
-class TBAnimationManager
+class TB_DLLCLASS TBAnimationManager
 {
 private:
 	static TBLinkListOf<TBAnimationObject> animating_objects;

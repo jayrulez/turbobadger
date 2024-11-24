@@ -6,6 +6,7 @@
 #ifndef TB_RENDERER_BATCHER_H
 #define TB_RENDERER_BATCHER_H
 
+#include "tb_export.h"
 #include "tb_renderer.h"
 
 #ifdef TB_RENDERER_BATCHER
@@ -17,7 +18,7 @@ namespace tb {
 /** TBRendererBatcher is a helper class that implements batching of draw operations for a TBRenderer.
 	If you do not want to do your own batching you can subclass this class instead of TBRenderer.
 	If overriding any function in this class, make sure to call the base class too. */
-class TBRendererBatcher : public TBRenderer
+class TB_DLLCLASS TBRendererBatcher : public TBRenderer
 {
 public:
 	/** Vertex stored in a Batch */
@@ -31,7 +32,7 @@ public:
 		};
 	};
 	/** A batch which should be rendered. */
-	class Batch
+	class TB_DLLCLASS Batch
 	{
 	public:
 		Batch() : vertex_count(0), bitmap(nullptr), fragment(nullptr), batch_id(0), is_flushing(false) {}

@@ -640,7 +640,7 @@ public:
 	/** PaintProps contains properties needed for painting a widget.
 		Properties may be inherited from the parent widget if not specified
 		in the skin. */
-	class PaintProps
+	class TB_DLLCLASS PaintProps
 	{
 	public:
 		PaintProps();
