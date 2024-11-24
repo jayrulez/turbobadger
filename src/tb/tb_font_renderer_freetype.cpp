@@ -5,7 +5,7 @@
 
 #include "tb_font_renderer.h"
 #include "tb_renderer.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 
 #ifdef TB_FONT_RENDERER_FREETYPE
 

@@ -6,7 +6,7 @@
 #include "tb_widgets_common.h"
 #include "tb_font_renderer.h"
 #include "tb_widgets_listener.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include <assert.h>
 
 namespace tb {
@@ -563,7 +563,7 @@ bool TBScrollBar::OnEvent(const TBWidgetEvent &ev)
 	else if (ev.type == EVENT_TYPE_WHEEL)
 	{
 		double old_val = m_value;
-		SetValueDouble(m_value + ev.delta_y * TBSystem::GetPixelsPerLine());
+		SetValueDouble(m_value + ev.delta_y * g_system_interface->GetPixelsPerLine());
 		return m_value != old_val;
 	}
 	return false;

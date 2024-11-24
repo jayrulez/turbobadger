@@ -4,7 +4,6 @@
 // ================================================================================
 
 #include "tb_bitmap_fragment.h"
-#include "tb_system.h"
 #include "tb_tempbuffer.h"
 
 #ifdef TB_IMAGE_LOADER_STB

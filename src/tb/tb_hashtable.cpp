@@ -4,7 +4,7 @@
 // ================================================================================
 
 #include "tb_hashtable.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include "tb_tempbuffer.h"
 
 namespace tb {
@@ -180,7 +180,7 @@ void TBHashTable::Debug()
 	}
 	TBStr tmp; tmp.SetFormatted(" (total: %d of %d buckets)\n", total_count, m_num_buckets);
 	line.AppendString(tmp);
-	TBDebugOut(line.GetData());
+	g_system_interface->DebugOut(line.GetData());
 }
 
 #endif // TB_RUNTIME_DEBUG_INFO

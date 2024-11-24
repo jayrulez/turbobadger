@@ -5,7 +5,7 @@
 
 #include "tb_dimension.h"
 #include "tb_types.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include "tb_tempbuffer.h"
 #include "tb_value.h"
 #include <stdlib.h>
@@ -58,7 +58,7 @@ float TBDimensionConverter::MmToPxF(float mm) const
 {
 	if (mm <= TB_INVALID_DIMENSION || mm == 0)
 		return mm;
-	return mm * TBSystem::GetDPI() / 25.4f;
+	return mm * g_system_interface->GetDPI() / 25.4f;
 }
 
 int TBDimensionConverter::GetPxFromString(const char *str, int def_value) const

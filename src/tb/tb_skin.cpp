@@ -5,7 +5,7 @@
 
 #include "tb_skin.h"
 #include "tb_shape_rasterizer.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include "tb_tempbuffer.h"
 #include "tb_font_renderer.h"
 #include <string.h>
@@ -49,7 +49,7 @@ SKIN_ELEMENT_TYPE StringToType(const char *type_str)
 		return SKIN_ELEMENT_TYPE_TILE;
 	else if (strcmp(type_str, "StretchBorder") == 0)
 		return SKIN_ELEMENT_TYPE_STRETCH_BORDER;
-	TBDebugOut("Skin error: Unknown skin type!\n");
+	g_system_interface->DebugOut("Skin error: Unknown skin type!\n");
 	return SKIN_ELEMENT_TYPE_STRETCH_BOX;
 }
 
@@ -65,7 +65,7 @@ TBSkinCondition::TARGET StringToTarget(const char *target_str)
 		return TBSkinCondition::TARGET_PREV_SIBLING;
 	else if (strcmp(target_str, "next sibling") == 0)
 		return TBSkinCondition::TARGET_NEXT_SIBLING;
-	TBDebugOut("Skin error: Unknown target in condition!\n");
+	g_system_interface->DebugOut("Skin error: Unknown target in condition!\n");
 	return TBSkinCondition::TARGET_THIS;
 }
 
@@ -164,7 +164,7 @@ bool TBSkin::LoadInternal(const char *skin_file)
 			assert(supported_dpi_node->GetValue().IsArray() || supported_dpi_node->GetValue().GetInt() == base_dpi);
 			if (TBValueArray *arr = supported_dpi_node->GetValue().GetArray())
 			{
-				int screen_dpi = TBSystem::GetDPI();
+				int screen_dpi = g_system_interface->GetDPI();
 				int best_supported_dpi = 0;
 				for (int i = 0; i < arr->GetLength(); i++)
 				{
@@ -264,7 +264,7 @@ bool TBSkin::ReloadBitmaps()
 #ifdef TB_RUNTIME_DEBUG_INFO
 	TBStr info;
 	info.SetFormatted("Skin loaded using %d bitmaps.\n", m_frag_manager.GetNumMaps());
-	TBDebugOut(info);
+	g_system_interface->DebugOut(info);
 #endif
 	return success;
 }
@@ -459,7 +459,7 @@ TBSkinElement *TBSkin::PaintSkin(const TBRect &dst_rect, TBSkinElement *element,
 		else
 		{
 			TB_IF_DEBUG(paint_error_highlight = true);
-			TBDebugOut("Skin error: The skin references a missing element, or has a reference loop!\n");
+			g_system_interface->DebugOut("Skin error: The skin references a missing element, or has a reference loop!\n");
 			// Fall back to the standard skin.
 			override_state = nullptr;
 		}

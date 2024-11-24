@@ -1041,7 +1041,7 @@ public:
 	// TBWidget related globals
 	static TBWidget *hovered_widget;	///< The currently hovered widget, or nullptr.
 	static TBWidget *captured_widget;	///< The currently captured widget, or nullptr.
-	static TBWidget *focused_widget;	///< The currently focused widget, or nullptr.
+	static  TBWidget *focused_widget;	///< The currently focused widget, or nullptr.
 	static int pointer_down_widget_x;	///< Pointer x position on down event, relative to the captured widget.
 	static int pointer_down_widget_y;	///< Pointer y position on down event, relative to the captured widget.
 	static int pointer_move_widget_x;	///< Pointer x position on last pointer event, relative to the captured widget (if any) or hovered widget.

@@ -6,7 +6,7 @@
 #include "tb_font_renderer.h"
 #include "tb_renderer.h"
 #include "tb_tempbuffer.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include "tb_node_tree.h"
 #include "tb_hashtable.h"
 

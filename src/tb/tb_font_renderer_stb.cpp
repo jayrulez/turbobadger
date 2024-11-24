@@ -6,7 +6,6 @@
 #include "tb_export.h"
 #include "tb_font_renderer.h"
 #include "tb_renderer.h"
-#include "tb_system.h"
 #include "tb_tempbuffer.h"
 
 #ifdef TB_FONT_RENDERER_STB

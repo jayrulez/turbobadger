@@ -7,7 +7,7 @@
 
 #ifdef TB_IMAGE
 
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include "tb_tempbuffer.h"
 #include "tb_skin.h"
 
@@ -143,7 +143,7 @@ TBImage TBImageManager::GetImage(const char *filename)
 			m_frag_manager.FreeFragment(fragment);
 			image_rep = nullptr;
 		}
-		TBDebugOut(image_rep ? "TBImageManager - Loaded new image.\n" : "TBImageManager - Loading image failed.\n");
+		g_system_interface->DebugOut(image_rep ? "TBImageManager - Loaded new image.\n" : "TBImageManager - Loading image failed.\n");
 	}
 	return TBImage(image_rep);
 }
@@ -164,7 +164,7 @@ TBImage TBImageManager::GetImage(const char *name, uint32 *buffer, int width, in
 			m_frag_manager.FreeFragment(fragment);
 			image_rep = nullptr;
 		}
-		TBDebugOut(image_rep ? "TBImageManager - Loaded new image.\n" : "TBImageManager - Loading image failed.\n");
+		g_system_interface->DebugOut(image_rep ? "TBImageManager - Loaded new image.\n" : "TBImageManager - Loading image failed.\n");
 	}
 	return TBImage(image_rep);
 }
@@ -179,7 +179,7 @@ void TBImageManager::RemoveImageRep(TBImageRep *image_rep)
 	}
 	m_image_rep_hash.Remove(image_rep->hash_key);
 	image_rep->image_manager = nullptr;
-	TBDebugOut("TBImageManager - Removed image.\n");
+	g_system_interface->DebugOut("TBImageManager - Removed image.\n");
 }
 
 void TBImageManager::OnContextLost()

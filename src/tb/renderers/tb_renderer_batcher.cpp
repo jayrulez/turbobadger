@@ -5,7 +5,7 @@
 
 #include "renderers/tb_renderer_batcher.h"
 #include "tb_bitmap_fragment.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 
 #ifdef TB_RENDERER_BATCHER
 
@@ -106,7 +106,7 @@ void TBRendererBatcher::EndPaint()
 
 #ifdef TB_RUNTIME_DEBUG_INFO
 	if (TB_DEBUG_SETTING(RENDER_BATCHES))
-		TBDebugPrint("Frame rendered using %d batches and a total of %d triangles.\n",
+		g_system_interface->DebugPrint("Frame rendered using %d batches and a total of %d triangles.\n",
 						batch.batch_id - dbg_begin_paint_batch_id,
 						dbg_frame_triangle_count);
 #endif // TB_RUNTIME_DEBUG_INFO

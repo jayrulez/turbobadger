@@ -4,7 +4,8 @@
 // ================================================================================
 
 #include "tb_tempbuffer.h"
-#include "tb_system.h"
+#include "tb_core.h"
+#include "tb_system_interface.h"
 #include <assert.h>
 #include <stdlib.h>
 #if !defined(__native_client__)
@@ -113,7 +114,7 @@ bool TBTempBuffer::AppendPath(const char *full_path_and_filename)
 
 bool TBTempBuffer::AppendFile(const char *filename)
 {
-	if (TBFile *file = TBFile::Open(filename, TBFile::MODE_READ))
+	if (TBFile *file = g_system_interface->OpenFile(filename, TBFile::MODE_READ))
 	{
 		const int file_size = (int)file->Size();
 		if (Reserve(m_append_pos + file_size + 1) && file->Read(m_data + m_append_pos, 1, file_size) == file_size)

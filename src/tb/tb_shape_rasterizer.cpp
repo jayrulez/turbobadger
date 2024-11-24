@@ -5,7 +5,7 @@
 
 #include "tb_shape_rasterizer.h"
 #include "tb_font_renderer.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include "tb_blur.h"
 #include "utf8/utf8.h"
 #include <math.h>
@@ -161,7 +161,7 @@ void TBShapeRasterizer::StencilBlur(float radius) {
 
 void TBShapeRasterizer::StencilGlyph(const TBFontDescription &fd, const char *glyph_str, float mul) {
 	if (!g_font_manager->HasFontFace(fd) && !g_font_manager->CreateFontFace(fd)) {
-		TBDebugPrint("Skin error: The glyph font could not be loaded in size %d!\n", fd.GetSize());
+		g_system_interface->DebugPrint("Skin error: The glyph font could not be loaded in size %d!\n", fd.GetSize());
 		return;
 	}
 	TBFontFace *font = g_font_manager->GetFontFace(fd);

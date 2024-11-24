@@ -7,7 +7,7 @@
 
 #ifdef TB_RENDERER_GL
 #include "tb_bitmap_fragment.h"
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include <assert.h>
 #include <stdio.h>
 
@@ -127,7 +127,7 @@ void TBRendererGL::EndPaint()
 
 #ifdef TB_RUNTIME_DEBUG_INFO
 	if (TB_DEBUG_SETTING(RENDER_BATCHES))
-		TBDebugPrint("Frame caused %d bitmap validations.\n", dbg_bitmap_validations);
+		g_system_interface->DebugPrint("Frame caused %d bitmap validations.\n", dbg_bitmap_validations);
 #endif // TB_RUNTIME_DEBUG_INFO
 }
 

@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "tb_system.h"
+#include "tb_system_interface.h"
 #include "tb_tempbuffer.h"
 #include "tb_language.h"
 
@@ -157,7 +157,7 @@ class FileParser : public TBParserStream
 public:
 	bool Read(const char *filename, TBParserTarget *target)
 	{
-		f = TBFile::Open(filename, TBFile::MODE_READ);
+		f = g_system_interface->OpenFile(filename, TBFile::MODE_READ);
 		if (!f)
 			return false;
 		TBParser p;
@@ -210,7 +210,7 @@ public:
 #ifdef TB_RUNTIME_DEBUG_INFO
 		TBStr err;
 		err.SetFormatted("%s(%d):Parse error: %s\n", m_filename, line_nr, error);
-		TBDebugOut(err);
+		g_system_interface->DebugOut(err);
 #endif // TB_RUNTIME_DEBUG_INFO
 	}
 	virtual void OnComment(int line_nr, const char *comment)
