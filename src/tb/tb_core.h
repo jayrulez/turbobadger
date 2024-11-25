@@ -49,6 +49,7 @@ class TBFileInterface;
 class TBSystemInterface;
 class TBFileInterface;
 class TBContext;
+class TBClipboardInterface;
 
 TB_DLLCLASS TBRenderer* get_renderer();
 TB_DLLCLASS TBSkin* get_tb_skin();
@@ -58,9 +59,14 @@ TB_DLLCLASS TBFontManager* get_font_manager();
 TB_DLLCLASS TBSystemInterface* get_system_interface();
 TB_DLLCLASS TBFileInterface* get_file_interface();
 TB_DLLCLASS TBContext* get_context();
+TB_DLLCLASS TBClipboardInterface* get_clipboard_interface();
 
 /** Initialize turbo badger. Call this before using any turbo badger API. */
-bool TB_DLLCLASS tb_core_init(TBRenderer *renderer, TBSystemInterface *system_interface, TBFileInterface *file_interface);
+bool TB_DLLCLASS tb_core_init(
+    TBRenderer *renderer, 
+    TBSystemInterface *system_interface, 
+    TBFileInterface *file_interface, 
+    TBClipboardInterface *clipboard_interface);
 
 /** Shutdown turbo badger. Call this after deleting the last widget, to free turbo badger internals. */
 void TB_DLLCLASS tb_core_shutdown();

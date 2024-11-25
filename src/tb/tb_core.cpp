@@ -13,6 +13,7 @@
 #include "image/tb_image_manager.h"
 #include "tb_system_interface.h"
 #include "tb_context.h"
+#include "tb_clipboard_interface.h"
 
 namespace tb {
 
@@ -24,6 +25,7 @@ static TBFontManager *g_font_manager = nullptr;
 static TBSystemInterface *g_system_interface = nullptr;
 static TBFileInterface *g_file_interface = nullptr;
 static TBContext* g_context;
+static TBClipboardInterface* g_clipboard_interface;
 
 TB_DLLCLASS TBRenderer* get_renderer() { return g_renderer; }
 TB_DLLCLASS TBSkin* get_tb_skin() { return g_tb_skin; }
@@ -33,13 +35,19 @@ TB_DLLCLASS TBFontManager* get_font_manager() { return g_font_manager; }
 TB_DLLCLASS TBSystemInterface* get_system_interface() { return g_system_interface; }
 TB_DLLCLASS TBFileInterface* get_file_interface() { return g_file_interface; }
 TB_DLLCLASS TBContext* get_context() { return g_context; }
+TB_DLLCLASS TBClipboardInterface* get_clipboard_interface() { return g_clipboard_interface; }
 
-TB_DLLCLASS bool tb_core_init(TBRenderer *renderer, TBSystemInterface* system_interface, TBFileInterface* file_interface)
+TB_DLLCLASS bool tb_core_init(
+	TBRenderer *renderer, 
+	TBSystemInterface* system_interface, 
+	TBFileInterface* file_interface, 
+	TBClipboardInterface* clipboard_interface)
 {
 	system_interface->DebugPrint("Initiating Turbo Badger - version %s\n", TB_VERSION_STR);
 	g_renderer = renderer;
 	g_system_interface = system_interface;
 	g_file_interface = file_interface;
+	g_clipboard_interface = clipboard_interface;
 
 	g_context = new TBContext;
 	g_tb_lng = new TBLanguage;

@@ -21,10 +21,5 @@ namespace tb {
         //int GetPanThreshold() override;
         //int GetPixelsPerLine() override;
         //int GetDPI() override;
-
-        void EmptyClipboard()  override;
-        bool HasClipboardText()  override;
-        bool SetClipboardText(const char* text)  override;
-        bool GetClipboardText(tb::TBStr& text)  override;
     };
 }

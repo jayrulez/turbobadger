@@ -18,9 +18,9 @@ namespace tb {
 	{
 	public:
 		// TBWidget related globals
-		TBWidget* hovered_widget;	///< The currently hovered widget, or nullptr.
-		TBWidget* captured_widget;	///< The currently captured widget, or nullptr.
-		TBWidget* focused_widget;	///< The currently focused widget, or nullptr.
+		TBWidget* hovered_widget = nullptr;	///< The currently hovered widget, or nullptr.
+		TBWidget* captured_widget = nullptr;	///< The currently captured widget, or nullptr.
+		TBWidget* focused_widget = nullptr;	///< The currently focused widget, or nullptr.
 		int pointer_down_widget_x;	///< Pointer x position on down event, relative to the captured widget.
 		int pointer_down_widget_y;	///< Pointer y position on down event, relative to the captured widget.
 		int pointer_move_widget_x;	///< Pointer x position on last pointer event, relative to the captured widget (if any) or hovered widget.

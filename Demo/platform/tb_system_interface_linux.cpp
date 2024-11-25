@@ -1,5 +1,7 @@
 #include "tb_system_interface_linux.h"
 
+#if defined(TB_TARGET_LINUX)
+
 #include <sys/time.h>
 #include <stdio.h>
 
@@ -40,21 +42,4 @@ int tb::TBSystemInterfaceLinux::GetDPI()
 	return 96;
 }
 
-//void tb::TBSystemInterfaceLinux::EmptyClipboard()
-//{
-//}
-//
-//bool tb::TBSystemInterfaceLinux::HasClipboardText()
-//{
-//	return false;
-//}
-//
-//bool tb::TBSystemInterfaceLinux::SetClipboardText(const char* text)
-//{
-//	return false;
-//}
-//
-//bool tb::TBSystemInterfaceLinux::GetClipboardText(tb::TBStr& text)
-//{
-//	return false;
-//}
+#endif

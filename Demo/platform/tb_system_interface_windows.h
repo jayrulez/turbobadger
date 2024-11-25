@@ -1,9 +1,11 @@
 #pragma once
 
-#include "tb_glfw/tb_system_interface_glfw.h"
+#include "tb_system_interface_glfw.h"
+
+#if defined(TB_TARGET_WINDOWS)
 
 namespace tb {
-    class TBSystemInterfaceLinux : public TBSystemInterfaceGlfw
+    class TBSystemInterfaceWindows : public TBSystemInterfaceGlfw
     {
     public:
         void DebugOut(const char* str) override;
@@ -14,10 +16,7 @@ namespace tb {
         int GetPanThreshold() override;
         int GetPixelsPerLine() override;
         int GetDPI() override;
-
-        //void EmptyClipboard() override;
-        //bool HasClipboardText() override;
-        //bool SetClipboardText(const char* text)  override;
-        //bool GetClipboardText(tb::TBStr& text)  override;
     };
 }
+
+#endif

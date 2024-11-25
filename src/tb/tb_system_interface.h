@@ -15,6 +15,8 @@ namespace tb {
 	class TB_DLLCLASS TBSystemInterface
 	{
 	public:
+        virtual ~TBSystemInterface() = default;
+        
 		// Debug
 
 		virtual void DebugOut(const char* str) = 0;
@@ -50,20 +52,6 @@ namespace tb {
 
 		/** Get Dots Per Inch for the main screen. */
 		virtual int GetDPI() = 0;
-
-		// Clipboard
-			/** Empty the contents of the clipboard. */
-		virtual void EmptyClipboard() = 0;
-
-		/** Return true if the clipboard currently contains text. */
-		virtual bool HasClipboardText() = 0;
-
-		/** Set the text of the clipboard in UTF-8 format. */
-		virtual bool SetClipboardText(const char* text) = 0;
-
-		/** Get the text from the clipboard in UTF-8 format.
-			Returns true on success. */
-		virtual bool GetClipboardText(TBStr& text) = 0;
 	};
 } // namespace tb
 

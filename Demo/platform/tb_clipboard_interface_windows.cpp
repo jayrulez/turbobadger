@@ -1,50 +1,12 @@
-#include "tb_system_interface_windows.h"
+#include "tb_clipboard_interface_windows.h"
+
+#if defined(TB_TARGET_WINDOWS)
 
 #include <Windows.h>
 #include <mmsystem.h>
 #include <stdio.h>
 
-void tb::TBSystemInterfaceWindows::DebugOut(const char* str)
-{
-	OutputDebugString(str);
-}
-
-double tb::TBSystemInterfaceWindows::GetTimeMS()
-{
-	return timeGetTime();
-}
-
-//void tb::TBSystemInterfaceWindows::RescheduleTimer(double fire_time)
-//{
-//}
-
-int tb::TBSystemInterfaceWindows::GetLongClickDelayMS()
-{
-	return 500;
-}
-
-int tb::TBSystemInterfaceWindows::GetPanThreshold()
-{
-	return 5 * GetDPI() / 96;
-}
-
-int tb::TBSystemInterfaceWindows::GetPixelsPerLine()
-{
-	return 40 * GetDPI() / 96;
-}
-
-int tb::TBSystemInterfaceWindows::GetDPI()
-{
-	HDC hdc = GetDC(nullptr);
-	int DPI_x = GetDeviceCaps(hdc, LOGPIXELSX);
-	ReleaseDC(nullptr, hdc);
-#if 0 // TEST CODE!
-	DPI_x *= 2;
-#endif
-	return DPI_x;
-}
-
-void tb::TBSystemInterfaceWindows::EmptyClipboard()
+void tb::TBClipboardInterfaceWindows::Empty()
 {
 	if (OpenClipboard(NULL))
 	{
@@ -53,7 +15,7 @@ void tb::TBSystemInterfaceWindows::EmptyClipboard()
 	}
 }
 
-bool tb::TBSystemInterfaceWindows::HasClipboardText()
+bool tb::TBClipboardInterfaceWindows::HasText()
 {
 	bool has_text = false;
 	if (OpenClipboard(NULL))
@@ -66,7 +28,7 @@ bool tb::TBSystemInterfaceWindows::HasClipboardText()
 	return has_text;
 }
 
-bool tb::TBSystemInterfaceWindows::SetClipboardText(const char* text)
+bool tb::TBClipboardInterfaceWindows::SetText(const char* text)
 {
 	if (OpenClipboard(NULL))
 	{
@@ -87,10 +49,10 @@ bool tb::TBSystemInterfaceWindows::SetClipboardText(const char* text)
 	return false;
 }
 
-bool tb::TBSystemInterfaceWindows::GetClipboardText(tb::TBStr& text)
+bool tb::TBClipboardInterfaceWindows::GetText(tb::TBStr& text)
 {
 	bool success = false;
-	if (HasClipboardText() && OpenClipboard(NULL))
+	if (HasText() && OpenClipboard(NULL))
 	{
 		if (HANDLE hClipboardData = GetClipboardData(CF_UNICODETEXT))
 		{
@@ -108,3 +70,5 @@ bool tb::TBSystemInterfaceWindows::GetClipboardText(tb::TBStr& text)
 	}
 	return success;
 }
+
+#endif

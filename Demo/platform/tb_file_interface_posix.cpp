@@ -71,7 +71,7 @@ size_t TBFileInterfacePosix::Read(tb::TBFileHandle file, void* buf, size_t elemS
 
 	if (m_openFiles.find(fileId) != m_openFiles.end())
 	{
-		return fread(buf, elemSize, count, m_openFiles[fileId]); return size_t();
+		return fread(buf, elemSize, count, m_openFiles[fileId]);
 	}
 
 	return 0;

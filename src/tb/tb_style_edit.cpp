@@ -7,6 +7,7 @@
 #include "tb_widgets_common.h"
 #include "tb_style_edit_content.h"
 #include "tb_system_interface.h"
+#include "tb_clipboard_interface.h"
 #include "tb_tempbuffer.h"
 #include "tb_font_renderer.h"
 #include "utf8/utf8.h"
@@ -192,7 +193,7 @@ void TBSelection::CopyToClipboard()
 	{
 		TBStr text;
 		if (GetText(text))
-			get_system_interface()->SetClipboardText(text);
+			get_clipboard_interface()->SetText(text);
 	}
 }
 
@@ -1799,7 +1800,7 @@ void TBStyleEdit::Copy()
 void TBStyleEdit::Paste()
 {
 	TBStr text;
-	if (get_system_interface()->HasClipboardText() && get_system_interface()->GetClipboardText(text))
+	if (get_clipboard_interface()->HasText() && get_clipboard_interface()->GetText(text))
 	{
 		InsertText(text, text.Length());
 		ScrollIfNeeded(true, true);

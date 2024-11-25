@@ -14,6 +14,7 @@ namespace tb {
 	class TB_DLLCLASS TBFileInterface
 	{
 	public:
+        virtual ~TBFileInterface() = default;
 		enum TBFileMode { MODE_READ };
 
 		virtual TBFileHandle Open(const char* filename, TBFileMode mode) = 0;

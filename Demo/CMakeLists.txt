@@ -36,15 +36,12 @@ if(CMAKE_COMPILER_IS_MINGW)
 endif(CMAKE_COMPILER_IS_MINGW)
 
 add_executable(TurboBadgerDemo WIN32 ${LOCAL_SRCS})
-target_link_libraries(TurboBadgerDemo TurboBadgerLib TurboBadgerGL TurboBadgerGlfw TurboBadgerPosix ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
-
-if(CMAKE_SYSTEM MATCHES "Windows")
-target_link_libraries(TurboBadgerDemo TurboBadgerWindows)
-endif(CMAKE_SYSTEM MATCHES "Windows")
+target_link_libraries(TurboBadgerDemo TurboBadgerLib ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
+target_link_libraries(TurboBadgerDemo PUBLIC TurboBadgerGL)
 
 target_include_directories(TurboBadgerDemo
-    PRIVATE
-     ${CMAKE_CURRENT_SOURCE_DIR}/../src
+    PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src
 )
 
 install(TARGETS TurboBadgerDemo

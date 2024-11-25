@@ -61,39 +61,3 @@ void tb::TBSystemInterfaceGlfw::RescheduleTimer(double fire_time)
 //{
 //	return 0;
 //}
-
-void tb::TBSystemInterfaceGlfw::EmptyClipboard()
-{
-	SetClipboardText("");
-}
-
-bool tb::TBSystemInterfaceGlfw::HasClipboardText()
-{
-	if (GLFWwindow* window = glfwGetCurrentContext())
-	{
-		const char* str = glfwGetClipboardString(window);
-		if (str && *str)
-			return true;
-	}
-	return false;
-}
-
-bool tb::TBSystemInterfaceGlfw::SetClipboardText(const char* text)
-{
-	if (GLFWwindow* window = glfwGetCurrentContext())
-	{
-		glfwSetClipboardString(window, text);
-		return true;
-	}
-	return false;
-}
-
-bool tb::TBSystemInterfaceGlfw::GetClipboardText(tb::TBStr& text)
-{
-	if (GLFWwindow* window = glfwGetCurrentContext())
-	{
-		if (const char* str = glfwGetClipboardString(window))
-			return text.Set(str);
-	}
-	return false;
-}

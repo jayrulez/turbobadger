@@ -1,7 +1,13 @@
-#include "tb_glfw/glfw_extra.h"
-#include "tb_glfw/tb_system_interface_glfw.h"
-#include "tb_posix/tb_file_interface_posix.h"
-#include "tb_windows/tb_system_interface_windows.h" // todo: fixup cross platform
+#include "glfw_extra.h"
+#include "tb_file_interface_posix.h"
+#include "tb_system_interface_glfw.h"
+#ifdef _WIN32
+#	include "tb_system_interface_windows.h"
+#	include "tb_clipboard_interface_windows.h"
+#else
+#	include "tb_system_interface_linux.h"
+#	include "tb_clipboard_interface_glfw.h"
+#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
@@ -49,7 +55,10 @@ public:
 						, mainWindow(nullptr)
 						, m_cursor_i_beam(nullptr)
 						, m_has_pending_update(false)
-						, m_quit_requested(false) {}
+						, m_quit_requested(false)
+						, m_system_interface(nullptr)
+						, m_clipboard_interface(nullptr)
+	{}
 	~AppBackendGLFW();
 
 	virtual void OnAppEvent(const EVENT &ev);
@@ -62,6 +71,7 @@ public:
 	TBRendererGL *m_renderer;
 	TBFileInterfacePosix m_file_interface;
 	TBSystemInterfaceGlfw* m_system_interface;
+	TBClipboardInterface* m_clipboard_interface;
 	GLFWwindow *mainWindow;
 	GLFWcursor *m_cursor_i_beam;
 	bool m_has_pending_update;
@@ -412,8 +422,15 @@ bool AppBackendGLFW::Init(App *app)
 #endif
 
 	m_renderer = new TBRendererGL();
-	m_system_interface = new TBSystemInterfaceWindows(); // todo, fixup cross platform
-	tb_core_init(m_renderer, m_system_interface, &m_file_interface);
+
+#ifdef _WIN32
+	m_system_interface = new TBSystemInterfaceWindows();
+	m_clipboard_interface = new TBClipboardInterfaceWindows();
+#else
+	m_system_interface = new TBSystemInterfaceLinux();
+	m_clipboard_interface = new TBClipboardInterfaceGlfw();
+#endif
+	tb_core_init(m_renderer, m_system_interface, &m_file_interface, m_clipboard_interface);
 
 	// Create the App object for our demo
 	m_app = app;
