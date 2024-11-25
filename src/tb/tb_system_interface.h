@@ -9,6 +9,7 @@
 
 #include "tb_export.h"
 #include "tb_str.h"
+#include <cstdarg>
 
 namespace tb {
 	class TB_DLLCLASS TBSystemInterface
@@ -17,7 +18,13 @@ namespace tb {
 		// Debug
 
 		virtual void DebugOut(const char* str) = 0;
-		virtual void DebugPrint(const char* str, ...) = 0;
+		virtual void DebugPrint(const char* str, ...)
+		{
+			va_list args;
+			va_start(args, str);
+			tb::TBStr tmp; tmp.SetFormatted(str, args); DebugOut(tmp);
+			va_end(args);
+		}
 
 		// Platform
 
