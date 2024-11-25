@@ -1,4 +1,7 @@
-#include "glfw_extra.h"
+#include "tb_glfw/glfw_extra.h"
+#include "tb_glfw/tb_system_interface_glfw.h"
+#include "tb_posix/tb_file_interface_posix.h"
+#include "tb_windows/tb_system_interface_windows.h" // todo: fixup cross platform
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
@@ -57,6 +60,8 @@ public:
 
 	App *m_app;
 	TBRendererGL *m_renderer;
+	TBFileInterfacePosix m_file_interface;
+	TBSystemInterfaceGlfw* m_system_interface;
 	GLFWwindow *mainWindow;
 	GLFWcursor *m_cursor_i_beam;
 	bool m_has_pending_update;
@@ -105,7 +110,7 @@ static bool InvokeShortcut(int key, SPECIAL_KEY special_key, MODIFIER_KEYS modif
 #else
 	bool shortcut_key = (modifierkeys & TB_CTRL) ? true : false;
 #endif
-	if (!TBWidget::focused_widget || !down || !shortcut_key)
+	if (!get_context()->focused_widget || !down || !shortcut_key)
 		return false;
 	bool reverse_key = (modifierkeys & TB_SHIFT) ? true : false;
 	int upper_key = toupr_ascii(key);
@@ -143,7 +148,7 @@ static bool InvokeShortcut(int key, SPECIAL_KEY special_key, MODIFIER_KEYS modif
 	TBWidgetEvent ev(EVENT_TYPE_SHORTCUT);
 	ev.modifierkeys = modifierkeys;
 	ev.ref_id = id;
-	return TBWidget::focused_widget->InvokeEvent(ev);
+	return get_context()->focused_widget->InvokeEvent(ev);
 }
 
 static bool InvokeKey(GLFWwindow *window, unsigned int key, SPECIAL_KEY special_key, MODIFIER_KEYS modifierkeys, bool down)
@@ -199,11 +204,11 @@ static void key_callback(GLFWwindow *window, int key, int scancode, int action, 
 	case GLFW_KEY_KP_ENTER:		InvokeKey(window, 0, TB_KEY_ENTER, modifier, down); break;
 	case GLFW_KEY_ESCAPE:		InvokeKey(window, 0, TB_KEY_ESC, modifier, down); break;
 	case GLFW_KEY_MENU:
-		if (TBWidget::focused_widget && !down)
+		if (get_context()->focused_widget && !down)
 		{
 			TBWidgetEvent ev(EVENT_TYPE_CONTEXT_MENU);
 			ev.modifierkeys = modifier;
-			TBWidget::focused_widget->InvokeEvent(ev);
+			get_context()->focused_widget->InvokeEvent(ev);
 		}
 		break;
 	case GLFW_KEY_LEFT_SHIFT:
@@ -263,11 +268,11 @@ static void mouse_button_callback(GLFWwindow *window, int button, int action, in
 	else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
 	{
 		GetBackend(window)->GetRoot()->InvokePointerMove(x, y, modifier, ShouldEmulateTouchEvent());
-		if (TBWidget::hovered_widget)
+		if (get_context()->hovered_widget)
 		{
-			TBWidget::hovered_widget->ConvertFromRoot(x, y);
+			get_context()->hovered_widget->ConvertFromRoot(x, y);
 			TBWidgetEvent ev(EVENT_TYPE_CONTEXT_MENU, x, y, false, modifier);
-			TBWidget::hovered_widget->InvokeEvent(ev);
+			get_context()->hovered_widget->InvokeEvent(ev);
 		}
 	}
 }
@@ -276,11 +281,11 @@ void cursor_position_callback(GLFWwindow *window, double x, double y)
 {
 	mouse_x = (int)x;
 	mouse_y = (int)y;
-	if (GetBackend(window)->GetRoot() && !(ShouldEmulateTouchEvent() && !TBWidget::captured_widget)) {
+	if (GetBackend(window)->GetRoot() && !(ShouldEmulateTouchEvent() && !get_context()->captured_widget)) {
 		GetBackend(window)->GetRoot()->InvokePointerMove(mouse_x, mouse_y, GetModifierKeys(), ShouldEmulateTouchEvent());
 
 		// Update cursor.
-		TBWidget *active_widget = TBWidget::captured_widget ? TBWidget::captured_widget : TBWidget::hovered_widget;
+		TBWidget *active_widget = get_context()->captured_widget ? get_context()->captured_widget : get_context()->hovered_widget;
 		if (TBSafeCast<TBEditField>(active_widget)) {
 			glfwSetCursor(window, GetBackend(window)->m_cursor_i_beam);
 		} else {
@@ -295,27 +300,6 @@ static void scroll_callback(GLFWwindow *window, double x, double y)
 		GetBackend(window)->GetRoot()->InvokeWheel(mouse_x, mouse_y, (int)x, -(int)y, GetModifierKeys());
 }
 
-/** Reschedule the platform timer, or cancel it if fire_time is TB_NOT_SOON.
-	If fire_time is 0, it should be fired ASAP.
-	If force is true, it will ask the platform to schedule it again, even if
-	the fire_time is the same as last time. */
-static void ReschedulePlatformTimer(double fire_time, bool force)
-{
-	static double set_fire_time = -1;
-	if (fire_time == TB_NOT_SOON)
-	{
-		set_fire_time = -1;
-		glfwKillTimer();
-	}
-	else if (fire_time != set_fire_time || force || fire_time == 0)
-	{
-		set_fire_time = fire_time;
-		double delay = fire_time - tb::get_system_interface()->GetTimeMS();
-		unsigned int idelay = (unsigned int) MAX(delay, 0.0);
-		glfwRescheduleTimer(idelay);
-	}
-}
-
 static void timer_callback()
 {
 	double next_fire_time = TBMessageHandler::GetNextMessageFireTime();
@@ -325,7 +309,7 @@ static void timer_callback()
 		// We timed out *before* we were supposed to (the OS is not playing nice).
 		// Calling ProcessMessages now won't achieve a thing so force a reschedule
 		// of the platform timer again with the same time.
-		ReschedulePlatformTimer(next_fire_time, true);
+		TBSystemInterfaceGlfw::ReschedulePlatformTimer(next_fire_time, true);
 		return;
 	}
 
@@ -334,13 +318,6 @@ static void timer_callback()
 	// If we still have things to do (because we didn't process all messages,
 	// or because there are new messages), we need to rescedule, so call RescheduleTimer.
 	get_system_interface()->RescheduleTimer(TBMessageHandler::GetNextMessageFireTime());
-}
-
-// This doesn't really belong here (it belongs in tb_system_[linux/windows].cpp.
-// This is here since the proper implementations has not yet been done.
-void TBSystem::RescheduleTimer(double fire_time)
-{
-	ReschedulePlatformTimer(fire_time, false);
 }
 
 static void window_refresh_callback(GLFWwindow *window)
@@ -371,9 +348,9 @@ static void window_size_callback(GLFWwindow *window, int w, int h)
 static void drop_callback(GLFWwindow *window, int count, const char **files_utf8)
 {
 	AppBackendGLFW *backend = GetBackend(window);
-	TBWidget *target = TBWidget::hovered_widget;
+	TBWidget *target = get_context()->hovered_widget;
 	if (!target)
-		target = TBWidget::focused_widget;
+		target = get_context()->focused_widget;
 	if (!target)
 		target = backend->GetRoot();
 	if (target)
@@ -435,7 +412,8 @@ bool AppBackendGLFW::Init(App *app)
 #endif
 
 	m_renderer = new TBRendererGL();
-	tb_core_init(m_renderer);
+	m_system_interface = new TBSystemInterfaceWindows(); // todo, fixup cross platform
+	tb_core_init(m_renderer, m_system_interface, &m_file_interface);
 
 	// Create the App object for our demo
 	m_app = app;
@@ -450,6 +428,8 @@ AppBackendGLFW::~AppBackendGLFW()
 	m_app = nullptr;
 
 	tb_core_shutdown();
+
+	delete m_system_interface;
 
 	glfwDestroyCursor(m_cursor_i_beam);
 

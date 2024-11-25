@@ -23,7 +23,6 @@ set(LOCAL_SRCS "")
 aux_source_directory(./demo01 LOCAL_SRCS)
 aux_source_directory(./platform LOCAL_SRCS)
 include_directories(".")
-include_directories("../../src")
 
 # Add glfw project
 target_include_directories(TurboBadgerLib PUBLIC "thirdparty/glfw/include")
@@ -37,7 +36,17 @@ if(CMAKE_COMPILER_IS_MINGW)
 endif(CMAKE_COMPILER_IS_MINGW)
 
 add_executable(TurboBadgerDemo WIN32 ${LOCAL_SRCS})
-target_link_libraries(TurboBadgerDemo TurboBadgerLib TurboBadgerGL ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
+target_link_libraries(TurboBadgerDemo TurboBadgerLib TurboBadgerGL TurboBadgerGlfw TurboBadgerPosix ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
+
+if(CMAKE_SYSTEM MATCHES "Windows")
+target_link_libraries(TurboBadgerDemo TurboBadgerWindows)
+endif(CMAKE_SYSTEM MATCHES "Windows")
+
+target_include_directories(TurboBadgerDemo
+    PRIVATE
+     ${CMAKE_CURRENT_SOURCE_DIR}/../src
+)
+
 install(TARGETS TurboBadgerDemo
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib

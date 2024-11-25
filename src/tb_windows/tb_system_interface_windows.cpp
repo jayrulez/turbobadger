@@ -4,36 +4,36 @@
 #include <mmsystem.h>
 #include <stdio.h>
 
-void td::TBSystemInterfaceWindows::DebugOut(const char* str)
+void tb::TBSystemInterfaceWindows::DebugOut(const char* str)
 {
 	OutputDebugString(str);
 }
 
-double td::TBSystemInterfaceWindows::GetTimeMS()
+double tb::TBSystemInterfaceWindows::GetTimeMS()
 {
 	return timeGetTime();
 }
 
-void td::TBSystemInterfaceWindows::RescheduleTimer(double fire_time)
-{
-}
+//void tb::TBSystemInterfaceWindows::RescheduleTimer(double fire_time)
+//{
+//}
 
-int td::TBSystemInterfaceWindows::GetLongClickDelayMS()
+int tb::TBSystemInterfaceWindows::GetLongClickDelayMS()
 {
 	return 500;
 }
 
-int td::TBSystemInterfaceWindows::GetPanThreshold()
+int tb::TBSystemInterfaceWindows::GetPanThreshold()
 {
 	return 5 * GetDPI() / 96;
 }
 
-int td::TBSystemInterfaceWindows::GetPixelsPerLine()
+int tb::TBSystemInterfaceWindows::GetPixelsPerLine()
 {
 	return 40 * GetDPI() / 96;
 }
 
-int td::TBSystemInterfaceWindows::GetDPI()
+int tb::TBSystemInterfaceWindows::GetDPI()
 {
 	HDC hdc = GetDC(nullptr);
 	int DPI_x = GetDeviceCaps(hdc, LOGPIXELSX);
@@ -44,7 +44,7 @@ int td::TBSystemInterfaceWindows::GetDPI()
 	return DPI_x;
 }
 
-void td::TBSystemInterfaceWindows::EmptyClipboard()
+void tb::TBSystemInterfaceWindows::EmptyClipboard()
 {
 	if (OpenClipboard(NULL))
 	{
@@ -53,7 +53,7 @@ void td::TBSystemInterfaceWindows::EmptyClipboard()
 	}
 }
 
-bool td::TBSystemInterfaceWindows::HasClipboardText()
+bool tb::TBSystemInterfaceWindows::HasClipboardText()
 {
 	bool has_text = false;
 	if (OpenClipboard(NULL))
@@ -66,7 +66,7 @@ bool td::TBSystemInterfaceWindows::HasClipboardText()
 	return has_text;
 }
 
-bool td::TBSystemInterfaceWindows::SetClipboardText(const char* text)
+bool tb::TBSystemInterfaceWindows::SetClipboardText(const char* text)
 {
 	if (OpenClipboard(NULL))
 	{
@@ -87,7 +87,7 @@ bool td::TBSystemInterfaceWindows::SetClipboardText(const char* text)
 	return false;
 }
 
-bool td::TBSystemInterfaceWindows::GetClipboardText(tb::TBStr& text)
+bool tb::TBSystemInterfaceWindows::GetClipboardText(tb::TBStr& text)
 {
 	bool success = false;
 	if (HasClipboardText() && OpenClipboard(NULL))

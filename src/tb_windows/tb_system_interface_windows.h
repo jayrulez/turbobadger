@@ -1,15 +1,15 @@
 #pragma once
 
-#include "tb_system_interface.h"
+#include "tb_glfw/tb_system_interface_glfw.h"
 
-namespace td {
-    class TBSystemInterfaceWindows : public tb::TBSystemInterface
+namespace tb {
+    class TBSystemInterfaceWindows : public TBSystemInterfaceGlfw
     {
     public:
         void DebugOut(const char* str) override;
 
         double GetTimeMS() override;
-        void RescheduleTimer(double fire_time) override;
+        //void RescheduleTimer(double fire_time) override;
         int GetLongClickDelayMS() override;
         int GetPanThreshold() override;
         int GetPixelsPerLine() override;
