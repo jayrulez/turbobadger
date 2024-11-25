@@ -8,7 +8,6 @@
 #define TB_SYSTEM_INTERFACE_H
 
 #include "tb_export.h"
-#include "tb_file.h"
 #include "tb_str.h"
 
 namespace tb {
@@ -19,10 +18,6 @@ namespace tb {
 
 		virtual void DebugOut(const char* str) = 0;
 		virtual void DebugPrint(const char* str, ...) = 0;
-
-		// File
-
-		virtual TBFile* OpenFile(const char* filename, TBFile::TBFileMode mode) = 0;
 
 		// Platform
 

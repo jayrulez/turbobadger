@@ -22,6 +22,8 @@ typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
 
+typedef uintptr_t TBFileHandle;
+
 template <class T>
 T Max(const T& left, const T& right) { return left > right ? left : right; }
 

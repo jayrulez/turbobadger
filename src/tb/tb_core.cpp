@@ -21,16 +21,19 @@ TB_DLLCLASS TBWidgetsReader *g_widgets_reader = nullptr;
 TB_DLLCLASS TBLanguage *g_tb_lng = nullptr;
 TB_DLLCLASS TBFontManager *g_font_manager = nullptr;
 TB_DLLCLASS TBSystemInterface *g_system_interface = nullptr;
+TB_DLLCLASS TBFileInterface *g_file_interface = nullptr;
 
-TB_DLLCLASS bool tb_core_init(TBRenderer *renderer, TBSystemInterface* system_interface)
+TB_DLLCLASS bool tb_core_init(TBRenderer *renderer, TBSystemInterface* system_interface, TBFileInterface* file_interface)
 {
 	system_interface->DebugPrint("Initiating Turbo Badger - version %s\n", TB_VERSION_STR);
 	g_renderer = renderer;
+	g_system_interface = system_interface;
+	g_file_interface = file_interface;
+
 	g_tb_lng = new TBLanguage;
 	g_font_manager = new TBFontManager();
 	g_tb_skin = new TBSkin();
 	g_widgets_reader = TBWidgetsReader::Create();
-	g_system_interface = system_interface;
 #ifdef TB_IMAGE
 	g_image_manager = new TBImageManager();
 #endif

@@ -47,6 +47,7 @@ class TBLanguage;
 class TBFontManager;
 class TBFileInterface;
 class TBSystemInterface;
+class TBFileInterface;
 
 extern TB_DLLCLASS TBRenderer *g_renderer;
 extern TB_DLLCLASS TBSkin *g_tb_skin;
@@ -54,9 +55,10 @@ extern TB_DLLCLASS TBWidgetsReader *g_widgets_reader;
 extern TB_DLLCLASS TBLanguage *g_tb_lng;
 extern TB_DLLCLASS TBFontManager *g_font_manager;
 extern TB_DLLCLASS TBSystemInterface *g_system_interface;
+extern TB_DLLCLASS TBFileInterface *g_file_interface;
 
 /** Initialize turbo badger. Call this before using any turbo badger API. */
-bool TB_DLLCLASS tb_core_init(TBRenderer *renderer, TBSystemInterface *system_interface);
+bool TB_DLLCLASS tb_core_init(TBRenderer *renderer, TBSystemInterface *system_interface, TBFileInterface *file_interface);
 
 /** Shutdown turbo badger. Call this after deleting the last widget, to free turbo badger internals. */
 void TB_DLLCLASS tb_core_shutdown();

@@ -9,6 +9,7 @@
 #include <string.h>
 #include <assert.h>
 #include "tb_system_interface.h"
+#include "tb_file_interface.h"
 #include "tb_tempbuffer.h"
 #include "tb_language.h"
 
@@ -157,20 +158,20 @@ class FileParser : public TBParserStream
 public:
 	bool Read(const char *filename, TBParserTarget *target)
 	{
-		f = g_system_interface->OpenFile(filename, TBFile::MODE_READ);
+		f = g_file_interface->Open(filename, TBFileInterface::MODE_READ);
 		if (!f)
 			return false;
 		TBParser p;
 		TBParser::STATUS status = p.Read(this, target);
-		delete f;
+		g_file_interface->Close(f);
 		return status == TBParser::STATUS_OK ? true : false;
 	}
 	virtual int GetMoreData(char *buf, int buf_len)
 	{
-		return (int)f->Read(buf, 1, buf_len);
+		return (int)g_file_interface->Read(f, buf, 1, buf_len);
 	}
 private:
-	TBFile *f;
+	TBFileHandle f;
 };
 
 class DataParser : public TBParserStream
