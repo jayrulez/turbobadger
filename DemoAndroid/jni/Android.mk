@@ -6,9 +6,11 @@ PROJECT_ROOT := ../../
 
 LOCAL_SRC_FILES := jni_glue.cpp \
                    App.cpp       \
+                   tb_system_interface_android.cpp       \
+                   tb_file_interface_android.cpp       \
                    ../../src/tb/tb_bitmap_fragment.cpp \
                    ../../src/tb/tb_blur.cpp \
-                   ../../src/tb/tb_clipboard_dummy.cpp \
+                   ../../src/tb/platform/tb_clipboard_interface.cpp \
                    ../../src/tb/tb_color.cpp \
                    ../../src/tb/tb_dimension.cpp \
                    ../../src/tb/tb_editfield.cpp \
@@ -39,7 +41,6 @@ LOCAL_SRC_FILES := jni_glue.cpp \
                    ../../src/tb/tb_skin_util.cpp \
                    ../../src/tb/tb_style_edit.cpp \
                    ../../src/tb/tb_style_edit_content.cpp \
-                   ../../src/tb/tb_system_android.cpp \
                    ../../src/tb/tb_tab_container.cpp \
                    ../../src/tb/tb_tempbuffer.cpp \
                    ../../src/tb/tb_toggle_container.cpp \
@@ -67,7 +68,7 @@ LOCAL_SRC_FILES := jni_glue.cpp \
 
 LOCAL_MODULE     := libTurboBadger
 LOCAL_CFLAGS     := -Werror -DANDROID -D__ANDROID__ -DTB_RENDERER_GLES_1 -DTB_ALWAYS_SHOW_EDIT_FOCUS
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. $(LOCAL_PATH)/../../src/tb $(LOCAL_PATH)/../../Demo/renderers
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. $(LOCAL_PATH)/../../src/tb $(LOCAL_PATH)/../../src/tb_gl
 LOCAL_LDLIBS     := -llog -landroid -lGLESv1_CM
 LOCAL_CPPFLAGS   := -fno-rtti -fno-exceptions -std=c++0x
 

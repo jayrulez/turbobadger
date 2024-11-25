@@ -36,7 +36,7 @@ if(CMAKE_COMPILER_IS_MINGW)
 endif(CMAKE_COMPILER_IS_MINGW)
 
 add_executable(TurboBadgerDemo WIN32 ${LOCAL_SRCS})
-target_link_libraries(TurboBadgerDemo TurboBadgerLib ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
+target_link_libraries(TurboBadgerDemo TurboBadgerLib TurboBadgerGL ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
 install(TARGETS TurboBadgerDemo
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib

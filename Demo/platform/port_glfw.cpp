@@ -18,7 +18,7 @@
 #include "tb_file_interface_posix.h"
 #include "tb_msg.h"
 #include "tb_editfield.h"
-#include "renderers/tb_renderer_gl.h"
+#include "tb_renderer_gl.h"
 #include "tb_font_renderer.h"
 #include "Application.h"
 
