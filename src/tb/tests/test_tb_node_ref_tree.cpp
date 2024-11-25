@@ -59,7 +59,7 @@ TB_TEST_GROUP(tb_node_ref_tree)
 					"	skin: 'FireButtonSkin'\n");
 
 		TBWidget root;
-		g_widgets_reader->LoadData(&root, "TBButton: id: 'fire', skin: '@test_styles>FireButton>skin'");
+		get_widgets_reader()->LoadData(&root, "TBButton: id: 'fire', skin: '@test_styles>FireButton>skin'");
 
 		TBWidget *button = root.GetWidgetByID(TBIDC("fire"));
 		TB_VERIFY(button->GetSkinBg() == TBIDC("FireButtonSkin"));
@@ -78,7 +78,7 @@ TB_TEST_GROUP(tb_node_ref_tree)
 					 "bar_broken_tree: '@test_foo>foo_broken_tree'");
 
 		TBWidget root;
-		g_widgets_reader->LoadData(&root,
+		get_widgets_reader()->LoadData(&root,
 			"TBInlineSelect: id: 'select', value: '@test_bar>bar_value'\n"
 			"TBButton: id: 'button_circular', text: '@test_bar>bar_circular'\n"
 			"TBButton: id: 'button_broken_node', text: '@test_bar>bar_broken_node'\n"
@@ -115,7 +115,7 @@ TB_TEST_GROUP(tb_node_ref_tree)
 					"	text: 'hello'\n");
 
 		TBWidget root;
-		g_widgets_reader->LoadData(&root,	"TBEditField: id: 'edit'\n"
+		get_widgets_reader()->LoadData(&root,	"TBEditField: id: 'edit'\n"
 											"	@include @test_styles>VeryNice");
 		TBEditField *edit = root.GetWidgetByIDAndType<TBEditField>(TBIDC("edit"));
 		TB_VERIFY(edit->GetSkinBg() == TBIDC("SpecialSkin"));
@@ -125,7 +125,7 @@ TB_TEST_GROUP(tb_node_ref_tree)
 	TB_TEST(reference_local_include)
 	{
 		TBWidget root;
-		g_widgets_reader->LoadData(&root,	"SomeDeclarations\n"
+		get_widgets_reader()->LoadData(&root,	"SomeDeclarations\n"
 											"	skin: 'SpecialSkin'\n"
 											"	text: 'hello'\n"
 											"TBEditField: id: 'edit'\n"
@@ -155,7 +155,7 @@ TB_TEST_GROUP(tb_node_ref_tree)
 		TBWidget root1, root2;
 
 		// Inflate & check
-		g_widgets_reader->LoadData(&root1, layout_str);
+		get_widgets_reader()->LoadData(&root1, layout_str);
 		TBLayout *layout1 = root1.GetWidgetByIDAndType<TBLayout>(TBIDC("layout"));
 		TB_VERIFY(layout1->GetAxis() == AXIS_X);
 		TB_VERIFY(layout1->GetSpacing() == 100);
@@ -165,7 +165,7 @@ TB_TEST_GROUP(tb_node_ref_tree)
 		dt.SetValue("layout>landscape", TBValue(0));
 
 		// Inflate & check
-		g_widgets_reader->LoadData(&root2, layout_str);
+		get_widgets_reader()->LoadData(&root2, layout_str);
 		TBLayout *layout2 = root2.GetWidgetByIDAndType<TBLayout>(TBIDC("layout"));
 		TB_VERIFY(layout2->GetAxis() == AXIS_Y);
 		TB_VERIFY(layout2->GetSpacing() == 200);

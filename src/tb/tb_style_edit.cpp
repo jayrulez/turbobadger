@@ -192,7 +192,7 @@ void TBSelection::CopyToClipboard()
 	{
 		TBStr text;
 		if (GetText(text))
-			g_system_interface->SetClipboardText(text);
+			get_system_interface()->SetClipboardText(text);
 	}
 }
 
@@ -672,7 +672,7 @@ void TBTextProps::Pop()
 
 TBFontFace *TBTextProps::GetFont() const
 {
-	return g_font_manager->GetFontFace(data->font_desc);
+	return get_font_manager()->GetFontFace(data->font_desc);
 }
 
 // ============================================================================
@@ -1401,8 +1401,8 @@ TBStyleEdit::TBStyleEdit()
 	selection.styledit = this;
 	TMPDEBUG(packed.show_whitespace = true);
 
-	font_desc = g_font_manager->GetDefaultFontDescription();
-	font = g_font_manager->GetFontFace(font_desc);
+	font_desc = get_font_manager()->GetDefaultFontDescription();
+	font = get_font_manager()->GetFontFace(font_desc);
 
 #ifdef TB_TARGET_WINDOWS
 	packed.win_style_br = 1;
@@ -1442,7 +1442,7 @@ void TBStyleEdit::SetFont(const TBFontDescription &font_desc)
 	if (this->font_desc == font_desc)
 		return;
 	this->font_desc = font_desc;
-	font = g_font_manager->GetFontFace(font_desc);
+	font = get_font_manager()->GetFontFace(font_desc);
 	Reformat(true);
 }
 
@@ -1799,7 +1799,7 @@ void TBStyleEdit::Copy()
 void TBStyleEdit::Paste()
 {
 	TBStr text;
-	if (g_system_interface->HasClipboardText() && g_system_interface->GetClipboardText(text))
+	if (get_system_interface()->HasClipboardText() && get_system_interface()->GetClipboardText(text))
 	{
 		InsertText(text, text.Length());
 		ScrollIfNeeded(true, true);
@@ -1871,7 +1871,7 @@ bool TBStyleEdit::MouseUp(const TBPoint &point, int button, MODIFIER_KEYS modifi
 	if (button != 1)
 		return false;
 
-	if (touch && !g_context->cancel_click)
+	if (touch && !get_context()->cancel_click)
 	{
 		selection.SelectNothing();
 		caret.Place(mousedown_point);
@@ -1880,7 +1880,7 @@ bool TBStyleEdit::MouseUp(const TBPoint &point, int button, MODIFIER_KEYS modifi
 	}
 
 	select_state = 0;
-	if (caret.pos.block && !g_context->cancel_click)
+	if (caret.pos.block && !get_context()->cancel_click)
 	{
 		TBTextFragment *fragment = caret.pos.block->FindFragment(point.x + scroll_x, point.y + scroll_y - caret.pos.block->ypos);
 		if (fragment && fragment == mousedown_fragment)

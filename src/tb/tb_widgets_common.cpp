@@ -27,7 +27,7 @@ void TBWidgetString::ValidatCachedSize(TBWidget *widget)
 	if (!m_height || fd != m_fd)
 	{
 		m_fd = fd;
-		TBFontFace *font = g_font_manager->GetFontFace(fd);
+		TBFontFace *font = get_font_manager()->GetFontFace(fd);
 		m_width = font->GetStringWidth(m_text);
 		m_height = font->GetHeight();
 	}
@@ -246,11 +246,11 @@ void TBButton::OnMessageReceived(TBMessage *msg)
 {
 	if (msg->message == TBIDC("auto_click"))
 	{
-		assert(g_context->captured_widget == this);
-		if (!g_context->cancel_click && GetHitStatus(g_context->pointer_move_widget_x, g_context->pointer_move_widget_y))
+		assert(get_context()->captured_widget == this);
+		if (!get_context()->cancel_click && GetHitStatus(get_context()->pointer_move_widget_x, get_context()->pointer_move_widget_y))
 		{
-			TBWidgetEvent ev(EVENT_TYPE_CLICK, g_context->pointer_move_widget_x, g_context->pointer_move_widget_y, true);
-			g_context->captured_widget->InvokeEvent(ev);
+			TBWidgetEvent ev(EVENT_TYPE_CLICK, get_context()->pointer_move_widget_x, get_context()->pointer_move_widget_y, true);
+			get_context()->captured_widget->InvokeEvent(ev);
 		}
 		if (auto_click_repeat_delay)
 			PostMessageDelayed(TBIDC("auto_click"), nullptr, auto_click_repeat_delay);
@@ -389,13 +389,13 @@ void TBProgressSpinner::OnPaint(const PaintProps &paint_props)
 {
 	if (IsRunning())
 	{
-		TBSkinElement *e = g_tb_skin->GetSkinElement(m_skin_fg);
+		TBSkinElement *e = get_tb_skin()->GetSkinElement(m_skin_fg);
 		if (e && e->bitmap)
 		{
 			int size = e->bitmap->Height();
 			int num_frames = e->bitmap->Width() / e->bitmap->Height();
 			int current_frame = m_frame % num_frames;
-			g_renderer->DrawBitmap(GetPaddingRect(), TBRect(current_frame * size, 0, size, size), e->bitmap);
+			get_renderer()->DrawBitmap(GetPaddingRect(), TBRect(current_frame * size, 0, size, size), e->bitmap);
 		}
 	}
 }
@@ -519,13 +519,13 @@ void TBScrollBar::SetLimits(double min, double max, double visible)
 	// If we're currently dragging the scrollbar handle, convert the down point
 	// to root and then back after the applying the new limit.
 	// This prevents sudden jumps to unexpected positions when scrolling.
-	if (g_context->captured_widget == &m_handle)
-		m_handle.ConvertToRoot(g_context->pointer_down_widget_x, g_context->pointer_down_widget_y);
+	if (get_context()->captured_widget == &m_handle)
+		m_handle.ConvertToRoot(get_context()->pointer_down_widget_x, get_context()->pointer_down_widget_y);
 
 	UpdateHandle();
 
-	if (g_context->captured_widget == &m_handle)
-		m_handle.ConvertFromRoot(g_context->pointer_down_widget_x, g_context->pointer_down_widget_y);
+	if (get_context()->captured_widget == &m_handle)
+		m_handle.ConvertFromRoot(get_context()->pointer_down_widget_x, get_context()->pointer_down_widget_y);
 }
 
 void TBScrollBar::SetValueDouble(double value)
@@ -542,12 +542,12 @@ void TBScrollBar::SetValueDouble(double value)
 
 bool TBScrollBar::OnEvent(const TBWidgetEvent &ev)
 {
-	if (ev.type == EVENT_TYPE_POINTER_MOVE && g_context->captured_widget == &m_handle)
+	if (ev.type == EVENT_TYPE_POINTER_MOVE && get_context()->captured_widget == &m_handle)
 	{
 		if (m_to_pixel_factor > 0)
 		{
-			int dx = ev.target_x - g_context->pointer_down_widget_x;
-			int dy = ev.target_y - g_context->pointer_down_widget_y;
+			int dx = ev.target_x - get_context()->pointer_down_widget_x;
+			int dy = ev.target_y - get_context()->pointer_down_widget_y;
 			double delta_val = (m_axis == AXIS_X ? dx : dy) / m_to_pixel_factor;
 			SetValueDouble(m_value + delta_val);
 		}
@@ -564,7 +564,7 @@ bool TBScrollBar::OnEvent(const TBWidgetEvent &ev)
 	else if (ev.type == EVENT_TYPE_WHEEL)
 	{
 		double old_val = m_value;
-		SetValueDouble(m_value + ev.delta_y * g_system_interface->GetPixelsPerLine());
+		SetValueDouble(m_value + ev.delta_y * get_system_interface()->GetPixelsPerLine());
 		return m_value != old_val;
 	}
 	return false;
@@ -676,12 +676,12 @@ void TBSlider::SetValueDouble(double value)
 
 bool TBSlider::OnEvent(const TBWidgetEvent &ev)
 {
-	if (ev.type == EVENT_TYPE_POINTER_MOVE && g_context->captured_widget == &m_handle)
+	if (ev.type == EVENT_TYPE_POINTER_MOVE && get_context()->captured_widget == &m_handle)
 	{
 		if (m_to_pixel_factor > 0)
 		{
-			int dx = ev.target_x - g_context->pointer_down_widget_x;
-			int dy = ev.target_y - g_context->pointer_down_widget_y;
+			int dx = ev.target_x - get_context()->pointer_down_widget_x;
+			int dy = ev.target_y - get_context()->pointer_down_widget_y;
 			double delta_val = (m_axis == AXIS_X ? dx : -dy) / m_to_pixel_factor;
 			SetValueDouble(m_value + delta_val);
 		}
@@ -764,16 +764,16 @@ bool TBMover::OnEvent(const TBWidgetEvent &ev)
 	TBWidget *target = GetParent();
 	if (!target)
 		return false;
-	if (ev.type == EVENT_TYPE_POINTER_MOVE && g_context->captured_widget == this)
+	if (ev.type == EVENT_TYPE_POINTER_MOVE && get_context()->captured_widget == this)
 	{
-		int dx = ev.target_x - g_context->pointer_down_widget_x;
-		int dy = ev.target_y - g_context->pointer_down_widget_y;
+		int dx = ev.target_x - get_context()->pointer_down_widget_x;
+		int dy = ev.target_y - get_context()->pointer_down_widget_y;
 		TBRect rect = target->GetRect().Offset(dx, dy);
 		if (target->GetParent())
 		{
 			// Apply limit.
-			rect.x = CLAMP(rect.x, -g_context->pointer_down_widget_x, target->GetParent()->GetRect().w - g_context->pointer_down_widget_x);
-			rect.y = CLAMP(rect.y, -g_context->pointer_down_widget_y, target->GetParent()->GetRect().h - g_context->pointer_down_widget_y);
+			rect.x = CLAMP(rect.x, -get_context()->pointer_down_widget_x, target->GetParent()->GetRect().w - get_context()->pointer_down_widget_x);
+			rect.y = CLAMP(rect.y, -get_context()->pointer_down_widget_y, target->GetParent()->GetRect().h - get_context()->pointer_down_widget_y);
 		}
 		target->SetRect(rect);
 		return true;
@@ -802,10 +802,10 @@ bool TBResizer::OnEvent(const TBWidgetEvent &ev)
 	TBWidget *target = GetParent();
 	if (!target)
 		return false;
-	if (ev.type == EVENT_TYPE_POINTER_MOVE && g_context->captured_widget == this)
+	if (ev.type == EVENT_TYPE_POINTER_MOVE && get_context()->captured_widget == this)
 	{
-		int dx = ev.target_x - g_context->pointer_down_widget_x;
-		int dy = ev.target_y - g_context->pointer_down_widget_y;
+		int dx = ev.target_x - get_context()->pointer_down_widget_x;
+		int dy = ev.target_y - get_context()->pointer_down_widget_y;
 		TBRect rect = target->GetRect();
 		rect.w += dx;
 		rect.h += dy;

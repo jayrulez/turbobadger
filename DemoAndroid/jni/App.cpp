@@ -41,7 +41,7 @@ public:
 			for(int i = 0; i < iteration_count; i++)
 			{
 				TBWindow *win = new TBWindow;
-				g_widgets_reader->LoadFile(win, "layout/main_layout.tb.txt");
+				get_widgets_reader()->LoadFile(win, "layout/main_layout.tb.txt");
 				win->SetText(title);
 				win->SetSize(100 + i, 100 + i);
 				win->Close();
@@ -53,7 +53,7 @@ public:
 			title = "Resizing layout speed";
 			TBWindow *win = new TBWindow;
 			win->SetText(title);
-			g_widgets_reader->LoadFile(win, "layout/main_layout.tb.txt");
+			get_widgets_reader()->LoadFile(win, "layout/main_layout.tb.txt");
 
 			double start_time = TBSystem::GetTimeMS();
 			for(int i = 0; i < iteration_count; i++)
@@ -81,9 +81,9 @@ public:
 							"Root dimensions: %dx%dpx\n"
 							"100dp equals %dpx (Based on closest skin DPI and screen DPI)",
 							TBSystem::GetDPI(),
-							g_tb_skin->GetDimensionConverter()->GetDstDPI(),
+							get_tb_skin()->GetDimensionConverter()->GetDstDPI(),
 							GetParentRoot()->GetRect().w, GetParentRoot()->GetRect().h,
-							g_tb_skin->GetDimensionConverter()->DpToPx(100));
+							get_tb_skin()->GetDimensionConverter()->DpToPx(100));
 		TBMessageWindow *msg_win = new TBMessageWindow(GetParentRoot(), TBIDC(""));
 		msg_win->Show("Screen info", text);
 	}
@@ -131,31 +131,31 @@ void Init(unsigned int width, unsigned int height)
 	TBWidgetListener::AddGlobalListener(&edit_listener);
 
 	// Load language file
-	g_tb_lng->Load("language/lng_en.tb.txt");
+	get_tb_lng()->Load("language/lng_en.tb.txt");
 
 	// Load the default skin, and override skin that contains the graphics specific to the demo.
-	g_tb_skin->Load("skin/skin.tb.txt", "demo_skin/skin.tb.txt");
+	get_tb_skin()->Load("skin/skin.tb.txt", "demo_skin/skin.tb.txt");
 
 	// Register tbbf font renderer
 	void register_tbbf_font_renderer();
 	register_tbbf_font_renderer();
 
 	// Add a font to the font manager.
-	g_font_manager->AddFontInfo("font/segoe_white_with_shadow.tb.txt", "Segoe");
+	get_font_manager()->AddFontInfo("font/segoe_white_with_shadow.tb.txt", "Segoe");
 
 	// Set the default font description for widgets to one of the fonts we just added
 	TBFontDescription fd;
 	fd.SetID(TBIDC("Segoe"));
-	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(14));
-	g_font_manager->SetDefaultFontDescription(fd);
+	fd.SetSize(get_tb_skin()->GetDimensionConverter()->DpToPx(14));
+	get_font_manager()->SetDefaultFontDescription(fd);
 
 	// Create the font now.
-	TBFontFace *font = g_font_manager->CreateFontFace(g_font_manager->GetDefaultFontDescription());
+	TBFontFace *font = get_font_manager()->CreateFontFace(get_font_manager()->GetDefaultFontDescription());
 
 	// Give the root widget a background skin
 	root->SetSkinBg("background_solid");
 
-	g_widgets_reader->LoadFile(root, "layout/main_layout.tb.txt");
+	get_widgets_reader()->LoadFile(root, "layout/main_layout.tb.txt");
 }
 
 void Resize(unsigned int width, unsigned int height)
@@ -181,7 +181,7 @@ void Render()
 	// glViewport(0, 0, g_Width, g_Height);
 	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	g_renderer->BeginPaint(root->GetRect().w, root->GetRect().h);
+	get_renderer()->BeginPaint(root->GetRect().w, root->GetRect().h);
 
 	root->InvokePaint(TBWidget::PaintProps());
 
@@ -205,7 +205,7 @@ void Render()
 	str.SetFormatted("FPS: %d", fps);
 	root->GetFont()->DrawString(5, 5, TBColor(255, 255, 255), str);
 
-	g_renderer->EndPaint();
+	get_renderer()->EndPaint();
 }
 
 void Shutdown()

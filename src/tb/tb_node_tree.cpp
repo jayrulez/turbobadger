@@ -139,7 +139,7 @@ const char *TBNode::GetValueString(const char *request, const char *def)
 		{
 			const char *string = node->GetValue().GetString();
 			if (*string == '@' && *TBNode::GetNextNodeSeparator(string) == 0)
-				string = g_tb_lng->GetString(string + 1);
+				string = get_tb_lng()->GetString(string + 1);
 			return string;
 		}
 		return node->GetValue().GetString();
@@ -158,17 +158,17 @@ class FileParser : public TBParserStream
 public:
 	bool Read(const char *filename, TBParserTarget *target)
 	{
-		f = g_file_interface->Open(filename, TBFileInterface::MODE_READ);
+		f = get_file_interface()->Open(filename, TBFileInterface::MODE_READ);
 		if (!f)
 			return false;
 		TBParser p;
 		TBParser::STATUS status = p.Read(this, target);
-		g_file_interface->Close(f);
+		get_file_interface()->Close(f);
 		return status == TBParser::STATUS_OK ? true : false;
 	}
 	virtual int GetMoreData(char *buf, int buf_len)
 	{
-		return (int)g_file_interface->Read(f, buf, 1, buf_len);
+		return (int)get_file_interface()->Read(f, buf, 1, buf_len);
 	}
 private:
 	TBFileHandle f;
@@ -211,7 +211,7 @@ public:
 #ifdef TB_RUNTIME_DEBUG_INFO
 		TBStr err;
 		err.SetFormatted("%s(%d):Parse error: %s\n", m_filename, line_nr, error);
-		g_system_interface->DebugOut(err);
+		get_system_interface()->DebugOut(err);
 #endif // TB_RUNTIME_DEBUG_INFO
 	}
 	virtual void OnComment(int line_nr, const char *comment)

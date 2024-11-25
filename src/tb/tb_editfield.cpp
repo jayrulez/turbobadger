@@ -215,7 +215,7 @@ bool TBEditField::OnEvent(const TBWidgetEvent &ev)
 	else if (ev.type == EVENT_TYPE_WHEEL && ev.modifierkeys == TB_MODIFIER_NONE)
 	{
 		int old_val = m_scrollbar_y.GetValue();
-		m_scrollbar_y.SetValue(old_val + ev.delta_y * g_system_interface->GetPixelsPerLine());
+		m_scrollbar_y.SetValue(old_val + ev.delta_y * get_system_interface()->GetPixelsPerLine());
 		return m_scrollbar_y.GetValue() != old_val;
 	}
 	else if (ev.type == EVENT_TYPE_POINTER_DOWN && ev.target == this)
@@ -278,12 +278,12 @@ bool TBEditField::OnEvent(const TBWidgetEvent &ev)
 		if (TBMenuWindow *menu = new TBMenuWindow(ev.target, TBIDC("popupmenu")))
 		{
 			TBGenericStringItemSource *source = menu->GetList()->GetDefaultSource();
-			source->AddItem(new TBGenericStringItem(g_tb_lng->GetString(TBIDC("cut")), TBIDC("cut")));
-			source->AddItem(new TBGenericStringItem(g_tb_lng->GetString(TBIDC("copy")), TBIDC("copy")));
-			source->AddItem(new TBGenericStringItem(g_tb_lng->GetString(TBIDC("paste")), TBIDC("paste")));
-			source->AddItem(new TBGenericStringItem(g_tb_lng->GetString(TBIDC("delete")), TBIDC("delete")));
+			source->AddItem(new TBGenericStringItem(get_tb_lng()->GetString(TBIDC("cut")), TBIDC("cut")));
+			source->AddItem(new TBGenericStringItem(get_tb_lng()->GetString(TBIDC("copy")), TBIDC("copy")));
+			source->AddItem(new TBGenericStringItem(get_tb_lng()->GetString(TBIDC("paste")), TBIDC("paste")));
+			source->AddItem(new TBGenericStringItem(get_tb_lng()->GetString(TBIDC("delete")), TBIDC("delete")));
 			source->AddItem(new TBGenericStringItem("-"));
-			source->AddItem(new TBGenericStringItem(g_tb_lng->GetString(TBIDC("selectall")), TBIDC("selectall")));
+			source->AddItem(new TBGenericStringItem(get_tb_lng()->GetString(TBIDC("selectall")), TBIDC("selectall")));
 			menu->Show(source, TBPopupAlignment(pos_in_root), -1);
 		}
 		return true;
@@ -298,10 +298,10 @@ void TBEditField::OnPaint(const PaintProps &paint_props)
 	bool clip = m_scrollbar_x.CanScroll() || m_scrollbar_y.CanScroll();
 	TBRect old_clip;
 	if (clip)
-		old_clip = g_renderer->SetClipRect(visible_rect, true);
+		old_clip = get_renderer()->SetClipRect(visible_rect, true);
 
 	int trans_x = visible_rect.x, trans_y = visible_rect.y;
-	g_renderer->Translate(trans_x, trans_y);
+	get_renderer()->Translate(trans_x, trans_y);
 
 	// Draw text content, caret etc.
 	visible_rect.x = visible_rect.y = 0;
@@ -310,16 +310,16 @@ void TBEditField::OnPaint(const PaintProps &paint_props)
 	// If empty, draw placeholder text with some opacity.
 	if (m_style_edit.IsEmpty())
 	{
-		float old_opacity = g_renderer->GetOpacity();
-		g_renderer->SetOpacity(old_opacity * g_tb_skin->GetDefaultPlaceholderOpacity());
+		float old_opacity = get_renderer()->GetOpacity();
+		get_renderer()->SetOpacity(old_opacity * get_tb_skin()->GetDefaultPlaceholderOpacity());
 		TBRect placeholder_rect(visible_rect.x, visible_rect.y, visible_rect.w, GetFont()->GetHeight());
 		m_placeholder.Paint(this, placeholder_rect, paint_props.text_color);
-		g_renderer->SetOpacity(old_opacity);
+		get_renderer()->SetOpacity(old_opacity);
 	}
-	g_renderer->Translate(-trans_x, -trans_y);
+	get_renderer()->Translate(-trans_x, -trans_y);
 
 	if (clip)
-		g_renderer->SetClipRect(old_clip, false);
+		get_renderer()->SetClipRect(old_clip, false);
 }
 
 void TBEditField::OnPaintChildren(const PaintProps &paint_props)
@@ -426,18 +426,18 @@ void TBEditField::OnMessageReceived(TBMessage *msg)
 		// Post another blink message so we blink again.
 		PostMessageDelayed(TBIDC("blink"), nullptr, CARET_BLINK_TIME);
 	}
-	else if (msg->message == TBIDC("selscroll") && g_context->captured_widget == this)
+	else if (msg->message == TBIDC("selscroll") && get_context()->captured_widget == this)
 	{
 		// Get scroll speed from where mouse is relative to the padding rect.
 		TBRect padding_rect = GetVisibleRect().Shrink(2, 2);
-		int dx = GetSelectionScrollSpeed(g_context->pointer_move_widget_x, padding_rect.x, padding_rect.x + padding_rect.w);
-		int dy = GetSelectionScrollSpeed(g_context->pointer_move_widget_y, padding_rect.y, padding_rect.y + padding_rect.h);
+		int dx = GetSelectionScrollSpeed(get_context()->pointer_move_widget_x, padding_rect.x, padding_rect.x + padding_rect.w);
+		int dy = GetSelectionScrollSpeed(get_context()->pointer_move_widget_y, padding_rect.y, padding_rect.y + padding_rect.h);
 		m_scrollbar_x.SetValue(m_scrollbar_x.GetValue() + dx);
 		m_scrollbar_y.SetValue(m_scrollbar_y.GetValue() + dy);
 
 		// Handle mouse move at the new scroll position, so selection is updated
 		if (dx || dy)
-			m_style_edit.MouseMove(TBPoint(g_context->pointer_move_widget_x, g_context->pointer_move_widget_y));
+			m_style_edit.MouseMove(TBPoint(get_context()->pointer_move_widget_x, get_context()->pointer_move_widget_y));
 
 		// Post another setscroll message so we continue scrolling if we still should.
 		if (m_style_edit.select_state)
@@ -472,24 +472,24 @@ void TBEditField::DrawString(int32 x, int32 y, TBFontFace *font, const TBColor &
 
 void TBEditField::DrawRect(const TBRect &rect, const TBColor &color)
 {
-	g_tb_skin->PaintRect(rect, color, 1);
+	get_tb_skin()->PaintRect(rect, color, 1);
 }
 
 void TBEditField::DrawRectFill(const TBRect &rect, const TBColor &color)
 {
-	g_tb_skin->PaintRectFill(rect, color);
+	get_tb_skin()->PaintRectFill(rect, color);
 }
 
 void TBEditField::DrawTextSelectionBg(const TBRect &rect)
 {
 	TBWidgetSkinConditionContext context(this);
-	g_tb_skin->PaintSkin(rect, TBIDC("TBEditField.selection"), static_cast<SKIN_STATE>(GetAutoState()), context);
+	get_tb_skin()->PaintSkin(rect, TBIDC("TBEditField.selection"), static_cast<SKIN_STATE>(GetAutoState()), context);
 }
 
 void TBEditField::DrawContentSelectionFg(const TBRect &rect)
 {
 	TBWidgetSkinConditionContext context(this);
-	g_tb_skin->PaintSkin(rect, TBIDC("TBEditField.selection"), static_cast<SKIN_STATE>(GetAutoState()), context);
+	get_tb_skin()->PaintSkin(rect, TBIDC("TBEditField.selection"), static_cast<SKIN_STATE>(GetAutoState()), context);
 }
 
 void TBEditField::DrawCaret(const TBRect &rect)
@@ -535,9 +535,9 @@ void TBEditFieldScrollRoot::OnPaintChildren(const PaintProps &paint_props)
 	if (!GetFirstChild())
 		return;
 	// Clip children
-	TBRect old_clip_rect = g_renderer->SetClipRect(GetPaddingRect(), true);
+	TBRect old_clip_rect = get_renderer()->SetClipRect(GetPaddingRect(), true);
 	TBWidget::OnPaintChildren(paint_props);
-	g_renderer->SetClipRect(old_clip_rect, false);
+	get_renderer()->SetClipRect(old_clip_rect, false);
 }
 
 void TBEditFieldScrollRoot::GetChildTranslation(int &x, int &y) const
@@ -621,7 +621,7 @@ TBTextFragmentContent *TBEditFieldContentFactory::CreateFragmentContent(const ch
 		{
 			if (TBTextFragmentContentWidget *cw = new TBTextFragmentContentWidget(editfield, widget))
 			{
-				g_widgets_reader->LoadData(widget, text + 8, text_len - 9);
+				get_widgets_reader()->LoadData(widget, text + 8, text_len - 9);
 				return cw;
 			}
 			delete widget;

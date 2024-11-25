@@ -96,7 +96,7 @@ const char *CallAndOutput(TBTestGroup *test, TBCall *call)
 					"  %s(%d): \"%s\"\n",
 					test->name, call->name(),
 					fail_file, fail_line_nr, fail_text);
-	g_system_interface->DebugOut(msg);
+	get_system_interface()->DebugOut(msg);
 	return fail_text;
 }
 
@@ -107,7 +107,7 @@ void OutputPass(TBTestGroup *test, const char *call_name)
 	TBStr msg;
 	msg.SetFormatted("PASS: \"%s/%s\"\n",
 					test->name, call_name);
-	g_system_interface->DebugOut(msg);
+	get_system_interface()->DebugOut(msg);
 }
 
 int TBRunTests(uint32 settings)
@@ -116,7 +116,7 @@ int TBRunTests(uint32 settings)
 	int num_failed = 0;
 	int num_passed = 0;
 
-	g_system_interface->DebugOut("Running tests...\n");
+	get_system_interface()->DebugOut("Running tests...\n");
 
 	for (TBTestGroup *group = g_test_groups; group; group = group->next_test_group)
 	{
@@ -130,7 +130,7 @@ int TBRunTests(uint32 settings)
 
 			TBStr msg;
 			msg.SetFormatted("  %d tests skipped.\n", num_tests_in_group);
-			g_system_interface->DebugOut(msg);
+			get_system_interface()->DebugOut(msg);
 
 			num_failed += num_tests_in_group;
 			continue;
@@ -162,7 +162,7 @@ int TBRunTests(uint32 settings)
 
 	TBStr msg;
 	msg.SetFormatted("Test results: %d passed, %d failed.\n", num_passed, num_failed);
-	g_system_interface->DebugOut(msg);
+	get_system_interface()->DebugOut(msg);
 	return num_failed;
 }
 

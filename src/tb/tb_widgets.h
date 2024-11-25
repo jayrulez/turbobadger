@@ -563,7 +563,7 @@ public:
 
 		Returns true if successfully focused, or if set as last focus in its window. */
 	bool SetFocus(WIDGET_FOCUS_REASON reason, WIDGET_INVOKE_INFO info = WIDGET_INVOKE_INFO_NORMAL);
-	bool GetIsFocused() const { return g_context->focused_widget == this; }
+	bool GetIsFocused() const { return get_context()->focused_widget == this; }
 
 	/** Call SetFocus on all children and their children, until a widget is found that accepts it.
 		Returns true if some child was successfully focused. */

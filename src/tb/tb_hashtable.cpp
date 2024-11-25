@@ -180,7 +180,7 @@ void TBHashTable::Debug()
 	}
 	TBStr tmp; tmp.SetFormatted(" (total: %d of %d buckets)\n", total_count, m_num_buckets);
 	line.AppendString(tmp);
-	g_system_interface->DebugOut(line.GetData());
+	get_system_interface()->DebugOut(line.GetData());
 }
 
 #endif // TB_RUNTIME_DEBUG_INFO

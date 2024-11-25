@@ -160,11 +160,11 @@ void TBShapeRasterizer::StencilBlur(float radius) {
 }
 
 void TBShapeRasterizer::StencilGlyph(const TBFontDescription &fd, const char *glyph_str, float mul) {
-	if (!g_font_manager->HasFontFace(fd) && !g_font_manager->CreateFontFace(fd)) {
-		g_system_interface->DebugPrint("Skin error: The glyph font could not be loaded in size %d!\n", fd.GetSize());
+	if (!get_font_manager()->HasFontFace(fd) && !get_font_manager()->CreateFontFace(fd)) {
+		get_system_interface()->DebugPrint("Skin error: The glyph font could not be loaded in size %d!\n", fd.GetSize());
 		return;
 	}
-	TBFontFace *font = g_font_manager->GetFontFace(fd);
+	TBFontFace *font = get_font_manager()->GetFontFace(fd);
 	if (!font)
 		return;
 	TBFontRenderer *fr = font->GetFontRenderer();

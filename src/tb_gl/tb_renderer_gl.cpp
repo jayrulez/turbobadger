@@ -127,7 +127,7 @@ void TBRendererGL::EndPaint()
 
 #ifdef TB_RUNTIME_DEBUG_INFO
 	if (TB_DEBUG_SETTING(RENDER_BATCHES))
-		g_system_interface->DebugPrint("Frame caused %d bitmap validations.\n", dbg_bitmap_validations);
+		get_system_interface()->DebugPrint("Frame caused %d bitmap validations.\n", dbg_bitmap_validations);
 #endif // TB_RUNTIME_DEBUG_INFO
 }
 

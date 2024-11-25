@@ -102,12 +102,12 @@ TBImageManager *g_image_manager = nullptr;
 
 TBImageManager::TBImageManager()
 {
-	g_renderer->AddListener(this);
+	get_renderer()->AddListener(this);
 }
 
 TBImageManager::~TBImageManager()
 {
-	g_renderer->RemoveListener(this);
+	get_renderer()->RemoveListener(this);
 
 	// If there is TBImageRep objects live, we must unset the fragment pointer
 	// since the m_frag_manager is going to be destroyed very soon.
@@ -127,10 +127,10 @@ TBImage TBImageManager::GetImage(const char *filename)
 	{
 		// Load a fragment. Load a destination DPI bitmap if available.
 		TBBitmapFragment *fragment = nullptr;
-		if (g_tb_skin->GetDimensionConverter()->NeedConversion())
+		if (get_tb_skin()->GetDimensionConverter()->NeedConversion())
 		{
 			TBTempBuffer filename_dst_DPI;
-			g_tb_skin->GetDimensionConverter()->GetDstDPIFilename(filename, &filename_dst_DPI);
+			get_tb_skin()->GetDimensionConverter()->GetDstDPIFilename(filename, &filename_dst_DPI);
 			fragment = m_frag_manager.GetFragmentFromFile(filename_dst_DPI.GetData(), false);
 		}
 		if (!fragment)
@@ -143,7 +143,7 @@ TBImage TBImageManager::GetImage(const char *filename)
 			m_frag_manager.FreeFragment(fragment);
 			image_rep = nullptr;
 		}
-		g_system_interface->DebugOut(image_rep ? "TBImageManager - Loaded new image.\n" : "TBImageManager - Loading image failed.\n");
+		get_system_interface()->DebugOut(image_rep ? "TBImageManager - Loaded new image.\n" : "TBImageManager - Loading image failed.\n");
 	}
 	return TBImage(image_rep);
 }
@@ -164,7 +164,7 @@ TBImage TBImageManager::GetImage(const char *name, uint32 *buffer, int width, in
 			m_frag_manager.FreeFragment(fragment);
 			image_rep = nullptr;
 		}
-		g_system_interface->DebugOut(image_rep ? "TBImageManager - Loaded new image.\n" : "TBImageManager - Loading image failed.\n");
+		get_system_interface()->DebugOut(image_rep ? "TBImageManager - Loaded new image.\n" : "TBImageManager - Loading image failed.\n");
 	}
 	return TBImage(image_rep);
 }
@@ -179,7 +179,7 @@ void TBImageManager::RemoveImageRep(TBImageRep *image_rep)
 	}
 	m_image_rep_hash.Remove(image_rep->hash_key);
 	image_rep->image_manager = nullptr;
-	g_system_interface->DebugOut("TBImageManager - Removed image.\n");
+	get_system_interface()->DebugOut("TBImageManager - Removed image.\n");
 }
 
 void TBImageManager::OnContextLost()

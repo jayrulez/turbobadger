@@ -120,7 +120,7 @@ TBFontFace *STBFontRenderer::Create(TBFontManager *font_manager, const char *fil
 TB_DLLCLASS void register_stb_font_renderer()
 {
 	if (STBFontRenderer *fr = new STBFontRenderer)
-		g_font_manager->AddRenderer(fr);
+		get_font_manager()->AddRenderer(fr);
 }
 
 #endif // TB_FONT_RENDERER_STB

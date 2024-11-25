@@ -58,7 +58,7 @@ float TBDimensionConverter::MmToPxF(float mm) const
 {
 	if (mm <= TB_INVALID_DIMENSION || mm == 0)
 		return mm;
-	return mm * g_system_interface->GetDPI() / 25.4f;
+	return mm * get_system_interface()->GetDPI() / 25.4f;
 }
 
 int TBDimensionConverter::GetPxFromString(const char *str, int def_value) const

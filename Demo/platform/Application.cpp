@@ -52,9 +52,9 @@ void App::Process()
 
 void App::RenderFrame()
 {
-	g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
+	get_renderer()->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
 	m_root.InvokePaint(TBWidget::PaintProps());
-	g_renderer->EndPaint();
+	get_renderer()->EndPaint();
 
 	// If animations are running, reinvalidate immediately
 	if (TBAnimationManager::HasAnimationsRunning())

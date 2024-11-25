@@ -47,9 +47,9 @@ and layout, since all that affect the rendering. This is done by calling:
 Before painting the root widget (and all its children), you need to prepare
 the renderer to set up the correct matrix etc.
 
-	g_renderer->BeginPaint(window_width, window_height);
+	get_renderer()->BeginPaint(window_width, window_height);
 	root->InvokePaint(TBWidget::PaintProps())
-	g_renderer->EndPaint();
+	get_renderer()->EndPaint();
 
 Message handling
 ----------------
@@ -77,9 +77,9 @@ is put to sleep in the background and the graphics context is lost.
 Turbo Badger implements a renderer listener to handle this in all places that needs
 it, so the only thing you need to do is to call:
 
-	g_renderer->InvokeContextLost(); // Forget all bitmaps
+	get_renderer()->InvokeContextLost(); // Forget all bitmaps
 	...
-	g_renderer->InvokeContextRestored(); // Reload all bitmaps
+	get_renderer()->InvokeContextRestored(); // Reload all bitmaps
 
 Font system
 -----------

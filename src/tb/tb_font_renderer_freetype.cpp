@@ -203,7 +203,7 @@ TBFontFace *FreetypeFontRenderer::Create(TBFontManager *font_manager, const char
 void register_freetype_font_renderer()
 {
 	if (FreetypeFontRenderer *fr = new FreetypeFontRenderer)
-		g_font_manager->AddRenderer(fr);
+		get_font_manager()->AddRenderer(fr);
 }
 
 #endif // TB_FONT_RENDERER_FREETYPE

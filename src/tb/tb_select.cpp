@@ -167,7 +167,7 @@ void TBSelectList::ValidateList()
 		if (TBWidget *widget = new TBTextField())
 		{
 			TBStr str;
-			str.SetFormatted(g_tb_lng->GetString(m_header_lng_string_id), num_sorted_items, m_source->GetNumItems());
+			str.SetFormatted(get_tb_lng()->GetString(m_header_lng_string_id), num_sorted_items, m_source->GetNumItems());
 			widget->SetText(str);
 			widget->SetSkinBg(TBIDC("TBList.header"));
 			widget->SetState(WIDGET_STATE_DISABLED, true);

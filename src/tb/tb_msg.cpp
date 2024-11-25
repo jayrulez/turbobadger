@@ -40,7 +40,7 @@ TBMessageHandler::~TBMessageHandler()
 
 bool TBMessageHandler::PostMessageDelayed(TBID message, TBMessageData *data, uint32 delay_in_ms)
 {
-	return PostMessageOnTime(message, data, g_system_interface->GetTimeMS() + (double)delay_in_ms);
+	return PostMessageOnTime(message, data, get_system_interface()->GetTimeMS() + (double)delay_in_ms);
 }
 
 bool TBMessageHandler::PostMessageOnTime(TBID message, TBMessageData *data, double fire_time)
@@ -79,7 +79,7 @@ bool TBMessageHandler::PostMessageOnTime(TBID message, TBMessageData *data, doub
 		// If we added it first and there's no normal messages, the next fire time has
 		// changed and we have to reschedule the timer.
 		if (!g_all_normal_messages.GetFirst() && g_all_delayed_messages.GetFirst() == msg)
-			g_system_interface->RescheduleTimer(msg->fire_time_ms);
+			get_system_interface()->RescheduleTimer(msg->fire_time_ms);
 		return true;
 	}
 	return false;
@@ -95,7 +95,7 @@ bool TBMessageHandler::PostMessage(TBID message, TBMessageData *data)
 		// If we added it and there was no messages, the next fire time has
 		// changed and we have to rescedule the timer.
 		if (g_all_normal_messages.GetFirst() == msg)
-			g_system_interface->RescheduleTimer(0);
+			get_system_interface()->RescheduleTimer(0);
 		return true;
 	}
 	return false;
@@ -125,7 +125,7 @@ void TBMessageHandler::DeleteMessage(TBMessage *msg)
 
 	delete msg;
 
-	// Note: We could call g_system_interface->RescheduleTimer if we think that deleting
+	// Note: We could call get_system_interface()->RescheduleTimer if we think that deleting
 	// this message changed the time for the next message.
 }
 
@@ -142,7 +142,7 @@ void TBMessageHandler::ProcessMessages()
 	TBLinkListOf<TBMessageLink>::Iterator iter = g_all_delayed_messages.IterateForward();
 	while (TBMessage *msg = static_cast<TBMessage*>(iter.GetAndStep()))
 	{
-		if (g_system_interface->GetTimeMS() >= msg->fire_time_ms)
+		if (get_system_interface()->GetTimeMS() >= msg->fire_time_ms)
 		{
 			// Remove from global list
 			g_all_delayed_messages.Remove(msg);

@@ -117,7 +117,7 @@ void TBWindow::Activate()
 bool TBWindow::EnsureFocus()
 {
 	// If we already have focus, we're done.
-	if (g_context->focused_widget && IsAncestorOf(g_context->focused_widget))
+	if (get_context()->focused_widget && IsAncestorOf(get_context()->focused_widget))
 		return true;
 
 	// Focus last focused widget (if we have one)

@@ -16,14 +16,23 @@
 
 namespace tb {
 
-/*TB_DLLCLASS*/ TBRenderer *g_renderer = nullptr;
-/*TB_DLLCLASS*/ TBSkin *g_tb_skin = nullptr;
-/*TB_DLLCLASS*/ TBWidgetsReader *g_widgets_reader = nullptr;
-/*TB_DLLCLASS*/ TBLanguage *g_tb_lng = nullptr;
-/*TB_DLLCLASS*/ TBFontManager *g_font_manager = nullptr;
-/*TB_DLLCLASS*/ TBSystemInterface *g_system_interface = nullptr;
-/*TB_DLLCLASS*/ TBFileInterface *g_file_interface = nullptr;
-/*TB_DLLCLASS*/ TBContext* g_context;
+static TBRenderer *g_renderer = nullptr;
+static TBSkin *g_tb_skin = nullptr;
+static TBWidgetsReader *g_widgets_reader = nullptr;
+static TBLanguage *g_tb_lng = nullptr;
+static TBFontManager *g_font_manager = nullptr;
+static TBSystemInterface *g_system_interface = nullptr;
+static TBFileInterface *g_file_interface = nullptr;
+static TBContext* g_context;
+
+TB_DLLCLASS TBRenderer* get_renderer() { return g_renderer; }
+TB_DLLCLASS TBSkin* get_tb_skin() { return g_tb_skin; }
+TB_DLLCLASS TBWidgetsReader* get_widgets_reader() { return g_widgets_reader; }
+TB_DLLCLASS TBLanguage* get_tb_lng() { return g_tb_lng; }
+TB_DLLCLASS TBFontManager* get_font_manager() { return g_font_manager; }
+TB_DLLCLASS TBSystemInterface* get_system_interface() { return g_system_interface; }
+TB_DLLCLASS TBFileInterface* get_file_interface() { return g_file_interface; }
+TB_DLLCLASS TBContext* get_context() { return g_context; }
 
 TB_DLLCLASS bool tb_core_init(TBRenderer *renderer, TBSystemInterface* system_interface, TBFileInterface* file_interface)
 {

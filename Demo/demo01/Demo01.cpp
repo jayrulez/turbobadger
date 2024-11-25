@@ -54,7 +54,7 @@ DemoWindow::DemoWindow(TBWidget *root)
 
 bool DemoWindow::LoadResourceFile(const char *filename)
 {
-	// We could do g_widgets_reader->LoadFile(this, filename) but we want
+	// We could do get_widgets_reader()->LoadFile(this, filename) but we want
 	// some extra data we store under "WindowInfo", so read into node tree.
 	TBNode node;
 	if (!node.ReadFile(filename))
@@ -65,7 +65,7 @@ bool DemoWindow::LoadResourceFile(const char *filename)
 
 void DemoWindow::LoadResourceData(const char *data)
 {
-	// We could do g_widgets_reader->LoadData(this, filename) but we want
+	// We could do get_widgets_reader()->LoadData(this, filename) but we want
 	// some extra data we store under "WindowInfo", so read into node tree.
 	TBNode node;
 	node.ReadData(data);
@@ -74,13 +74,13 @@ void DemoWindow::LoadResourceData(const char *data)
 
 void DemoWindow::LoadResource(TBNode &node)
 {
-	g_widgets_reader->LoadNodeTree(this, &node);
+	get_widgets_reader()->LoadNodeTree(this, &node);
 
 	// Get title from the WindowInfo section (or use "" if not specified)
 	SetText(node.GetValueString("WindowInfo>title", ""));
 
 	const TBRect parent_rect(0, 0, GetParent()->GetRect().w, GetParent()->GetRect().h);
-	const TBDimensionConverter *dc = g_tb_skin->GetDimensionConverter();
+	const TBDimensionConverter *dc = get_tb_skin()->GetDimensionConverter();
 	TBRect window_rect = GetResizeToFitContentRect();
 
 	// Use specified size or adapt to the preferred content size.
@@ -206,7 +206,7 @@ public:
 					edit->SetFontDescription(TBFontDescription());
 				else if (ev.ref_id == TBIDC("large font"))
 				{
-					TBFontDescription fd = g_font_manager->GetDefaultFontDescription();
+					TBFontDescription fd = get_font_manager()->GetDefaultFontDescription();
 					fd.SetSize(28);
 					edit->SetFontDescription(fd);
 				}
@@ -553,7 +553,7 @@ void MainWindow::OnMessageReceived(TBMessage *msg)
 		TBStr text;
 		text.SetFormatted("Delayed message received!\n\n"
 							"It was received %d ms after its intended fire time.",
-							(int)(g_system_interface->GetTimeMS() - msg->GetFireTime()));
+							(int)(get_system_interface()->GetTimeMS() - msg->GetFireTime()));
 		TBMessageWindow *msg_win = new TBMessageWindow(this, TBIDC(""));
 		msg_win->Show("Message window", text);
 	}
@@ -621,10 +621,10 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 		else if (ev.target->GetID() == TBIDC("reload skin bitmaps"))
 		{
 			int reload_count = 10;
-			double t1 = g_system_interface->GetTimeMS();
+			double t1 = get_system_interface()->GetTimeMS();
 			for (int i = 0; i < reload_count; i++)
-				g_tb_skin->ReloadBitmaps();
-			double t2 = g_system_interface->GetTimeMS();
+				get_tb_skin()->ReloadBitmaps();
+			double t2 = get_system_interface()->GetTimeMS();
 
 			TBStr message;
 			message.SetFormatted("Reloading the skin graphics %d times took %dms", reload_count, (int)(t2 - t1));
@@ -634,8 +634,8 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 		}
 		else if (ev.target->GetID() == TBIDC("test context lost"))
 		{
-			g_renderer->InvokeContextLost();
-			g_renderer->InvokeContextRestored();
+			get_renderer()->InvokeContextLost();
+			get_renderer()->InvokeContextRestored();
 			TBMessageWindow *msg_win = new TBMessageWindow(ev.target, TBID());
 			msg_win->Show("Context lost & restore",
 							"Called InvokeContextLost and InvokeContextRestored.\n\n"
@@ -797,7 +797,7 @@ void DemoApplication::RenderFrame()
 	// Application::RenderFrame();
 
 	// Render
-	g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
+	get_renderer()->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
 	m_root.InvokePaint(TBWidget::PaintProps());
 
 #if defined(TB_RUNTIME_DEBUG_INFO) && defined(TB_IMAGE)
@@ -809,7 +809,7 @@ void DemoApplication::RenderFrame()
 	frame_counter_total++;
 
 	// Update the FPS counter
-	double time = g_system_interface->GetTimeMS();
+	double time = get_system_interface()->GetTimeMS();
 	if (time > frame_counter_reset_time + 1000)
 	{
 		fps = (int) ((frame_counter / (time - frame_counter_reset_time)) * 1000);
@@ -828,7 +828,7 @@ void DemoApplication::RenderFrame()
 		str.SetFormatted("Frame %d", frame_counter_total);
 	m_root.GetFont()->DrawString(5, 5, TBColor(255, 255, 255), str);
 
-	g_renderer->EndPaint();
+	get_renderer()->EndPaint();
 
 	// If we want continous updates or got animations running, reinvalidate immediately
 	if (continuous_repaint || TBAnimationManager::HasAnimationsRunning())
@@ -840,7 +840,7 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 	App::OnBackendAttached(backend, width, height);
 
 	// Load language file
-	g_tb_lng->Load("resources/language/lng_en.tb.txt");
+	get_tb_lng()->Load("resources/language/lng_en.tb.txt");
 
 	// Register font renderers.
 #ifdef TB_FONT_RENDERER_TBBF
@@ -860,21 +860,21 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 #if 0 // defined(TB_FONT_RENDERER_STB) || defined(TB_FONT_RENDERER_FREETYPE)
 	// New experimental skin using shapes & icon font, to scale perfectly for any DPI
 	// Requires FontAwesome to be added before loading skin.
-	g_font_manager->AddFontInfo("resources/fonty_skin/fontawesome.ttf", "FontAwesome");
-	g_tb_skin->Load("resources/fonty_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
+	get_font_manager()->AddFontInfo("resources/fonty_skin/fontawesome.ttf", "FontAwesome");
+	get_tb_skin()->Load("resources/fonty_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
 #else
-	g_tb_skin->Load("resources/default_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
+	get_tb_skin()->Load("resources/default_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
 #endif
 
 	// Add fonts we can use to the font manager.
 #if defined(TB_FONT_RENDERER_STB) || defined(TB_FONT_RENDERER_FREETYPE)
-	g_font_manager->AddFontInfo("Demo/fonts_ttf/Lato-Regular.ttf", "Lato");
+	get_font_manager()->AddFontInfo("Demo/fonts_ttf/Lato-Regular.ttf", "Lato");
 #endif
 #ifdef TB_FONT_RENDERER_TBBF
-	g_font_manager->AddFontInfo("resources/default_font/segoe_white_with_shadow.tb.txt", "Segoe");
-	g_font_manager->AddFontInfo("Demo/fonts/neon.tb.txt", "Neon");
-	g_font_manager->AddFontInfo("Demo/fonts/orangutang.tb.txt", "Orangutang");
-	g_font_manager->AddFontInfo("Demo/fonts/orange.tb.txt", "Orange");
+	get_font_manager()->AddFontInfo("resources/default_font/segoe_white_with_shadow.tb.txt", "Segoe");
+	get_font_manager()->AddFontInfo("Demo/fonts/neon.tb.txt", "Neon");
+	get_font_manager()->AddFontInfo("Demo/fonts/orangutang.tb.txt", "Orangutang");
+	get_font_manager()->AddFontInfo("Demo/fonts/orange.tb.txt", "Orange");
 #endif
 
 	// Set the default font description for widgets to one of the fonts we just added
@@ -884,18 +884,18 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 	TBFontDescription fd;
 #if defined(TB_FONT_RENDERER_FREETYPE)
 	fd.SetID(TBIDC("Lato"));
-	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(15));
+	fd.SetSize(get_tb_skin()->GetDimensionConverter()->DpToPx(15));
 #elif defined(TB_FONT_RENDERER_STB)
 	fd.SetID(TBIDC("Lato"));
-	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(18));
+	fd.SetSize(get_tb_skin()->GetDimensionConverter()->DpToPx(18));
 #else
 	fd.SetID(TBIDC("Segoe"));
-	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(14));
+	fd.SetSize(get_tb_skin()->GetDimensionConverter()->DpToPx(14));
 #endif
-	g_font_manager->SetDefaultFontDescription(fd);
+	get_font_manager()->SetDefaultFontDescription(fd);
 
 	// Create the font now.
-	TBFontFace *font = g_font_manager->CreateFontFace(g_font_manager->GetDefaultFontDescription());
+	TBFontFace *font = get_font_manager()->CreateFontFace(get_font_manager()->GetDefaultFontDescription());
 
 	// Render some glyphs in one go now since we know we are going to use them. It would work fine
 	// without this since glyphs are rendered when needed, but with some extra updating of the glyph bitmap.

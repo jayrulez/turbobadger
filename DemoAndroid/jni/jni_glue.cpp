@@ -120,7 +120,7 @@ JNI_VOID_TB_LIB(OnContextLost)(JNIEnv *env, jobject obj)
 	set_jnienv(env);
 	//TBDebugOut("OnContextLost");
 
-	g_renderer->InvokeContextLost(); // Forget all bitmaps
+	get_renderer()->InvokeContextLost(); // Forget all bitmaps
 	context_lost = true;
 }
 
@@ -134,10 +134,10 @@ JNI_VOID_TB_LIB(OnContextRestored)(JNIEnv *env, jobject obj)
 		// and on when active, result in a OnContextRestore but missing the
 		// OnContextLost.
 		//TBDebugOut("InvokeContextLost (bug workaround)");
-		g_renderer->InvokeContextLost(); // Forget all bitmaps
+		get_renderer()->InvokeContextLost(); // Forget all bitmaps
 	}
 	//TBDebugOut("OnContextRestored");
-	g_renderer->InvokeContextRestored(); // Reload all bitmaps
+	get_renderer()->InvokeContextRestored(); // Reload all bitmaps
 	context_lost = false;
 }
 

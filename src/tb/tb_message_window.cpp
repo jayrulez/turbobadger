@@ -47,7 +47,7 @@ bool TBMessageWindow::Show(const char *title, const char *message, TBMessageWind
 							"		TBSkinImage: id: 2\n"
 							"		TBEditField: multiline: 1, readonly: 1, id: 1\n"
 							"	TBLayout: distribution-position: right bottom, id: 3\n";
-	if (!g_widgets_reader->LoadData(GetContentRoot(), source))
+	if (!get_widgets_reader()->LoadData(GetContentRoot(), source))
 		return false;
 
 	SetText(title);
@@ -109,7 +109,7 @@ void TBMessageWindow::AddButton(TBID id, bool focused)
 	if (TBButton *btn = new TBButton)
 	{
 		btn->SetID(id);
-		btn->SetText(g_tb_lng->GetString(btn->GetID()));
+		btn->SetText(get_tb_lng()->GetString(btn->GetID()));
 		layout->AddChild(btn);
 		if (focused)
 			btn->SetFocus(WIDGET_FOCUS_REASON_UNKNOWN);

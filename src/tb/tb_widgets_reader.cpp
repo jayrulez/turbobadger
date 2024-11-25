@@ -94,7 +94,7 @@ void TBWidget::OnInflate(const INFLATE_INFO &info)
 		LayoutParams layout_params;
 		if (GetLayoutParams())
 			layout_params = *GetLayoutParams();
-		const TBDimensionConverter *dc = g_tb_skin->GetDimensionConverter();
+		const TBDimensionConverter *dc = get_tb_skin()->GetDimensionConverter();
 		if (const char *str = lp->GetValueString("width", nullptr))
 			layout_params.SetWidth(dc->GetPxFromString(str, LayoutParams::UNSPECIFIED));
 		if (const char *str = lp->GetValueString("height", nullptr))
@@ -124,7 +124,7 @@ void TBWidget::OnInflate(const INFLATE_INFO &info)
 		TBFontDescription fd = GetCalculatedFontDescription();
 		if (const char *size = font->GetValueString("size", nullptr))
 		{
-			int new_size = g_tb_skin->GetDimensionConverter()->GetPxFromString(size, fd.GetSize());
+			int new_size = get_tb_skin()->GetDimensionConverter()->GetPxFromString(size, fd.GetSize());
 			fd.SetSize(new_size);
 		}
 		if (const char *name = font->GetValueString("name", nullptr))
@@ -136,7 +136,7 @@ void TBWidget::OnInflate(const INFLATE_INFO &info)
 
 	if (TBNode *rect_node = info.node->GetNode("rect"))
 	{
-		const TBDimensionConverter *dc = g_tb_skin->GetDimensionConverter();
+		const TBDimensionConverter *dc = get_tb_skin()->GetDimensionConverter();
 		TBValue &val = rect_node->GetValue();
 		if (val.GetArrayLength() == 4)
 		{
@@ -179,7 +179,7 @@ void TBEditField::OnInflate(const INFLATE_INFO &info)
 	SetWrapping(info.node->GetValueInt("wrap", GetWrapping()) ? true : false);
 	SetAdaptToContentSize(info.node->GetValueInt("adapt-to-content", GetAdaptToContentSize()) ? true : false);
 	if (const char *virtual_width = info.node->GetValueString("virtual-width", nullptr))
-		SetVirtualWidth(g_tb_skin->GetDimensionConverter()->GetPxFromString(virtual_width, GetVirtualWidth()));
+		SetVirtualWidth(get_tb_skin()->GetDimensionConverter()->GetPxFromString(virtual_width, GetVirtualWidth()));
 	if (const char *text = info.node->GetValueString("placeholder", nullptr))
 		SetPlaceholderText(text);
 	if (const char *text_align = info.node->GetValueString("text-align", nullptr))
@@ -205,7 +205,7 @@ TB_WIDGET_FACTORY(TBLayout, TBValue::TYPE_NULL, WIDGET_Z_TOP) {}
 void TBLayout::OnInflate(const INFLATE_INFO &info)
 {
 	if (const char *spacing = info.node->GetValueString("spacing", nullptr))
-		SetSpacing(g_tb_skin->GetDimensionConverter()->GetPxFromString(spacing, SPACING_FROM_SKIN));
+		SetSpacing(get_tb_skin()->GetDimensionConverter()->GetPxFromString(spacing, SPACING_FROM_SKIN));
 	SetGravity(WIDGET_GRAVITY_ALL);
 	if (const char *size = info.node->GetValueString("size", nullptr))
 	{

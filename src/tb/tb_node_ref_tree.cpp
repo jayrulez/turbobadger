@@ -28,7 +28,7 @@ TBValue &TBNodeRefTree::GetValue(const char *request)
 {
 	if (TBNode *node = m_node.GetNodeFollowRef(request))
 		return node->GetValue();
-	g_system_interface->DebugPrint("TBNodeRefTree::GetValue - Request not found: %s\n", request);
+	get_system_interface()->DebugPrint("TBNodeRefTree::GetValue - Request not found: %s\n", request);
 	static TBValue nullval;
 	return nullval;
 }
@@ -115,14 +115,14 @@ TBNode *TBNodeRefTree::FollowNodeRef(TBNode *node)
 		}
 		else
 		{
-			g_system_interface->DebugPrint("TBNodeRefTree::ResolveNode - No tree found for request \"%s\" from node \"%s\"\n",
+			get_system_interface()->DebugPrint("TBNodeRefTree::ResolveNode - No tree found for request \"%s\" from node \"%s\"\n",
 						 node_str, node->GetValue().GetString());
 			break;
 		}
 
 		if (!next_node)
 		{
-			g_system_interface->DebugPrint("TBNodeRefTree::ResolveNode - Node not found on request \"%s\"\n", node_str);
+			get_system_interface()->DebugPrint("TBNodeRefTree::ResolveNode - Node not found on request \"%s\"\n", node_str);
 			break;
 		}
 		node = next_node;
@@ -132,7 +132,7 @@ TBNode *TBNodeRefTree::FollowNodeRef(TBNode *node)
 			node->m_cycle_id = cycle_id;
 		else
 		{
-			g_system_interface->DebugPrint("TBNodeRefTree::ResolveNode - Reference loop detected on request \"%s\" from node \"%s\"\n",
+			get_system_interface()->DebugPrint("TBNodeRefTree::ResolveNode - Reference loop detected on request \"%s\" from node \"%s\"\n",
 				node_str, node->GetValue().GetString());
 			return start_node;
 		}

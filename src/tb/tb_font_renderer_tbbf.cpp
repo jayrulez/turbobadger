@@ -286,7 +286,7 @@ TBFontFace *TBBFRenderer::Create(TBFontManager *font_manager, const char *filena
 TB_DLLCLASS void register_tbbf_font_renderer()
 {
 	if (TBBFRenderer *fr = new TBBFRenderer)
-		g_font_manager->AddRenderer(fr);
+		get_font_manager()->AddRenderer(fr);
 }
 
 #endif // TB_FONT_RENDERER_TBBF
