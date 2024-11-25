@@ -23,6 +23,9 @@ Thumbs.db
 
 *.sublime-workspace
 
+*.exe
+*.dll
+
 Debug
 Release
 ipch
@@ -31,6 +34,8 @@ bin
 gen
 * gitignore
 
+Build/
+
 documentation
 
 DemoAndroid/libs
@@ -38,4 +43,3 @@ DemoAndroid/assets/demo_skin
 DemoAndroid/assets/font
 DemoAndroid/assets/language
 DemoAndroid/assets/skin
-Demo.exe
