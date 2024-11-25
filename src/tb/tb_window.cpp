@@ -4,6 +4,7 @@
 // ================================================================================
 
 #include "tb_window.h"
+#include "tb_context.h"
 #include <assert.h>
 
 namespace tb {
@@ -116,7 +117,7 @@ void TBWindow::Activate()
 bool TBWindow::EnsureFocus()
 {
 	// If we already have focus, we're done.
-	if (focused_widget && IsAncestorOf(focused_widget))
+	if (g_context->focused_widget && IsAncestorOf(g_context->focused_widget))
 		return true;
 
 	// Focus last focused widget (if we have one)

@@ -14,6 +14,7 @@
 #include "tb_widget_value.h"
 #include "tb_object.h"
 #include "tb_font_desc.h"
+#include "tb_context.h"
 
 namespace tb {
 
@@ -562,7 +563,7 @@ public:
 
 		Returns true if successfully focused, or if set as last focus in its window. */
 	bool SetFocus(WIDGET_FOCUS_REASON reason, WIDGET_INVOKE_INFO info = WIDGET_INVOKE_INFO_NORMAL);
-	bool GetIsFocused() const { return focused_widget == this; }
+	bool GetIsFocused() const { return g_context->focused_widget == this; }
 
 	/** Call SetFocus on all children and their children, until a widget is found that accepts it.
 		Returns true if some child was successfully focused. */
@@ -1039,17 +1040,6 @@ public:
 #endif // TB_RUNTIME_DEBUG_INFO
 
 	// TBWidget related globals
-	static TBWidget *hovered_widget;	///< The currently hovered widget, or nullptr.
-	static TBWidget *captured_widget;	///< The currently captured widget, or nullptr.
-	static  TBWidget *focused_widget;	///< The currently focused widget, or nullptr.
-	static int pointer_down_widget_x;	///< Pointer x position on down event, relative to the captured widget.
-	static int pointer_down_widget_y;	///< Pointer y position on down event, relative to the captured widget.
-	static int pointer_move_widget_x;	///< Pointer x position on last pointer event, relative to the captured widget (if any) or hovered widget.
-	static int pointer_move_widget_y;	///< Pointer y position on last pointer event, relative to the captured widget (if any) or hovered widget.
-	static bool cancel_click;			///< true if the pointer up event should not generate a click event.
-	static bool update_widget_states;	///< true if something has called InvalidateStates() and it still hasn't been updated.
-	static bool update_skin_states;		///< true if something has called InvalidateStates() and skin still hasn't been updated.
-	static bool show_focus_state;		///< true if the focused state should be painted automatically.
 	struct TOUCH_INFO {
 		TBWidget *hovered_widget;		///< The currently hovered widget, or nullptr.
 		TBWidget *captured_widget;		///< The currently captured widget, or nullptr.

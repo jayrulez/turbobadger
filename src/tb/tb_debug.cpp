@@ -9,6 +9,7 @@
 #include "tb_editfield.h"
 #include "tb_font_renderer.h"
 #include "tb_tempbuffer.h"
+#include "tb_context.h"
 #include <stdio.h>
 
 namespace tb {
@@ -100,7 +101,7 @@ public:
 		// Draw font glyph fragments (the font of the hovered widget)
 		if (TB_DEBUG_SETTING(RENDER_FONT_BITMAP_FRAGMENTS))
 		{
-			TBWidget *widget = TBWidget::hovered_widget ? TBWidget::hovered_widget : TBWidget::focused_widget;
+			TBWidget *widget = g_context->hovered_widget ? g_context->hovered_widget : g_context->focused_widget;
 			g_font_manager->GetFontFace(widget ?
 										widget->GetCalculatedFontDescription() :
 										g_font_manager->GetDefaultFontDescription())->Debug();

@@ -13,6 +13,7 @@
 #include "tb_widget_skin_condition_context.h"
 #include "tb_font_renderer.h"
 #include "tb_skin_util.h"
+#include "tb_context.h"
 
 namespace tb {
 
@@ -425,18 +426,18 @@ void TBEditField::OnMessageReceived(TBMessage *msg)
 		// Post another blink message so we blink again.
 		PostMessageDelayed(TBIDC("blink"), nullptr, CARET_BLINK_TIME);
 	}
-	else if (msg->message == TBIDC("selscroll") && captured_widget == this)
+	else if (msg->message == TBIDC("selscroll") && g_context->captured_widget == this)
 	{
 		// Get scroll speed from where mouse is relative to the padding rect.
 		TBRect padding_rect = GetVisibleRect().Shrink(2, 2);
-		int dx = GetSelectionScrollSpeed(pointer_move_widget_x, padding_rect.x, padding_rect.x + padding_rect.w);
-		int dy = GetSelectionScrollSpeed(pointer_move_widget_y, padding_rect.y, padding_rect.y + padding_rect.h);
+		int dx = GetSelectionScrollSpeed(g_context->pointer_move_widget_x, padding_rect.x, padding_rect.x + padding_rect.w);
+		int dy = GetSelectionScrollSpeed(g_context->pointer_move_widget_y, padding_rect.y, padding_rect.y + padding_rect.h);
 		m_scrollbar_x.SetValue(m_scrollbar_x.GetValue() + dx);
 		m_scrollbar_y.SetValue(m_scrollbar_y.GetValue() + dy);
 
 		// Handle mouse move at the new scroll position, so selection is updated
 		if (dx || dy)
-			m_style_edit.MouseMove(TBPoint(pointer_move_widget_x, pointer_move_widget_y));
+			m_style_edit.MouseMove(TBPoint(g_context->pointer_move_widget_x, g_context->pointer_move_widget_y));
 
 		// Post another setscroll message so we continue scrolling if we still should.
 		if (m_style_edit.select_state)
