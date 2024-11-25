@@ -5,7 +5,7 @@
 
 #include "tb_font_renderer.h"
 #include "tb_renderer.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 #include "tb_skin.h"
 #include <math.h>
 

@@ -8,7 +8,9 @@
 #include "tb_widgets_reader.h"
 #include "tb_language.h"
 #include "tb_font_renderer.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
+#include "platform/tb_file_interface.h"
+#include "platform/tb_clipboard_interface.h"
 #include "animation/tb_animation.h"
 #include "image/tb_image_manager.h"
 
@@ -19,11 +21,23 @@ TBSkin *g_tb_skin = nullptr;
 TBWidgetsReader *g_widgets_reader = nullptr;
 TBLanguage *g_tb_lng = nullptr;
 TBFontManager *g_font_manager = nullptr;
+TBSystemInterface *g_system_interface = nullptr;
+TBFileInterface *g_file_interface = nullptr;
+TBClipboardInterface *g_clipboard_interface = nullptr;
 
-bool tb_core_init(TBRenderer *renderer)
+bool tb_core_init(
+	TBRenderer *renderer,
+	TBSystemInterface* system_interface,
+	TBFileInterface* file_interface,
+	TBClipboardInterface* clipboard_interface)
 {
-	TBDebugPrint("Initiating Turbo Badger - version %s\n", TB_VERSION_STR);
 	g_renderer = renderer;
+	g_system_interface = system_interface;
+	g_file_interface = file_interface;
+	g_clipboard_interface = clipboard_interface;
+
+	TBDebugPrint("Initiating Turbo Badger - version %s\n", TB_VERSION_STR);
+
 	g_tb_lng = new TBLanguage;
 	g_font_manager = new TBFontManager();
 	g_tb_skin = new TBSkin();

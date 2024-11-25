@@ -1,4 +1,5 @@
-#include "tb_system.h"
+#include "tb_platform.h"
+#include "platform/tb_system_interface.h"
 
 #ifdef TB_TARGET_WINDOWS
 #include "glfw_extra.h"

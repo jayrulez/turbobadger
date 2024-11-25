@@ -11,7 +11,7 @@
 #include "App.h"
 #include "tb_widgets.h"
 #include "tb_widgets_listener.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 #include "tb_editfield.h"
 
 using namespace tb;

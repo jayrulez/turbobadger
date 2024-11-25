@@ -7,7 +7,7 @@
 
 #ifdef TB_IMAGE
 
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 #include "tb_tempbuffer.h"
 #include "tb_skin.h"
 

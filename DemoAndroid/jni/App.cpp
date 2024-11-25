@@ -4,7 +4,9 @@
 #include "renderers/tb_renderer_gl.h"
 
 #include "tb_core.h"
-#include "tb_system.h"
+#include "tb_system_interface_android.h"
+#include "tb_file_interface_android.h"
+#include "tb_clipboard_interface_dummy.h"
 #include "tb_widgets.h"
 #include "tb_select.h"
 #include "tb_font_renderer.h"
@@ -18,6 +20,9 @@
 using namespace tb;
 
 TBRendererGL *renderer;
+TBSystemInterfaceAndroid *system_interface;
+TBFileInterfaceAndroid *file_interface;
+TBClipboardInterfaceDummy *clipboard_interface;
 TBWidget *root;
 int g_width, g_height;
 
@@ -37,7 +42,7 @@ public:
 		if (test == TEST_INFLATE)
 		{
 			title = "Inflate + layout speed";
-			double start_time = TBSystem::GetTimeMS();
+			double start_time = g_system_interface->GetTimeMS();
 			for(int i = 0; i < iteration_count; i++)
 			{
 				TBWindow *win = new TBWindow;
@@ -46,7 +51,7 @@ public:
 				win->SetSize(100 + i, 100 + i);
 				win->Close();
 			}
-			total_time = TBSystem::GetTimeMS() - start_time;
+			total_time = g_system_interface->GetTimeMS() - start_time;
 		}
 		else
 		{
@@ -55,10 +60,10 @@ public:
 			win->SetText(title);
 			g_widgets_reader->LoadFile(win, "layout/main_layout.tb.txt");
 
-			double start_time = TBSystem::GetTimeMS();
+			double start_time = g_system_interface->GetTimeMS();
 			for(int i = 0; i < iteration_count; i++)
 				win->SetSize(100 + i, 100 + i);
-			total_time = TBSystem::GetTimeMS() - start_time;
+			total_time = g_system_interface->GetTimeMS() - start_time;
 
 			win->Close();
 		}
@@ -80,7 +85,7 @@ public:
 							"Closest skin DPI: %d\n"
 							"Root dimensions: %dx%dpx\n"
 							"100dp equals %dpx (Based on closest skin DPI and screen DPI)",
-							TBSystem::GetDPI(),
+							g_system_interface->GetDPI(),
 							g_tb_skin->GetDimensionConverter()->GetDstDPI(),
 							GetParentRoot()->GetRect().w, GetParentRoot()->GetRect().h,
 							g_tb_skin->GetDimensionConverter()->DpToPx(100));
@@ -123,6 +128,9 @@ EditListener edit_listener;
 void Init(unsigned int width, unsigned int height)
 {
 	renderer = new TBRendererGL();
+    system_interface = new TBSystemInterfaceAndroid();
+    file_interface = new TBFileInterfaceAndroid();
+    clipboard_interface = new TBClipboardInterfaceDummy();
 	tb_core_init(renderer);
 	root = new AppRoot();
 	Resize(width, height);
@@ -187,12 +195,12 @@ void Render()
 
 	static int fps = 0;
 	static uint32 frame_counter = 0;
-	static double frame_counter_reset_time = TBSystem::GetTimeMS();
+	static double frame_counter_reset_time = g_system_interface->GetTimeMS();
 
 	frame_counter++;
 
 	// Update the FPS counter
-	double time = TBSystem::GetTimeMS();
+	double time = g_system_interface->GetTimeMS();
 	if (time > frame_counter_reset_time + 1000)
 	{
 		fps = (int) ((frame_counter / (time - frame_counter_reset_time)) * 1000);
@@ -213,5 +221,8 @@ void Shutdown()
 	delete root;
 	TBWidgetListener::RemoveGlobalListener(&edit_listener);
 	tb_core_shutdown();
+    delete clipboard_interface;
+    delete file_interface;
+    delete system_interface;
 	delete renderer;
 }

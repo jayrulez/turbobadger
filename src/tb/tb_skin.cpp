@@ -5,7 +5,7 @@
 
 #include "tb_skin.h"
 #include "tb_shape_rasterizer.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 #include "tb_tempbuffer.h"
 #include "tb_font_renderer.h"
 #include <string.h>
@@ -164,7 +164,7 @@ bool TBSkin::LoadInternal(const char *skin_file)
 			assert(supported_dpi_node->GetValue().IsArray() || supported_dpi_node->GetValue().GetInt() == base_dpi);
 			if (TBValueArray *arr = supported_dpi_node->GetValue().GetArray())
 			{
-				int screen_dpi = TBSystem::GetDPI();
+				int screen_dpi = g_system_interface->GetDPI();
 				int best_supported_dpi = 0;
 				for (int i = 0; i < arr->GetLength(); i++)
 				{

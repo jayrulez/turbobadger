@@ -5,7 +5,7 @@
 
 #include "renderers/tb_renderer_batcher.h"
 #include "tb_bitmap_fragment.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 
 #ifdef TB_RENDERER_BATCHER
 

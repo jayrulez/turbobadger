@@ -7,7 +7,7 @@
 
 #ifdef TB_RENDERER_GL
 #include "tb_bitmap_fragment.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 #include <assert.h>
 #include <stdio.h>
 

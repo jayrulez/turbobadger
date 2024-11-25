@@ -4,7 +4,7 @@
 // ================================================================================
 
 #include "tb_language.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 #include "tb_node_tree.h"
 
 namespace tb {

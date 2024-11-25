@@ -1,10 +1,21 @@
+#include "tb_platform.h"
 #include "glfw_extra.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
 #include <string.h>
 #include "tb_skin.h"
-#include "tb_system.h"
+#include "tb_core.h"
+#include "platform/tb_system_interface.h"
+#include "tb_system_interface_glfw.h"
+#if _WIN32
+#	include "tb_system_interface_windows.h"
+#	include "tb_clipboard_interface_windows.h"
+#else
+#	include "tb_system_interface_linux.h"
+#	include "tb_clipboard_interface_glfw.h"
+#endif
+#include "tb_file_interface_posix.h"
 #include "tb_msg.h"
 #include "tb_editfield.h"
 #include "renderers/tb_renderer_gl.h"
@@ -43,10 +54,16 @@ public:
 	bool Init(App *app);
 	AppBackendGLFW()	: m_app(nullptr)
 						, m_renderer(nullptr)
+						, m_system_interface(nullptr)
+						, m_clipboard_interface(nullptr)
 						, mainWindow(nullptr)
 						, m_cursor_i_beam(nullptr)
 						, m_has_pending_update(false)
-						, m_quit_requested(false) {}
+						, m_quit_requested(false) 
+	{
+		m_system_interface = &m_system_interface_platform;
+		m_clipboard_interface = &m_clipboard_interface_platform;
+	}
 	~AppBackendGLFW();
 
 	virtual void OnAppEvent(const EVENT &ev);
@@ -57,6 +74,16 @@ public:
 
 	App *m_app;
 	TBRendererGL *m_renderer;
+#if _WIN32
+	TBSystemInterfaceWindows m_system_interface_platform;
+	TBClipboardInterfaceWindows m_clipboard_interface_platform;
+#else
+	TBSystemInterfaceLinux m_system_interface_platform;
+	TBClipboardInterfaceGlfw m_clipboard_interface_platform;
+#endif
+	TBSystemInterfaceGlfw* m_system_interface;
+	TBFileInterfacePosix m_file_interface;
+	TBClipboardInterface* m_clipboard_interface;
 	GLFWwindow *mainWindow;
 	GLFWcursor *m_cursor_i_beam;
 	bool m_has_pending_update;
@@ -246,7 +273,7 @@ static void mouse_button_callback(GLFWwindow *window, int button, int action, in
 			static int last_y = 0;
 			static int counter = 1;
 
-			double time = TBSystem::GetTimeMS();
+			double time = g_system_interface->GetTimeMS();
 			if (time < last_time + 600 && last_x == x && last_y == y)
 				counter++;
 			else
@@ -310,7 +337,7 @@ static void ReschedulePlatformTimer(double fire_time, bool force)
 	else if (fire_time != set_fire_time || force || fire_time == 0)
 	{
 		set_fire_time = fire_time;
-		double delay = fire_time - tb::TBSystem::GetTimeMS();
+		double delay = fire_time - tb::g_system_interface->GetTimeMS();
 		unsigned int idelay = (unsigned int) MAX(delay, 0.0);
 		glfwRescheduleTimer(idelay);
 	}
@@ -319,7 +346,7 @@ static void ReschedulePlatformTimer(double fire_time, bool force)
 static void timer_callback()
 {
 	double next_fire_time = TBMessageHandler::GetNextMessageFireTime();
-	double now = tb::TBSystem::GetTimeMS();
+	double now = tb::g_system_interface->GetTimeMS();
 	if (now < next_fire_time)
 	{
 		// We timed out *before* we were supposed to (the OS is not playing nice).
@@ -333,15 +360,15 @@ static void timer_callback()
 
 	// If we still have things to do (because we didn't process all messages,
 	// or because there are new messages), we need to rescedule, so call RescheduleTimer.
-	TBSystem::RescheduleTimer(TBMessageHandler::GetNextMessageFireTime());
+	g_system_interface->RescheduleTimer(TBMessageHandler::GetNextMessageFireTime());
 }
 
 // This doesn't really belong here (it belongs in tb_system_[linux/windows].cpp.
 // This is here since the proper implementations has not yet been done.
-void TBSystem::RescheduleTimer(double fire_time)
-{
-	ReschedulePlatformTimer(fire_time, false);
-}
+//void TBSystem::>RescheduleTimer(double fire_time)
+//{
+//	ReschedulePlatformTimer(fire_time, false);
+//}
 
 static void window_refresh_callback(GLFWwindow *window)
 {
@@ -435,7 +462,7 @@ bool AppBackendGLFW::Init(App *app)
 #endif
 
 	m_renderer = new TBRendererGL();
-	tb_core_init(m_renderer);
+	tb_core_init(m_renderer, m_system_interface, &m_file_interface, m_clipboard_interface);
 
 	// Create the App object for our demo
 	m_app = app;

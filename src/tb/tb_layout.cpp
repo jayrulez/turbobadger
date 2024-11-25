@@ -4,7 +4,7 @@
 // ================================================================================
 
 #include "tb_layout.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 #include "tb_skin_util.h"
 #include <assert.h>
 
@@ -305,7 +305,7 @@ void TBLayout::ValidateLayout(const SizeConstraints &constraints, PreferredSize 
 		return;
 	}
 
-	TB_IF_DEBUG_SETTING(LAYOUT_PS_DEBUGGING, last_layout_time = TBSystem::GetTimeMS());
+	TB_IF_DEBUG_SETTING(LAYOUT_PS_DEBUGGING, last_layout_time = g_system_interface->GetTimeMS());
 
 	// Pre Layout step (calculate distribution position)
 	int missing_space = MAX(total_preferred_w - layout_rect.w, 0);
@@ -413,7 +413,7 @@ bool TBLayout::OnEvent(const TBWidgetEvent &ev)
 	if (ev.type == EVENT_TYPE_WHEEL && ev.modifierkeys == TB_MODIFIER_NONE)
 	{
 		int old_scroll = GetOverflowScroll();
-		SetOverflowScroll(m_overflow_scroll + ev.delta_y * TBSystem::GetPixelsPerLine());
+		SetOverflowScroll(m_overflow_scroll + ev.delta_y * g_system_interface->GetPixelsPerLine());
 		return m_overflow_scroll != old_scroll;
 	}
 	return false;

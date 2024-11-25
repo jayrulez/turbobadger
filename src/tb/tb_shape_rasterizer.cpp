@@ -5,7 +5,7 @@
 
 #include "tb_shape_rasterizer.h"
 #include "tb_font_renderer.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 #include "tb_blur.h"
 #include "utf8/utf8.h"
 #include <math.h>

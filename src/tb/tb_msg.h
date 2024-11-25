@@ -80,7 +80,7 @@ public:
 		automatically when the message is deleted. */
 	bool PostMessageDelayed(TBID message, TBMessageData *data, uint32 delay_in_ms);
 
-	/** Posts a message to the target at the given time (relative to TBSystem::GetTimeMS()).
+	/** Posts a message to the target at the given time (relative to g_system_interface->GetTimeMS()).
 		data may be nullptr if no extra data need to be sent. It will be deleted
 		automatically when the message is deleted. */
 	bool PostMessageOnTime(TBID message, TBMessageData *data, double fire_time);

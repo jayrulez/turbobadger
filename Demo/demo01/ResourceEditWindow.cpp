@@ -1,7 +1,7 @@
 #include "ResourceEditWindow.h"
 #include "tb_widgets_reader.h"
 #include "tb_message_window.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 #include "tb_select.h"
 #include "tb_editfield.h"
 #include "tb_tempbuffer.h"

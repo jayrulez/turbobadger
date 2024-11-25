@@ -4,7 +4,7 @@
 // ================================================================================
 
 #include "tb_hashtable.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 #include "tb_tempbuffer.h"
 
 namespace tb {

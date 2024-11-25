@@ -73,46 +73,4 @@
 /** Enable support for TBImage, TBImageManager, TBImageWidget. */
 #define TB_IMAGE
 
-// == Additional configuration of platform implementations ========================
-
-/** Define for posix implementation of TBFile. */
-//#define TB_FILE_POSIX
-
-/** Defines for implementations of TBClipboard. */
-//#define TB_CLIPBOARD_DUMMY // Cross platform. Not integrating with the OS.
-//#define TB_CLIPBOARD_GLFW // Cross platform using glfw API.
-//#define TB_CLIPBOARD_WINDOWS
-
-/** Defines for implementations of TBSystem. */
-//#define TB_SYSTEM_LINUX
-//#define TB_SYSTEM_WINDOWS
-//#define TB_SYSTEM_ANDROID
-
-/** Defines for additional platform specific issues. */
-//#define TB_TARGET_WINDOWS
-//#define TB_TARGET_MACOSX
-//#define TB_TARGET_LINUX
-
-// == Setting some defaults for platform implementations ==========================
-
-#if defined(ANDROID) || defined(__ANDROID__)
-#define TB_SYSTEM_ANDROID
-#define TB_CLIPBOARD_DUMMY
-#elif defined(__linux) || defined(__linux__)
-#define TB_FILE_POSIX
-#define TB_TARGET_LINUX
-#define TB_SYSTEM_LINUX
-#define TB_CLIPBOARD_GLFW
-#elif MACOSX
-#define TB_FILE_POSIX
-#define TB_TARGET_MACOSX
-#define TB_SYSTEM_LINUX
-#define TB_CLIPBOARD_GLFW
-#elif defined(_WIN32) || defined(__WIN32__) || defined(__WINDOWS__)
-#define TB_FILE_POSIX
-#define TB_TARGET_WINDOWS
-#define TB_CLIPBOARD_WINDOWS
-#define TB_SYSTEM_WINDOWS
-#endif
-
 #endif // TB_CONFIG_H

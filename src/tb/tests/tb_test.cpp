@@ -4,7 +4,7 @@
 // ================================================================================
 
 #include "tb_test.h"
-#include "tb_system.h"
+#include "platform/tb_system_interface.h"
 
 #ifdef TB_UNIT_TESTING
 // Reference at least one group in each test file, to force
