@@ -17,7 +17,7 @@ namespace tb {
 /** TBRendererBatcher is a helper class that implements batching of draw operations for a TBRenderer.
 	If you do not want to do your own batching you can subclass this class instead of TBRenderer.
 	If overriding any function in this class, make sure to call the base class too. */
-class TBRendererBatcher : public TBRenderer
+class TB_API TBRendererBatcher : public TBRenderer
 {
 public:
 	/** Vertex stored in a Batch */

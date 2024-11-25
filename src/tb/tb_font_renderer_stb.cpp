@@ -117,7 +117,7 @@ TBFontFace *STBFontRenderer::Create(TBFontManager *font_manager, const char *fil
 	return nullptr;
 }
 
-void register_stb_font_renderer()
+TB_API void register_stb_font_renderer()
 {
 	if (STBFontRenderer *fr = new STBFontRenderer)
 		g_font_manager->AddRenderer(fr);

@@ -23,8 +23,9 @@ Thumbs.db
 
 *.sublime-workspace
 
-*.exe
 *.dll
+*.exe
+*.lib
 
 Debug
 Release

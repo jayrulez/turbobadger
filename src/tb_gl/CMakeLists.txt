@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 
 file(GLOB_RECURSE LOCAL_SRCS "*.cpp" "*.h")
 
@@ -9,6 +9,8 @@ target_link_libraries(TurboBadgerGL
     TurboBadgerLib
     opengl32
 )
+
+target_compile_definitions(TurboBadgerLib PRIVATE TB_GL_COMPILING)
 
 install(TARGETS TurboBadgerGL
     RUNTIME DESTINATION bin

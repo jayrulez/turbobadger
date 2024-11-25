@@ -24,7 +24,7 @@ enum TB_SORT {
 	There can be multiple viewers for each source. The viewer will recieve
 	callbacks when the source is changed, so it can update itself.
 */
-class TBSelectItemViewer : public TBLinkOf<TBSelectItemViewer>
+class TB_API TBSelectItemViewer : public TBLinkOf<TBSelectItemViewer>
 {
 public:
 	TBSelectItemViewer() : m_source(nullptr) {}
@@ -69,7 +69,7 @@ protected:
 	remember to call InvokeItem[Added/...] to notify viewers that they need to update.
 */
 
-class TBSelectItemSource
+class TB_API TBSelectItemSource
 {
 public:
 	TBSelectItemSource() : m_sort(TB_SORT_NONE) {}

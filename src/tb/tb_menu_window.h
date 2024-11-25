@@ -18,7 +18,7 @@ namespace tb {
 
 	It may open sub items as new windows at the same time as this window is open.*/
 
-class TBMenuWindow : public TBPopupWindow
+class TB_API TBMenuWindow : public TBPopupWindow
 {
 public:
 	// For safe typecasting

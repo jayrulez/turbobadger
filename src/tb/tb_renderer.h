@@ -16,7 +16,7 @@ namespace tb {
 class TBBitmapFragment;
 
 /** TBRendererListener is a listener for TBRenderer. */
-class TBRendererListener : public TBLinkOf<TBRendererListener>
+class TB_API TBRendererListener : public TBLinkOf<TBRendererListener>
 {
 public:
 	virtual ~TBRendererListener() {}
@@ -51,7 +51,7 @@ public:
 
 /** TBRenderer is a minimal interface for painting strings and bitmaps. */
 
-class TBRenderer
+class TB_API TBRenderer
 {
 public:
 	virtual ~TBRenderer() {}

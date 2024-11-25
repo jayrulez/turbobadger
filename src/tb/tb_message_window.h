@@ -18,7 +18,7 @@ enum TB_MSG {
 };
 
 /** TBMessageWindowSettings contains additional settings for TBMessageWindow. */
-class TBMessageWindowSettings
+class TB_API TBMessageWindowSettings
 {
 public:
 	TBMessageWindowSettings() : msg(TB_MSG_OK), dimmer(false), styling(false) {}
@@ -39,7 +39,7 @@ public:
 
 	If the target widget is deleted while this window is alive, the
 	window will delete itself. */
-class TBMessageWindow : public TBWindow, private TBWidgetListener
+class TB_API TBMessageWindow : public TBWindow, private TBWidgetListener
 {
 public:
 	// For safe typecasting

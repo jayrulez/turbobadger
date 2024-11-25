@@ -1,5 +1,7 @@
+cmake_minimum_required(VERSION 3.5)
+
 project(TurboBadger)
-cmake_minimum_required(VERSION 2.8)
+
 
 option(TB_BUILD_DEMO "Build the Demo application. Depends on glfw." ON)
 option(TB_DEMO_IN_SRC "Build the demo application to the source directory" ON)
@@ -15,6 +17,7 @@ option(TB_RENDERER_BATCHER "Enable to get TBRendererBatcher" ON)
 option(TB_RENDERER_GL "Enable renderer using OpenGL. This renderer depends on TB_RENDERER_BATCHER." ON)
 option(TB_RENDERER_GLES_1 "Enable renderer using OpenGL ES. This renderer depends on TB_RENDERER_GL." OFF)
 option(TB_IMAGE "Enable support for TBImage, TBImageManager, TBImageWidget." ON)
+option(TB_STATIC_LIB "Builds TurboBadgerLib as a static library when on, otherwise as a shared library" ON)
 
 # Runtime/subsystem configurations
 # Needs further work
@@ -57,6 +60,10 @@ configure_file(tb_config.h.in src/tb/config.h)
  
 if(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU" OR ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x -fno-exceptions -fno-rtti -Wall -Wextra -Wno-unused-parameter")
+endif()
+
+if(TB_STATIC_LIB)
+ add_definitions(-DTB_STATIC)
 endif()
 
 if(APPLE)

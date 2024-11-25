@@ -19,7 +19,7 @@ namespace tb {
 
 /** Base class for widget animations. This animation object will
 	be deleted automatically if the widget is deleted. */
-class TBWidgetAnimationObject : public TBAnimationObject, public TBLinkOf<TBWidgetAnimationObject>
+class TB_API TBWidgetAnimationObject : public TBAnimationObject, public TBLinkOf<TBWidgetAnimationObject>
 {
 public:
 	// For safe typecasting
@@ -32,7 +32,7 @@ public:
 };
 
 /** Animate the opacity of the target widget. */
-class TBWidgetAnimationOpacity : public TBWidgetAnimationObject
+class TB_API TBWidgetAnimationOpacity : public TBWidgetAnimationObject
 {
 public:
 	// For safe typecasting
@@ -49,7 +49,7 @@ private:
 };
 
 /** Animate the rectangle of the target widget. */
-class TBWidgetAnimationRect : public TBWidgetAnimationObject
+class TB_API TBWidgetAnimationRect : public TBWidgetAnimationObject
 {
 public:
 	// For safe typecasting
@@ -79,7 +79,7 @@ private:
 	MODE m_mode;
 };
 
-class TBWidgetsAnimationManager : public TBWidgetListener
+class TB_API TBWidgetsAnimationManager : public TBWidgetListener
 {
 public:
 	/** Init the widgets animation manager. */

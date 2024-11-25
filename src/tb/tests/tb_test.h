@@ -95,7 +95,7 @@ namespace tb {
 #ifdef TB_UNIT_TESTING
 
 /** Run the tests. Return the number of fails. */
-int TBRunTests(uint32 settings = TB_TEST_VERBOSE);
+TB_API int TBRunTests(uint32 settings = TB_TEST_VERBOSE);
 
 /** Verify that the expression is true and fail if it isn't. */
 #define TB_VERIFY(expr) { fail_line_nr = __LINE__; fail_file = __FILE__; if (!(expr)) { fail_text = (#expr); return; } }

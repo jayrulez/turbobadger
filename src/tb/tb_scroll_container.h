@@ -49,7 +49,7 @@ public:
 
 /** TBScrollContainer - A container with scrollbars that can scroll its children. */
 
-class TBScrollContainer : public TBWidget
+class TB_API TBScrollContainer : public TBWidget
 {
 friend class TBScrollContainerRoot;
 public:

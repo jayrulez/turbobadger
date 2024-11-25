@@ -45,10 +45,10 @@ public:
 	int settings[NUM_SETTINGS];
 };
 
-extern TBDebugInfo g_tb_debug;
+TB_API extern TBDebugInfo g_tb_debug;
 
 /** Show a window containing runtime debugging settings. */
-void ShowDebugInfoSettingsWindow(class TBWidget *root);
+TB_API void ShowDebugInfoSettingsWindow(class TBWidget *root);
 
 #define TB_DEBUG_SETTING(setting) g_tb_debug.settings[TBDebugInfo::setting]
 #define TB_IF_DEBUG_SETTING(setting, code) if (TB_DEBUG_SETTING(setting)) { code; }

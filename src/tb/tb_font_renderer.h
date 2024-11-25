@@ -139,7 +139,7 @@ private:
 };
 
 /** TBFontFace represents a loaded font that can measure and render strings. */
-class TBFontFace
+class TB_API TBFontFace
 {
 public:
 	TBFontFace(TBFontGlyphCache *glyph_cache, TBFontRenderer *renderer, const TBFontDescription &font_desc);
@@ -203,7 +203,7 @@ private:
 };
 
 /** TBFontInfo provides information about a font file associated with a font id. */
-class TBFontInfo
+class TB_API TBFontInfo
 {
 public:
 	/** Get the font filename. */
@@ -236,7 +236,7 @@ private:
 	no font backend implemented yet. Since there is always at least the test font, no
 	nullptr checks are needed.
 */
-class TBFontManager
+class TB_API TBFontManager
 {
 public:
 	TBFontManager();

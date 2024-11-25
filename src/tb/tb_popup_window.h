@@ -58,7 +58,7 @@ public:
 	through the given target. It will automatically close on click events that
 	are not sent through this popup. */
 
-class TBPopupWindow : public TBWindow, private TBWidgetListener
+class TB_API TBPopupWindow : public TBWindow, private TBWidgetListener
 {
 public:
 	// For safe typecasting

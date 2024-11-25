@@ -222,7 +222,7 @@ MAKE_ENUM_FLAG_COMBO(SIZE_DEP);
 	This is calculated during layout for each widget from
 	the current skin, widget preferences and LayoutParams. */
 
-class PreferredSize
+class TB_API PreferredSize
 {
 public:
 	PreferredSize() : min_w(0), min_h(0)
@@ -357,7 +357,7 @@ enum WIDGET_HIT_STATUS {
 	Note: When you subclass a widget, use the TBOBJECT_SUBCLASS macro to define the type
 	casting functions instead of implementing those manually. */
 
-class TBWidget : public TBTypedObject, public TBLinkOf<TBWidget>
+class TB_API TBWidget : public TBTypedObject, public TBLinkOf<TBWidget>
 {
 public:
 	// For safe typecasting
@@ -639,7 +639,7 @@ public:
 	/** PaintProps contains properties needed for painting a widget.
 		Properties may be inherited from the parent widget if not specified
 		in the skin. */
-	class PaintProps
+	class TB_API PaintProps
 	{
 	public:
 		PaintProps();

@@ -27,7 +27,7 @@ MAKE_ENUM_FLAG_COMBO(TB_NODE_READ_FLAGS);
 
 	During ReadFile/ReadData, it may also select which branches to include
 	or exclude conditionally by lookup up values in TBNodeRefTree. */
-class TBNode : public TBLinkOf<TBNode>
+class TB_API TBNode : public TBLinkOf<TBNode>
 {
 public:
 	TBNode() : m_name(nullptr), m_parent(nullptr), m_cycle_id(0) {}

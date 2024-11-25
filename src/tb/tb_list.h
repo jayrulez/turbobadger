@@ -12,7 +12,7 @@ namespace tb {
 /** TBList is a list (array) of pointers to any kind of objects.
 	This is the backend for TBListOf and TBListAutoDeleteOf.
 	You should use the typed TBListOf or TBListAutoDeleteOf for object storing! */
-class TBListBackend
+class TB_API TBListBackend
 {
 public:
 	TBListBackend() : m_data(nullptr) {}

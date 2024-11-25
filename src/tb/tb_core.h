@@ -48,27 +48,27 @@ class TBSystemInterface;
 class TBFileInterface;
 class TBClipboardInterface;
 
-extern TBRenderer *g_renderer;
-extern TBSkin *g_tb_skin;
-extern TBWidgetsReader *g_widgets_reader;
-extern TBLanguage *g_tb_lng;
-extern TBFontManager *g_font_manager;
-extern TBSystemInterface* g_system_interface;
-extern TBFileInterface* g_file_interface;
-extern TBClipboardInterface* g_clipboard_interface;
+TB_API extern TBRenderer *g_renderer;
+TB_API extern TBSkin *g_tb_skin;
+TB_API extern TBWidgetsReader *g_widgets_reader;
+TB_API extern TBLanguage *g_tb_lng;
+TB_API extern TBFontManager *g_font_manager;
+TB_API extern TBSystemInterface* g_system_interface;
+TB_API extern TBFileInterface* g_file_interface;
+TB_API extern TBClipboardInterface* g_clipboard_interface;
 
 /** Initialize turbo badger. Call this before using any turbo badger API. */
-bool tb_core_init(
+TB_API bool tb_core_init(
     TBRenderer* renderer,
     TBSystemInterface* system_interface,
     TBFileInterface* file_interface,
     TBClipboardInterface* clipboard_interface);
 
 /** Shutdown turbo badger. Call this after deleting the last widget, to free turbo badger internals. */
-void tb_core_shutdown();
+TB_API void tb_core_shutdown();
 
 /** Returns true if turbo badger is initialized. */
-bool tb_core_is_initialized();
+TB_API bool tb_core_is_initialized();
 
 } // namespace tb
 

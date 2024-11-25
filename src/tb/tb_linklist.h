@@ -66,7 +66,7 @@ private:
 /** TBLink - The backend class to be inserted in TBLinkList.
 	Use the typed TBLinkOf for object storing! */
 
-class TBLink
+class TB_API TBLink
 {
 public:
 	TBLink() : prev(nullptr), next(nullptr), linklist(nullptr) {}
@@ -80,7 +80,7 @@ public:
 };
 
 template<class T>
-class TBLinkOf : public TBLink
+class TB_API TBLinkOf : public TBLink
 {
 public:
 	inline T *GetPrev() const { return (T *) prev; }
@@ -90,7 +90,7 @@ public:
 /** TBLinkList - This is the backend for TBLinkListOf and TBLinkListAutoDeleteOf.
 	You should use the typed TBLinkListOf or TBLinkListAutoDeleteOf for object storing! */
 
-class TBLinkList
+class TB_API TBLinkList
 {
 public:
 	TBLinkList() : first(nullptr), last(nullptr), first_iterator(nullptr) {}

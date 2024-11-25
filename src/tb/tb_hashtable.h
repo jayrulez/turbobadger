@@ -13,7 +13,7 @@ namespace tb {
 
 /** TBHashTable is a minimal hash table, for hashing anything using a uint32 key. */
 
-class TBHashTable
+class TB_API TBHashTable
 {
 public:
 	TBHashTable();

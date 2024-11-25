@@ -24,7 +24,7 @@ namespace tb {
 	Ex: TBButton: text: @close   (Create a button with text from lookup of "close")
 */
 
-class TBLanguage
+class TB_API TBLanguage
 {
 public:
 	~TBLanguage();

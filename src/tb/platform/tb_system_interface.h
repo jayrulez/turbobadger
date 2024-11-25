@@ -18,7 +18,7 @@
 #endif
 
 namespace tb {
-	class TBSystemInterface
+	class TB_API TBSystemInterface
 	{
 	public:
         virtual ~TBSystemInterface() = default;

@@ -58,7 +58,7 @@ public:
 	virtual TBTextFragmentContent *CreateFragmentContent(const char *text, int text_len);
 };
 
-class TBTextOfs
+class TB_API TBTextOfs
 {
 public:
 	TBTextOfs() : block(nullptr), ofs(0) {}
@@ -361,7 +361,7 @@ public:
 
 /** Edit and formats TBTextFragment's. It handles the text in a TBStyleEditView. */
 
-class TBStyleEdit
+class TB_API TBStyleEdit
 {
 public:
 	TBStyleEdit();

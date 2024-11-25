@@ -25,7 +25,7 @@ class TBWidgetListenerGlobalLink : public TBLinkOf<TBWidgetListenerGlobalLink> {
 	Local listeners (added with TBWidget:AddListener) will be invoked before
 	global listeners (added with TBWidgetListener::AddGlobalListener). */
 
-class TBWidgetListener : public TBLinkOf<TBWidgetListener>, public TBWidgetListenerGlobalLink
+class TB_API TBWidgetListener : public TBLinkOf<TBWidgetListener>, public TBWidgetListenerGlobalLink
 {
 public:
 	/** Add a listener to all widgets. */
@@ -71,7 +71,7 @@ private:
 
 /** TBWidgetSafePointer keeps a pointer to a widget that will be set to
 	nullptr if the widget is removed. */
-class TBWidgetSafePointer : private TBWidgetListener
+class TB_API TBWidgetSafePointer : private TBWidgetListener
 {
 public:
 	TBWidgetSafePointer() : m_widget(nullptr)					{ }

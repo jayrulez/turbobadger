@@ -15,7 +15,7 @@ namespace tb {
 
 #ifdef TB_RUNTIME_DEBUG_INFO
 
-TBDebugInfo g_tb_debug;
+TB_API TBDebugInfo g_tb_debug;
 
 TBDebugInfo::TBDebugInfo()
 {

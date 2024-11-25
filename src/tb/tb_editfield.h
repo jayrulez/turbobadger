@@ -70,7 +70,7 @@ public:
 	if enabled by SetStyling(true). Disabled by default.
 */
 
-class TBEditField : public TBWidget, private TBStyleEditListener, public TBMessageHandler
+class TB_API TBEditField : public TBWidget, private TBStyleEditListener, public TBMessageHandler
 {
 public:
 	// For safe typecasting

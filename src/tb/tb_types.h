@@ -12,6 +12,8 @@
 
 #include <string.h>
 
+#include "tb_api.h"
+
 namespace tb {
 
 typedef signed char int8;

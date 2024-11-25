@@ -283,7 +283,7 @@ TBFontFace *TBBFRenderer::Create(TBFontManager *font_manager, const char *filena
 	return nullptr;
 }
 
-void register_tbbf_font_renderer()
+TB_API void register_tbbf_font_renderer()
 {
 	if (TBBFRenderer *fr = new TBBFRenderer)
 		g_font_manager->AddRenderer(fr);

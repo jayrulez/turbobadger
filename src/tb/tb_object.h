@@ -18,7 +18,7 @@ typedef void* TB_TYPE_ID;
 
 	Each subclass is expected to define TBOBJECT_SUBCLASS to get the
 	necessary implementations, instead of implementing those manually. */
-class TBTypedObject
+class TB_API TBTypedObject
 {
 public:
 	virtual ~TBTypedObject() {}

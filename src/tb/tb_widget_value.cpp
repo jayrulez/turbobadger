@@ -140,7 +140,7 @@ void TBWidgetValue::SetDouble(double value)
 
 // == TBValueGroup ================================================================================
 
-/*extern*/ TBValueGroup g_value_group;
+TB_API /*extern*/ TBValueGroup g_value_group;
 
 TBWidgetValue *TBValueGroup::CreateValueIfNeeded(const TBID &name, TBValue::TYPE type)
 {

@@ -90,7 +90,7 @@ protected:
 	Has a text field in its internal layout by default. Other widgets can be added
 	under GetContentRoot(). */
 
-class TBButton : public TBWidget, protected TBMessageHandler
+class TB_API TBButton : public TBWidget, protected TBMessageHandler
 {
 public:
 	// For safe typecasting
@@ -186,7 +186,7 @@ protected:
 	If you need to load and show images dynamically (i.e. not always loaded as the skin),
 	you can use TBImageWidget. */
 
-class TBSkinImage : public TBWidget
+class TB_API TBSkinImage : public TBWidget
 {
 public:
 	// For safe typecasting

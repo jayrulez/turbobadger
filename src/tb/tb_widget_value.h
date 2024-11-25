@@ -56,7 +56,7 @@ private:
 	Note: The type that is synchronized changes if you request it in a different format!
 */
 
-class TBWidgetValue
+class TB_API TBWidgetValue
 {
 public:
 	TBWidgetValue(const TBID &name, TBValue::TYPE type = TBValue::TYPE_INT);
@@ -143,7 +143,7 @@ private:
 };
 
 /** The global value group. */
-extern TBValueGroup g_value_group;
+TB_API extern TBValueGroup g_value_group;
 
 } // namespace tb
 

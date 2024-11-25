@@ -69,7 +69,7 @@ private:
 	Immediate messages are put on a queue and delivered as soon as possible, after any delayed
 	messages that has passed their delivery time. This queue is global (among all TBMessageHandlers) */
 
-class TBMessageHandler
+class TB_API TBMessageHandler
 {
 public:
 	TBMessageHandler();

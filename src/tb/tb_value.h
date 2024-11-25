@@ -33,7 +33,7 @@ bool is_number_only(const char *str);
 bool is_number_float(const char *str);
 
 /** TBValueArray is a array of TBValue */
-class TBValueArray
+class TB_API TBValueArray
 {
 public:
 	TBValueArray();
@@ -43,7 +43,10 @@ public:
 	static TBValueArray *Clone(TBValueArray *source);
 	int GetLength() const { return m_list.GetNumItems(); }
 private:
+#pragma warning(push) 
+#pragma warning(disable: 4251)
 	TBListAutoDeleteOf<TBValue> m_list;
+#pragma warning(pop)
 };
 
 /** TBValue holds value of a specific type.
@@ -54,7 +57,7 @@ private:
 	its internal representation to that type. Exceptions are for array and
 	object, which will return 0 when getting as numbers, or "" or object name
 	when getting as string. */
-class TBValue
+class TB_API TBValue
 {
 public:
 	/** The current type of the value.

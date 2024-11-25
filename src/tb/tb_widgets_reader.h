@@ -136,7 +136,7 @@ public:
 	font>name			Font name
 	font>size			Font size
 */
-class TBWidgetsReader
+class TB_API TBWidgetsReader
 {
 public:
 	static TBWidgetsReader *Create();

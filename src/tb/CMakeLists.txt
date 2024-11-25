@@ -1,15 +1,14 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 
-set(LOCAL_SRCS "")
-aux_source_directory(. LOCAL_SRCS)
-aux_source_directory(image LOCAL_SRCS)
-aux_source_directory(animation LOCAL_SRCS)
-aux_source_directory(parser LOCAL_SRCS)
-aux_source_directory(renderers LOCAL_SRCS)
-aux_source_directory(tests LOCAL_SRCS)
-aux_source_directory(utf8 LOCAL_SRCS)
+file(GLOB_RECURSE LOCAL_SRCS "*.cpp" "*.h" "*.c")
 
-add_library(TurboBadgerLib ${LOCAL_SRCS})
+if(TB_STATIC_LIB)
+    add_library(TurboBadgerLib ${LOCAL_SRCS})
+else()
+    add_library(TurboBadgerLib SHARED ${LOCAL_SRCS})
+endif()
+
+target_compile_definitions(TurboBadgerLib PRIVATE TB_COMPILING)
 
 install(TARGETS TurboBadgerLib
     RUNTIME DESTINATION bin

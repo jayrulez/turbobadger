@@ -23,7 +23,7 @@ class TBValue;
 	to pixels, based on two DPI values.
 	Dimensions in Turbo Badger are normally in pixels (if not specified differently)
 	and conversion normally take place when loading skin. */
-class TBDimensionConverter
+class TB_API TBDimensionConverter
 {
 	int m_src_dpi; ///< The source DPI (Normally the base_dpi from skin).
 	int m_dst_dpi; ///< The destination DPI (Normally the supported skin DPI nearest to g_system_interface->GetDPI).

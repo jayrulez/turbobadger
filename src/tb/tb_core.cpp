@@ -16,14 +16,14 @@
 
 namespace tb {
 
-TBRenderer *g_renderer = nullptr;
-TBSkin *g_tb_skin = nullptr;
-TBWidgetsReader *g_widgets_reader = nullptr;
-TBLanguage *g_tb_lng = nullptr;
-TBFontManager *g_font_manager = nullptr;
-TBSystemInterface *g_system_interface = nullptr;
-TBFileInterface *g_file_interface = nullptr;
-TBClipboardInterface *g_clipboard_interface = nullptr;
+TB_API TBRenderer *g_renderer = nullptr;
+TB_API TBSkin *g_tb_skin = nullptr;
+TB_API TBWidgetsReader *g_widgets_reader = nullptr;
+TB_API TBLanguage *g_tb_lng = nullptr;
+TB_API TBFontManager *g_font_manager = nullptr;
+TB_API TBSystemInterface *g_system_interface = nullptr;
+TB_API TBFileInterface *g_file_interface = nullptr;
+TB_API TBClipboardInterface *g_clipboard_interface = nullptr;
 
 bool tb_core_init(
 	TBRenderer *renderer,

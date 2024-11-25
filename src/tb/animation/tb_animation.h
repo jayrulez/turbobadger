@@ -69,7 +69,7 @@ public:
 
 /** TBAnimationObject - Base class for all animated object */
 
-class TBAnimationObject : public TBTypedObject, public TBLinkOf<TBAnimationObject>
+class TB_API TBAnimationObject : public TBTypedObject, public TBLinkOf<TBAnimationObject>
 {
 public:
 	ANIMATION_CURVE animation_curve;
@@ -113,7 +113,7 @@ private:
 
 /** TBAnimationManager - System class that manages all animated object */
 
-class TBAnimationManager
+class TB_API TBAnimationManager
 {
 private:
 	static TBLinkListOf<TBAnimationObject> animating_objects;

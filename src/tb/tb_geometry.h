@@ -12,7 +12,7 @@ namespace tb {
 
 /** Simple point class. */
 
-class TBPoint
+class TB_API TBPoint
 {
 public:
 	int x, y;
@@ -22,7 +22,7 @@ public:
 
 /** Simple rectangle class. */
 
-class TBRect
+class TB_API TBRect
 {
 public:
 	int x, y, w, h;
@@ -57,7 +57,7 @@ public:
 
 /** TBRegion does calculations on regions represented by a list of rectangles. */
 
-class TBRegion
+class TB_API TBRegion
 {
 public:
 	TBRegion();

@@ -16,11 +16,11 @@ namespace tb {
 #define TB_ALL_TO_TERMINATION 2147483647
 
 /** Some useful C-like functions that's missing in the standard. */
-const char *stristr(const char *arg1, const char *arg2);
+TB_API const char *stristr(const char *arg1, const char *arg2);
 
 /** Simple string class that doesn't own or change the string pointer. */
 
-class TBStrC
+class TB_API TBStrC
 {
 protected:
 	char *s;
@@ -50,7 +50,7 @@ public:
 	out of memory, its storage will be a empty ("") const string.
 */
 
-class TBStr : public TBStrC
+class TB_API TBStr : public TBStrC
 {
 public:
 	~TBStr();

@@ -283,7 +283,7 @@ public:
 };
 
 /** TBSkin contains a list of TBSkinElement. */
-class TBSkin : private TBRendererListener
+class TB_API TBSkin : private TBRendererListener
 {
 public:
 	TBSkin();

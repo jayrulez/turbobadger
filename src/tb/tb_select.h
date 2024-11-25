@@ -16,7 +16,7 @@ class TBMenuWindow;
 
 /** TBSelectList shows a scrollable list of items provided by a TBSelectItemSource. */
 
-class TBSelectList : public TBWidget, public TBSelectItemViewer
+class TB_API TBSelectList : public TBWidget, public TBSelectItemViewer
 {
 public:
 	// For safe typecasting

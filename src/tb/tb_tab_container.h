@@ -12,7 +12,7 @@ namespace tb {
 
 /** TBTabLayout is a TBLayout used in TBTabContainer to apply
 	some default properties on any TBButton added to it. */
-class TBTabLayout : public TBLayout
+class TB_API TBTabLayout : public TBLayout
 {
 public:
 	// For safe typecasting
@@ -24,7 +24,7 @@ public:
 
 /** TBTabContainer - A container with tabs for multiple pages. */
 
-class TBTabContainer : public TBWidget
+class TB_API TBTabContainer : public TBWidget
 {
 public:
 	// For safe typecasting

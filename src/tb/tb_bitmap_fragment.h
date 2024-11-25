@@ -20,7 +20,7 @@ class TBBitmap;
 
 /** Return the nearest power of two from val.
 	F.ex 110 -> 128, 256->256, 257->512 etc. */
-int TBGetNearestPowerOfTwo(int val);
+TB_API int TBGetNearestPowerOfTwo(int val);
 
 /** TBImageloader is a class used to load skin images. It can be implemented
 	in any way the system wants, but the system has to provide a image loader
