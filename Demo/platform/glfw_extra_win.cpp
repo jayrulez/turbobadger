@@ -1,3 +1,4 @@
+#include "platform.h"
 #include "tb_system_interface.h"
 
 #ifdef TB_TARGET_WINDOWS

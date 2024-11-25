@@ -1,5 +1,6 @@
 #pragma once
 
+#include "platform.h"
 #include "tb_system_interface_glfw.h"
 
 #if defined(TB_TARGET_LINUX)

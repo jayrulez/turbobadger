@@ -1,5 +1,6 @@
 #pragma once
 
+#include "platform.h"
 #include "tb_clipboard_interface.h"
 
 #if defined(TB_TARGET_WINDOWS)
