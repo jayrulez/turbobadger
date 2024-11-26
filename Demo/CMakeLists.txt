@@ -7,12 +7,13 @@ if(TB_DEMO_IN_SRC)
 endif()
 
 if(CMAKE_SYSTEM MATCHES "Windows")
- add_definitions(-DGLFW_EXPOSE_NATIVE_WIN32)
- add_definitions(-DGLFW_EXPOSE_NATIVE_WGL)
+# add_definitions(-DGLFW_EXPOSE_NATIVE_WIN32)
+# add_definitions(-DGLFW_EXPOSE_NATIVE_WGL)
  set(EXTRA_LIBS ${EXTRA_LIBS} winmm)
 endif(CMAKE_SYSTEM MATCHES "Windows")
 
 # Configure glfw
+set(GLFW_BUILD_DOCS OFF)
 set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS OFF)
 set(GLFW_INSTALL OFF)
@@ -36,6 +37,12 @@ if(CMAKE_COMPILER_IS_MINGW)
 endif(CMAKE_COMPILER_IS_MINGW)
 
 add_executable(TurboBadgerDemo WIN32 ${LOCAL_SRCS})
+
+if(CMAKE_SYSTEM MATCHES "Windows")
+    target_compile_definitions(TurboBadgerDemo PRIVATE GLFW_EXPOSE_NATIVE_WIN32)
+    target_compile_definitions(TurboBadgerDemo PRIVATE GLFW_EXPOSE_NATIVE_WGL)
+endif(CMAKE_SYSTEM MATCHES "Windows")
+
 target_link_libraries(TurboBadgerDemo TurboBadgerLib TurboBadgerGL ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
 install(TARGETS TurboBadgerDemo
     RUNTIME DESTINATION bin
