@@ -10,6 +10,13 @@ endif()
 
 target_compile_definitions(TurboBadgerLib PRIVATE TB_COMPILING)
 
+add_custom_command(
+    TARGET TurboBadgerLib POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "$<TARGET_FILE:TurboBadgerLib>"         # Path to the built DLL
+        "${PROJECT_SOURCE_DIR}/bin"      # Destination directory
+)
+
 install(TARGETS TurboBadgerLib
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib

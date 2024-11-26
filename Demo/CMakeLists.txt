@@ -1,9 +1,9 @@
 # Use project source dir for demo output. We have to set
 # the release and debug specific defines too, for MSVC.
 if(TB_DEMO_IN_SRC)
-    SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})
-    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR})
-    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR})
+    SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin)
+    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin)
 endif()
 
 if(CMAKE_SYSTEM MATCHES "Windows")
@@ -41,6 +41,7 @@ add_executable(TurboBadgerDemo WIN32 ${LOCAL_SRCS})
 if(CMAKE_SYSTEM MATCHES "Windows")
     target_compile_definitions(TurboBadgerDemo PRIVATE GLFW_EXPOSE_NATIVE_WIN32)
     target_compile_definitions(TurboBadgerDemo PRIVATE GLFW_EXPOSE_NATIVE_WGL)
+    set_target_properties(TurboBadgerDemo PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 endif(CMAKE_SYSTEM MATCHES "Windows")
 
 target_link_libraries(TurboBadgerDemo TurboBadgerLib TurboBadgerGL ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})

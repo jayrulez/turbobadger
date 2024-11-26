@@ -56,7 +56,7 @@ if(TB_IMAGE)
     set(TB_IMAGE_CONFIG "#define TB_IMAGE")
 endif()
 
-configure_file(tb_config.h.in src/tb/config.h)
+configure_file(tb_config.h.in src/tb/tb_config.h)
  
 if(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU" OR ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x -fno-exceptions -fno-rtti -Wall -Wextra -Wno-unused-parameter")
