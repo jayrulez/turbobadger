@@ -153,7 +153,7 @@ void TBWidgetsAnimationManager::Shutdown()
 
 void TBWidgetsAnimationManager::AbortAnimations(TBWidget *widget)
 {
-	AbortAnimations(widget, nullptr);
+	AbortAnimations(widget, TB_INVALID_TYPE_ID);
 }
 
 void TBWidgetsAnimationManager::AbortAnimations(TBWidget *widget, TB_TYPE_ID type_id)
@@ -165,7 +165,7 @@ void TBWidgetsAnimationManager::AbortAnimations(TBWidget *widget, TB_TYPE_ID typ
 		{
 			// Skip this animation if we asked for a specific (and
 			// different) animation type.
-			if (type_id != nullptr && !wao->IsOfTypeId(type_id))
+			if (type_id != TB_INVALID_TYPE_ID && !wao->IsOfTypeId(type_id))
 				continue;
 
 			// Abort the animation. This will both autoremove itself

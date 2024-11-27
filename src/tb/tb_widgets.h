@@ -1065,7 +1065,7 @@ private:
 	TBWidget *FindScrollableWidget(bool scroll_x, bool scroll_y);
 	TBScroller *FindStartedScroller();
 	TBScroller *GetReadyScroller(bool scroll_x, bool scroll_y);
-	TBWidget *GetWidgetByIDInternal(const TBID &id, const TB_TYPE_ID type_id = nullptr);
+	TBWidget *GetWidgetByIDInternal(const TBID &id, const TB_TYPE_ID type_id = TB_INVALID_TYPE_ID);
 	void InvokeSkinUpdatesInternal(bool force_update);
 	void InvokeProcessInternal();
 	static void SetHoveredWidget(TBWidget *widget, bool touch);
