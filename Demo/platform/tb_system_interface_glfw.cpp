@@ -32,7 +32,7 @@ void tb::TBSystemInterfaceGlfw::ReschedulePlatformTimer(double fire_time, bool f
 	{
 		set_fire_time = fire_time;
 		double delay = fire_time - tb::g_system_interface->GetTimeMS();
-		unsigned int idelay = (unsigned int)tb::MAX(delay, 0.0);
+		unsigned int idelay = (unsigned int)tb::Max(delay, 0.0);
 		glfwRescheduleTimer(idelay);
 	}
 }
