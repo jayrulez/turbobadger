@@ -11,7 +11,9 @@
 
 // Configure stb image and remove some features we don't use to reduce binary size.
 #define STB_IMAGE_STATIC
+#ifndef TB_NO_STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
+#endif
 //#define STBI_SIMD
 #define STBI_NO_STDIO
 #define STBI_NO_FAILURE_STRINGS
