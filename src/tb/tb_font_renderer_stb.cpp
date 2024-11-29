@@ -12,7 +12,9 @@
 
 using namespace tb;
 
-#define STB_TRUETYPE_IMPLEMENTATION  // force following include to generate implementation
+#ifndef TB_NO_STB_TRUETYPE_IMPLEMENTATION
+#define STB_TRUETYPE_IMPLEMENTATION  // force following include to generate 
+#endif
 #include "thirdparty/stb_truetype.h"
 
 /** STBFontRenderer renders fonts using stb_truetype.h (http://nothings.org/) */
