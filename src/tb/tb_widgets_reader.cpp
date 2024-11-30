@@ -14,6 +14,7 @@
 #include "tb_font_renderer.h"
 #include "tb_toggle_container.h"
 #include "image/tb_image_widget.h"
+#include "tb_context.h"
 
 namespace tb {
 
@@ -439,7 +440,7 @@ void TBWidgetFactory::Register()
 
 // == TBWidgetsReader ===================================
 
-TBWidgetsReader *TBWidgetsReader::Create()
+TBWidgetsReader *TBWidgetsReader::Create(TBContext* context)
 {
 	TBWidgetsReader *w_reader = new TBWidgetsReader;
 	if (!w_reader || !w_reader->Init())
@@ -447,6 +448,7 @@ TBWidgetsReader *TBWidgetsReader::Create()
 		delete w_reader;
 		return nullptr;
 	}
+	w_reader->SetContext(context);
 	return w_reader;
 }
 
@@ -514,6 +516,9 @@ bool TBWidgetsReader::CreateWidget(TBWidget *target, TBNode *node)
 	if (!wc)
 		return false;
 
+	// Set target context to reader's context
+	target->SetContext(m_context);
+
 	// Create the widget
 	INFLATE_INFO info(this, target->GetContentRoot(), node, wc->sync_type);
 	TBWidget *new_widget = wc->Create(&info);
@@ -534,6 +539,11 @@ bool TBWidgetsReader::CreateWidget(TBWidget *target, TBNode *node)
 		new_widget->SetFocus(WIDGET_FOCUS_REASON_UNKNOWN);
 
 	return true;
+}
+
+void TBWidgetsReader::SetContext(TBContext* context)
+{
+	m_context = context;
 }
 
 } // namespace tb

@@ -39,6 +39,7 @@ freely, subject to the following restrictions:
 
 namespace tb {
 
+class TBContext;
 class TBRenderer;
 class TBSkin;
 class TBWidgetsReader;
@@ -69,6 +70,9 @@ TB_API void tb_core_shutdown();
 
 /** Returns true if turbo badger is initialized. */
 TB_API bool tb_core_is_initialized();
+
+TB_API TBContext* tb_create_context(const char* name);
+TB_API void tb_destroy_context(TBContext* context);
 
 } // namespace tb
 

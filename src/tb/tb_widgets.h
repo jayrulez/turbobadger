@@ -16,6 +16,7 @@
 
 namespace tb {
 
+class TBContext;
 class TBWindow;
 class TBWidget;
 class TBFontFace;
@@ -365,6 +366,9 @@ public:
 
 	TBWidget();
 	virtual ~TBWidget();
+
+	void SetContext(TBContext* context);
+	TBContext* GetContext() const;
 
 	/** Set the rect for this widget in its parent. The rect is relative to the parent widget.
 		The skin may expand outside this rect to draw f.ex shadows. */
@@ -903,6 +907,7 @@ public:
 		from GetPreferredSize so you normally don't need to check these params. */
 	const LayoutParams *GetLayoutParams() const { return m_layout_params; }
 
+protected:
 	// == Misc methods for invoking events. Should normally be called only on the root widget ===============
 
 	/** Invoke OnProcess and OnProcessAfterChildren on this widget and its children. */
@@ -917,22 +922,6 @@ public:
 
 	/** Invoke OnFontChanged on this widget and recursively on any children that inherit the font. */
 	void InvokeFontChanged();
-
-	/** Invoke a event on this widget.
-
-		This will first check with all registered TBWidgetListener if the event should be dispatched.
-
-		If the widgets OnEvent returns false (event not handled), it will continue traversing to
-		GetEventDestination (by default the parent) until a widget handles the event.
-
-		Note: When invoking event EVENT_TYPE_CHANGED, this will update the value of other widgets connected
-			  to the same group.
-
-		Note: Some event types will automatically invalidate states (See InvalidateStates(), InvalidateSkinStates())
-
-		Note: Remember that this widgets may be deleted after this call! So if you really must do something after
-		this call and are not sure what the event will cause, use TBWidgetSafePointer to detect self deletion. */
-	bool InvokeEvent(TBWidgetEvent &ev);
 
 	bool InvokePointerDown(int x, int y, int click_count, MODIFIER_KEYS modifierkeys, bool touch);
 	bool InvokePointerUp(int x, int y, MODIFIER_KEYS modifierkeys, bool touch);
@@ -965,6 +954,24 @@ public:
 	/** Make x and y (relative to the upper left corner of the root widget) relative to this widget. */
 	void ConvertFromRoot(int &x, int &y) const;
 
+public:
+
+	/** Invoke a event on this widget.
+
+		This will first check with all registered TBWidgetListener if the event should be dispatched.
+
+		If the widgets OnEvent returns false (event not handled), it will continue traversing to
+		GetEventDestination (by default the parent) until a widget handles the event.
+
+		Note: When invoking event EVENT_TYPE_CHANGED, this will update the value of other widgets connected
+			  to the same group.
+
+		Note: Some event types will automatically invalidate states (See InvalidateStates(), InvalidateSkinStates())
+
+		Note: Remember that this widgets may be deleted after this call! So if you really must do something after
+		this call and are not sure what the event will cause, use TBWidgetSafePointer to detect self deletion. */
+	bool InvokeEvent(TBWidgetEvent& ev);
+
 	/** Set the font description for this widget and any children that inherit the font.
 
 		Setting a unspecified TBFontDescription (no changes made since construction) means
@@ -990,7 +997,9 @@ public:
 	TBFontFace *GetFont() const;
 
 private:
+	friend class TBContext;
 	friend class TBWidgetListener;	///< It does iteration of m_listeners for us.
+	TBContext* m_context;           ///< The context of this widget
 	TBWidget *m_parent;				///< The parent of this widget
 	TBRect m_rect;					///< The rectangle of this widget, relative to the parent. See SetRect.
 	TBID m_id;						///< ID for GetWidgetByID and others.

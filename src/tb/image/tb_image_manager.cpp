@@ -100,7 +100,8 @@ void TBImage::SetImageRep(TBImageRep *image_rep)
 
 TBImageManager *g_image_manager = nullptr;
 
-TBImageManager::TBImageManager()
+TBImageManager::TBImageManager(TBContext* context)
+	: m_context(context)
 {
 	g_renderer->AddListener(this);
 }

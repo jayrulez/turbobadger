@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_scroller.h"
 #include "tb_widgets.h"
 #include "platform/tb_system_interface.h"
@@ -293,7 +294,7 @@ void TBScroller::GetTargetChildTranslation(int &x, int &y) const
 	int root_x = 0, root_y = 0;
 	int child_translation_x = 0, child_translation_y = 0;
 	TBWidget *scroll_root = m_target->GetScrollRoot();
-	scroll_root->ConvertToRoot(root_x, root_y);
+	scroll_root->GetContext()->ConvertToRoot(root_x, root_y);
 	scroll_root->GetChildTranslation(child_translation_x, child_translation_y);
 	x = root_x + child_translation_x;
 	y = root_y + child_translation_y;

@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_font_renderer.h"
 #include "tb_renderer.h"
 #include "platform/tb_system_interface.h"
@@ -449,7 +450,8 @@ void TBFontFace::Debug()
 
 // == TBFontManager ===============================================================================
 
-TBFontManager::TBFontManager()
+TBFontManager::TBFontManager(TBContext* context)
+	: m_context(context)
 {
 	// Add the test dummy font with empty name (Equals to ID 0)
 	AddFontInfo("-test-font-dummy-", "");

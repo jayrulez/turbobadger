@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_editfield.h"
 #include "tb_select.h"
 #include "tb_menu_window.h"
@@ -272,7 +273,7 @@ bool TBEditField::OnEvent(const TBWidgetEvent &ev)
 	else if (ev.type == EVENT_TYPE_CONTEXT_MENU && ev.target == this)
 	{
 		TBPoint pos_in_root(ev.target_x, ev.target_y);
-		ev.target->ConvertToRoot(pos_in_root.x, pos_in_root.y);
+		ev.target->GetContext()->ConvertToRoot(pos_in_root.x, pos_in_root.y);
 
 		if (TBMenuWindow *menu = new TBMenuWindow(ev.target, TBIDC("popupmenu")))
 		{

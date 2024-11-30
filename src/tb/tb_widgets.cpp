@@ -134,6 +134,24 @@ TBWidget::~TBWidget()
 	assert(!m_listeners.HasLinks()); // There's still listeners added to this widget!
 }
 
+void TBWidget::SetContext(TBContext* context)
+{
+	m_context = context;
+	if (!m_children.GetFirst())
+		return;
+
+	// Also ensure all children are of the same context.
+	for (TBWidget* child = GetFirstChild(); child; child = child->GetNext())
+	{
+		child->SetContext(context);
+	}
+}
+
+TBContext* TBWidget::GetContext() const
+{
+	return m_context;
+}
+
 void TBWidget::SetRect(const TBRect &rect)
 {
 	if (m_rect.Equals(rect))
@@ -328,6 +346,7 @@ void TBWidget::AddChildRelative(TBWidget *child, WIDGET_Z_REL z, TBWidget *refer
 {
 	assert(!child->m_parent);
 	child->m_parent = this;
+	child->SetContext(GetContext());
 
 	if (reference)
 	{
