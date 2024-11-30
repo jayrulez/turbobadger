@@ -27,7 +27,7 @@ void TBWidgetString::ValidatCachedSize(TBWidget *widget)
 	if (!m_height || fd != m_fd)
 	{
 		m_fd = fd;
-		TBFontFace *font = widget->GetContext()->GetFontManager()->GetFontFace(fd);
+		TBFontFace *font = g_font_manager->GetFontFace(fd);
 		m_width = font->GetStringWidth(m_text);
 		m_height = font->GetHeight();
 	}

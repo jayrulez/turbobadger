@@ -1795,9 +1795,9 @@ bool TBWidget::SetFontDescription(const TBFontDescription &font_desc)
 		return true;
 
 	// Set the font description only if we have a matching font, or succeed creating one.
-	if (GetContext()->GetFontManager()->HasFontFace(font_desc))
+	if (g_font_manager->HasFontFace(font_desc))
 		m_font_desc = font_desc;
-	else if (GetContext()->GetFontManager()->CreateFontFace(font_desc))
+	else if (g_font_manager->CreateFontFace(font_desc))
 		m_font_desc = font_desc;
 	else
 		return false;
@@ -1825,12 +1825,12 @@ TBFontDescription TBWidget::GetCalculatedFontDescription() const
 			return tmp->m_font_desc;
 		tmp = tmp->m_parent;
 	}
-	return GetContext()->GetFontManager()->GetDefaultFontDescription();
+	return g_font_manager->GetDefaultFontDescription();
 }
 
 TBFontFace *TBWidget::GetFont() const
 {
-	return GetContext()->GetFontManager()->GetFontFace(GetCalculatedFontDescription());
+	return g_font_manager->GetFontFace(GetCalculatedFontDescription());
 }
 
 } // namespace tb
