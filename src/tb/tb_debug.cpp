@@ -102,9 +102,9 @@ public:
 		if (TB_DEBUG_SETTING(RENDER_FONT_BITMAP_FRAGMENTS))
 		{
 			TBWidget *widget = TBWidget::hovered_widget ? TBWidget::hovered_widget : TBWidget::focused_widget;
-			g_font_manager->GetFontFace(widget ?
+			GetContext()->GetFontManager()->GetFontFace(widget ?
 										widget->GetCalculatedFontDescription() :
-										g_font_manager->GetDefaultFontDescription())->Debug();
+				GetContext()->GetFontManager()->GetDefaultFontDescription())->Debug();
 		}
 
 		g_renderer->Translate(-GetRect().w, 0);
