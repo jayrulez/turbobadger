@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_message_window.h"
 #include "tb_widgets_reader.h"
 #include "tb_editfield.h"
@@ -47,7 +48,7 @@ bool TBMessageWindow::Show(const char *title, const char *message, TBMessageWind
 							"		TBSkinImage: id: 2\n"
 							"		TBEditField: multiline: 1, readonly: 1, id: 1\n"
 							"	TBLayout: distribution-position: right bottom, id: 3\n";
-	if (!g_widgets_reader->LoadData(GetContentRoot(), source))
+	if (!GetContext()->GetWidgetsReader()->LoadData(GetContentRoot(), source))
 		return false;
 
 	SetText(title);
