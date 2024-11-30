@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_widgets_listener.h"
 #include "tb_popup_window.h"
 
@@ -38,7 +39,7 @@ TBRect TBPopupAlignment::GetAlignedRect(TBWidget *popup, TBWidget *target) const
 	}
 	else
 	{
-		target->ConvertToRoot(x, y);
+		target->GetContext()->ConvertToRoot(x, y);
 
 		if (align == TB_ALIGN_TOP || align == TB_ALIGN_BOTTOM)
 		{

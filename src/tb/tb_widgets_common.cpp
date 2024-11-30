@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_widgets_common.h"
 #include "tb_font_renderer.h"
 #include "tb_widgets_listener.h"
@@ -519,12 +520,12 @@ void TBScrollBar::SetLimits(double min, double max, double visible)
 	// to root and then back after the applying the new limit.
 	// This prevents sudden jumps to unexpected positions when scrolling.
 	if (captured_widget == &m_handle)
-		m_handle.ConvertToRoot(pointer_down_widget_x, pointer_down_widget_y);
+		m_handle.GetContext()->ConvertToRoot(pointer_down_widget_x, pointer_down_widget_y);
 
 	UpdateHandle();
 
 	if (captured_widget == &m_handle)
-		m_handle.ConvertFromRoot(pointer_down_widget_x, pointer_down_widget_y);
+		m_handle.GetContext()->ConvertFromRoot(pointer_down_widget_x, pointer_down_widget_y);
 }
 
 void TBScrollBar::SetValueDouble(double value)

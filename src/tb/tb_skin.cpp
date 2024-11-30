@@ -113,8 +113,9 @@ bool TBSkinCondition::GetCondition(TBSkinConditionContext &context) const
 
 // == TBSkin ================================================================
 
-TBSkin::TBSkin()
-	: m_listener(nullptr)
+TBSkin::TBSkin(TBContext* context)
+	: m_context(context)
+	, m_listener(nullptr)
 	, m_color_frag(nullptr)
 	, m_default_disabled_opacity(0.3f)
 	, m_default_placeholder_opacity(0.2f)

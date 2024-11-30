@@ -11,6 +11,7 @@
 
 namespace tb {
 
+class TBContext;
 class TBWidgetsReader;
 class TBWidgetFactory;
 class TBWidget;
@@ -139,7 +140,7 @@ public:
 class TB_API TBWidgetsReader
 {
 public:
-	static TBWidgetsReader *Create();
+	static TBWidgetsReader *Create(TBContext* context);
 	~TBWidgetsReader();
 
 	/** Add a widget factory. Does not take ownership of the factory.
@@ -156,8 +157,12 @@ public:
 	bool LoadData(TBWidget *target, const char *data, int data_len);
 	void LoadNodeTree(TBWidget *target, TBNode *node);
 private:
+	friend class TBContext;
+	TBWidgetsReader();
 	bool Init();
 	bool CreateWidget(TBWidget *target, TBNode *node);
+	void SetContext(TBContext* context);
+	TBContext* m_context;
 	TBLinkListOf<TBWidgetFactory> factories;
 };
 

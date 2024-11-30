@@ -1,6 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include "tb_context.h"
 #include "tb_widgets.h"
 
 // --------------------------------------------------------------------------------------
@@ -62,6 +63,7 @@ public:
 	virtual void Process();
 	virtual void RenderFrame();
 protected:
+	TBContext m_context;
 	AppBackend *m_backend;
 	AppRootWidget m_root;
 };

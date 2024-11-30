@@ -12,6 +12,8 @@
 
 namespace tb {
 
+class TBContext;
+
 /** TBLanguage is a basic language string manager.
 	Strings read into it can be looked up from a TBID, so either by a number
 	or the hash number from a string (done by TBID).
@@ -27,6 +29,7 @@ namespace tb {
 class TB_API TBLanguage
 {
 public:
+	TBLanguage(TBContext* context);
 	~TBLanguage();
 
 	/** Load a file into this language manager.
@@ -43,6 +46,7 @@ public:
 		be returned in debug builds. */
 	const char *GetString(const TBID &id);
 private:
+	TBContext* m_context;
 	TBHashTableOf<TBStr> strings;
 };
 

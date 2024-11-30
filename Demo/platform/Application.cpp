@@ -14,7 +14,8 @@ void AppRootWidget::OnInvalid()
 // == App =========================================================================================
 
 App::App(int width, int height)
-	: m_backend(nullptr)
+	: m_context()
+	, m_backend(nullptr)
 	, m_root(this)
 {
 	// Set initial size which suggest to the backend which size we want the window to be.

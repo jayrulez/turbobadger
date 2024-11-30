@@ -18,6 +18,7 @@
 
 namespace tb {
 
+class TBContext;
 class TBSkinConditionContext;
 
 /** Used for some values in TBSkinElement if they has not been specified in the skin. */
@@ -286,7 +287,7 @@ public:
 class TB_API TBSkin : private TBRendererListener
 {
 public:
-	TBSkin();
+	TBSkin(TBContext* context);
 	virtual ~TBSkin();
 
 	/** Set the listener for this skin. */
@@ -396,6 +397,7 @@ public:
 	virtual void OnContextRestored();
 private:
 	friend class TBSkinElement;
+	TBContext* m_context;
 	TBSkinListener *m_listener;
 	TBHashTableAutoDeleteOf<TBSkinElement> m_elements;	///< All skin elements for this skin.
 	TBBitmapFragmentManager m_frag_manager;				///< Fragment manager

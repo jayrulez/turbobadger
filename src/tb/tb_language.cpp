@@ -3,12 +3,16 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_language.h"
 #include "platform/tb_system_interface.h"
 #include "tb_node_tree.h"
 
 namespace tb {
-
+TBLanguage::TBLanguage(TBContext* context)
+	: m_context(context)
+{
+}
 TBLanguage::~TBLanguage()
 {
 	Clear();
