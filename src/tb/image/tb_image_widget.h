@@ -6,6 +6,7 @@
 #ifndef TB_IMAGE_WIDGET_H
 #define TB_IMAGE_WIDGET_H
 
+#include "tb_context.h"
 #include "tb_widgets.h"
 
 #ifdef TB_IMAGE
@@ -27,7 +28,7 @@ public:
 	TBImageWidget() {}
 
 	void SetImage(const TBImage &image) { m_image = image; }
-	void SetImage(const char *filename) { m_image = g_image_manager->GetImage(filename); }
+	void SetImage(const char *filename) { m_image = GetContext()->GetImageManager()->GetImage(filename); }
 
 	virtual PreferredSize OnCalculatePreferredContentSize(const SizeConstraints &constraints);
 

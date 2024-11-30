@@ -109,7 +109,7 @@ private:
 };
 
 /** The global TBImageManager. */
-extern TBImageManager *g_image_manager;
+//extern TBImageManager *g_image_manager;
 
 } // namespace tb
 

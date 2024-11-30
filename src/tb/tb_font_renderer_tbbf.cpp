@@ -276,7 +276,7 @@ TBFontFace *TBBFRenderer::Create(TBFontManager *font_manager, const char *filena
 	if (TBBFRenderer *fr = new TBBFRenderer())
 	{
 		if (fr->Load(filename, (int) font_desc.GetSize()))
-			if (TBFontFace *font = new TBFontFace(font_manager->GetGlyphCache(), fr, font_desc))
+			if (TBFontFace *font = new TBFontFace(font_manager->GetContext(), font_manager->GetGlyphCache(), fr, font_desc))
 				return font;
 		delete fr;
 	}

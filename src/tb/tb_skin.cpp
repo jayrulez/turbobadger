@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_skin.h"
 #include "tb_shape_rasterizer.h"
 #include "platform/tb_system_interface.h"
@@ -483,8 +484,8 @@ TBSkinElement *TBSkin::PaintSkin(const TBRect &dst_rect, TBSkinElement *element,
 	}
 
 	// Paint ugly rectangles on invalid skin elements in debug builds.
-	TB_IF_DEBUG(if (paint_error_highlight) g_tb_skin->PaintRect(dst_rect.Expand(1, 1), TBColor(255, 205, 0), 1));
-	TB_IF_DEBUG(if (paint_error_highlight) g_tb_skin->PaintRect(dst_rect.Shrink(1, 1), TBColor(255, 0, 0), 1));
+	TB_IF_DEBUG(if (paint_error_highlight) m_context->GetSkin()->PaintRect(dst_rect.Expand(1, 1), TBColor(255, 205, 0), 1));
+	TB_IF_DEBUG(if (paint_error_highlight) m_context->GetSkin()->PaintRect(dst_rect.Shrink(1, 1), TBColor(255, 0, 0), 1));
 
 	element->is_painting = false;
 	return return_element;

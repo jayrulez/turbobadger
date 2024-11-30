@@ -7,6 +7,7 @@
 
 #ifdef TB_IMAGE
 
+#include "tb_context.h"
 #include "platform/tb_system_interface.h"
 #include "tb_tempbuffer.h"
 #include "tb_skin.h"
@@ -98,7 +99,7 @@ void TBImage::SetImageRep(TBImageRep *image_rep)
 
 // == TBImageManager ====================================================================
 
-TBImageManager *g_image_manager = nullptr;
+//TBImageManager *g_image_manager = nullptr;
 
 TBImageManager::TBImageManager(TBContext* context)
 	: m_context(context)
@@ -128,10 +129,10 @@ TBImage TBImageManager::GetImage(const char *filename)
 	{
 		// Load a fragment. Load a destination DPI bitmap if available.
 		TBBitmapFragment *fragment = nullptr;
-		if (g_tb_skin->GetDimensionConverter()->NeedConversion())
+		if (m_context->GetSkin()->GetDimensionConverter()->NeedConversion())
 		{
 			TBTempBuffer filename_dst_DPI;
-			g_tb_skin->GetDimensionConverter()->GetDstDPIFilename(filename, &filename_dst_DPI);
+			m_context->GetSkin()->GetDimensionConverter()->GetDstDPIFilename(filename, &filename_dst_DPI);
 			fragment = m_frag_manager.GetFragmentFromFile(filename_dst_DPI.GetData(), false);
 		}
 		if (!fragment)

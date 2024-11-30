@@ -389,7 +389,7 @@ void TBProgressSpinner::OnPaint(const PaintProps &paint_props)
 {
 	if (IsRunning())
 	{
-		TBSkinElement *e = g_tb_skin->GetSkinElement(m_skin_fg);
+		TBSkinElement *e = GetContext()->GetSkin()->GetSkinElement(m_skin_fg);
 		if (e && e->bitmap)
 		{
 			int size = e->bitmap->Height();

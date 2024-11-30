@@ -143,7 +143,7 @@ private:
 class TB_API TBFontFace
 {
 public:
-	TBFontFace(TBFontGlyphCache *glyph_cache, TBFontRenderer *renderer, const TBFontDescription &font_desc);
+	TBFontFace(TBContext* context, TBFontGlyphCache *glyph_cache, TBFontRenderer *renderer, const TBFontDescription &font_desc);
 	~TBFontFace();
 
 	/** Render all glyphs needed to display the string. */
@@ -190,6 +190,8 @@ private:
 	TBFontGlyph *GetGlyph(UCS4 cp, bool render_if_needed);
 	TBFontGlyph *CreateAndCacheGlyph(const TBID &hash_id, UCS4 cp);
 	void RenderGlyph(TBFontGlyph *glyph);
+
+	TBContext* m_context;
 	TBFontGlyphCache *m_glyph_cache;
 	TBFontRenderer *m_font_renderer;
 	TBFontDescription m_font_desc;
@@ -242,6 +244,8 @@ class TB_API TBFontManager
 public:
 	TBFontManager(TBContext* context);
 	~TBFontManager();
+
+	TBContext* GetContext() const;
 
 	/** Add a renderer so fonts supported by the renderer can be created. Ownership of the
 		renderer is taken, until calling RemoveRenderer. */
