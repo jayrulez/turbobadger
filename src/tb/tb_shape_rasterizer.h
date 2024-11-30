@@ -35,7 +35,7 @@ public:
 	void StencilRectRadius(const TBRect &rect, int r1, int r2, int r3, int r4, float mul);
 	void StencilInvert();
 	void StencilBlur(float radius);
-	void StencilGlyph(const TBFontDescription &fd, const char *glyph_str, float mul);
+	void StencilGlyph(TBFontManager* font_manager, const TBFontDescription &fd, const char *glyph_str, float mul);
 	void StencilStencil(int x, int y, const uint8 *st, int st_w, int st_h, int st_stride, float mul);
 
 	void ColorClear();

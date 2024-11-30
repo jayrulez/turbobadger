@@ -367,7 +367,7 @@ void TBSkin::RasterizeShape(TBNode *node)
 			TBFontDescription fd(m_glyph_font_desc);
 			fd.SetSize(GetPxFromNode(action_node->GetNode("size"), (int) fd.GetSize()));
 			const float mul = action_node->GetValueFloat("mul", 1.f);
-			shape.StencilGlyph(fd, action_node->GetValue().GetString(), mul);
+			shape.StencilGlyph(m_context->GetFontManager(), fd, action_node->GetValue().GetString(), mul);
 		} else if (strcmp(action_node->GetName(), "sclear") == 0) {
 			shape.StencilClear();
 		} else if (strcmp(action_node->GetName(), "sinvert") == 0) {

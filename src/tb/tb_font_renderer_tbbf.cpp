@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_font_renderer.h"
 #include "tb_renderer.h"
 #include "tb_tempbuffer.h"
@@ -283,10 +284,10 @@ TBFontFace *TBBFRenderer::Create(TBFontManager *font_manager, const char *filena
 	return nullptr;
 }
 
-TB_API void register_tbbf_font_renderer()
+TB_API void register_tbbf_font_renderer(TBContext* context)
 {
 	if (TBBFRenderer *fr = new TBBFRenderer)
-		g_font_manager->AddRenderer(fr);
+		context->GetFontManager()->AddRenderer(fr);
 }
 
 #endif // TB_FONT_RENDERER_TBBF
