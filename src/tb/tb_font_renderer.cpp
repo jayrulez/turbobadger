@@ -240,8 +240,8 @@ void TBFontGlyphCache::OnContextRestored()
 
 // ================================================================================================
 
-TBFontFace::TBFontFace(TBFontGlyphCache *glyph_cache, TBFontRenderer *renderer, const TBFontDescription &font_desc)
-	: m_glyph_cache(glyph_cache), m_font_renderer(renderer), m_font_desc(font_desc), m_bgFont(nullptr), m_bgX(0), m_bgY(0)
+TBFontFace::TBFontFace(TBContext* context, TBFontGlyphCache *glyph_cache, TBFontRenderer *renderer, const TBFontDescription &font_desc)
+	: m_context(context), m_glyph_cache(glyph_cache), m_font_renderer(renderer), m_font_desc(font_desc), m_bgFont(nullptr), m_bgX(0), m_bgY(0)
 {
 	if (m_font_renderer)
 		m_metrics = m_font_renderer->GetMetrics();
@@ -407,7 +407,7 @@ void TBFontFace::DrawString(int x, int y, const TBColor &color, const char *str,
 			}
 		}
 		else if (!m_font_renderer) // This is the test font. Use same glyph width as height and draw square.
-			g_tb_skin->PaintRect(TBRect(x, y, m_metrics.height / 3, m_metrics.height), color, 1);
+			m_context->GetSkin()->PaintRect(TBRect(x, y, m_metrics.height / 3, m_metrics.height), color, 1);
 		prev_cp = cp;
 	}
 
@@ -466,6 +466,11 @@ TBFontManager::~TBFontManager()
 {
 }
 
+TBContext* TBFontManager::GetContext() const
+{
+	return m_context;
+}
+
 TBFontInfo *TBFontManager::AddFontInfo(const char *filename, const char *name)
 {
 	if (TBFontInfo *fi = new TBFontInfo(filename, name))
@@ -506,7 +511,7 @@ TBFontFace *TBFontManager::CreateFontFace(const TBFontDescription &font_desc)
 
 	if (fi->GetID() == 0) // Is this the test dummy font
 	{
-		if (TBFontFace *font = new TBFontFace(&m_glyph_cache, nullptr, font_desc))
+		if (TBFontFace *font = new TBFontFace(m_context, &m_glyph_cache, nullptr, font_desc))
 		{
 			if (m_fonts.Add(font_desc.GetFontFaceID(), font))
 				return font;

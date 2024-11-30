@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_scroll_container.h"
 #include "platform/tb_system_interface.h"
 #include <assert.h>
@@ -78,7 +79,7 @@ void TBScrollContainerRoot::OnPaintChildren(const PaintProps &paint_props)
 
 	TBRect old_clip_rect = g_renderer->SetClipRect(clip_rect, true);
 
-	TB_IF_DEBUG_SETTING(LAYOUT_CLIPPING, g_tb_skin->PaintRect(clip_rect, TBColor(255, 0, 0, 200), 1));
+	TB_IF_DEBUG_SETTING(LAYOUT_CLIPPING, GetContext()->GetSkin()->PaintRect(clip_rect, TBColor(255, 0, 0, 200), 1));
 
 	TBWidget::OnPaintChildren(paint_props);
 

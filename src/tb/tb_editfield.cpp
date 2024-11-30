@@ -311,7 +311,7 @@ void TBEditField::OnPaint(const PaintProps &paint_props)
 	if (m_style_edit.IsEmpty())
 	{
 		float old_opacity = g_renderer->GetOpacity();
-		g_renderer->SetOpacity(old_opacity * g_tb_skin->GetDefaultPlaceholderOpacity());
+		g_renderer->SetOpacity(old_opacity * GetContext()->GetSkin()->GetDefaultPlaceholderOpacity());
 		TBRect placeholder_rect(visible_rect.x, visible_rect.y, visible_rect.w, GetFont()->GetHeight());
 		m_placeholder.Paint(this, placeholder_rect, paint_props.text_color);
 		g_renderer->SetOpacity(old_opacity);
@@ -327,7 +327,7 @@ void TBEditField::OnPaintChildren(const PaintProps &paint_props)
 	TBWidget::OnPaintChildren(paint_props);
 
 	// Draw fadeout skin at the needed edges.
-	DrawEdgeFadeout(GetVisibleRect(),
+	DrawEdgeFadeout(GetContext(), GetVisibleRect(),
 		TBIDC("TBEditField.fadeout_x"),
 		TBIDC("TBEditField.fadeout_y"),
 		m_scrollbar_x.GetValue(),
@@ -472,24 +472,24 @@ void TBEditField::DrawString(int32 x, int32 y, TBFontFace *font, const TBColor &
 
 void TBEditField::DrawRect(const TBRect &rect, const TBColor &color)
 {
-	g_tb_skin->PaintRect(rect, color, 1);
+	GetContext()->GetSkin()->PaintRect(rect, color, 1);
 }
 
 void TBEditField::DrawRectFill(const TBRect &rect, const TBColor &color)
 {
-	g_tb_skin->PaintRectFill(rect, color);
+	GetContext()->GetSkin()->PaintRectFill(rect, color);
 }
 
 void TBEditField::DrawTextSelectionBg(const TBRect &rect)
 {
 	TBWidgetSkinConditionContext context(this);
-	g_tb_skin->PaintSkin(rect, TBIDC("TBEditField.selection"), static_cast<SKIN_STATE>(GetAutoState()), context);
+	GetContext()->GetSkin()->PaintSkin(rect, TBIDC("TBEditField.selection"), static_cast<SKIN_STATE>(GetAutoState()), context);
 }
 
 void TBEditField::DrawContentSelectionFg(const TBRect &rect)
 {
 	TBWidgetSkinConditionContext context(this);
-	g_tb_skin->PaintSkin(rect, TBIDC("TBEditField.selection"), static_cast<SKIN_STATE>(GetAutoState()), context);
+	GetContext()->GetSkin()->PaintSkin(rect, TBIDC("TBEditField.selection"), static_cast<SKIN_STATE>(GetAutoState()), context);
 }
 
 void TBEditField::DrawCaret(const TBRect &rect)

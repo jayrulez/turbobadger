@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_widgets.h"
 #include "tb_window.h"
 #include "tb_widgets_listener.h"
@@ -75,17 +76,18 @@ private:
 
 // == TBWidget::PaintProps ==============================================================
 
-TBWidget::PaintProps::PaintProps()
+TBWidget::PaintProps::PaintProps(TBContext* context)
 {
 	// Set the default properties, used for the root widgets
 	// calling InvokePaint. The base values for all inheritance.
-	text_color = g_tb_skin->GetDefaultTextColor();
+	text_color = context->GetSkin()->GetDefaultTextColor();
 }
 
 // == TBWidget ==========================================================================
 
 TBWidget::TBWidget()
-	: m_parent(nullptr)
+	: m_context(nullptr)
+	, m_parent(nullptr)
 	, m_opacity(1.f)
 	, m_state(WIDGET_STATE_NONE)
 	, m_gravity(WIDGET_GRAVITY_DEFAULT)
@@ -452,7 +454,7 @@ TBSkinElement *TBWidget::GetSkinBgElement()
 {
 	TBWidgetSkinConditionContext context(this);
 	WIDGET_STATE state = GetAutoState();
-	return g_tb_skin->GetSkinElementStrongOverride(m_skin_bg, static_cast<SKIN_STATE>(state), context);
+	return GetContext()->GetSkin()->GetSkinElementStrongOverride(m_skin_bg, static_cast<SKIN_STATE>(state), context);
 }
 
 TBWidget *TBWidget::FindScrollableWidget(bool scroll_x, bool scroll_y)
@@ -856,7 +858,7 @@ void TBWidget::OnPaintChildren(const PaintProps &paint_props)
 					g_renderer->SetOpacity(opacity);
 
 					TBWidgetSkinConditionContext context(child);
-					g_tb_skin->PaintSkinOverlay(child->m_rect, skin_element, static_cast<SKIN_STATE>(state), context);
+					GetContext()->GetSkin()->PaintSkinOverlay(child->m_rect, skin_element, static_cast<SKIN_STATE>(state), context);
 
 					g_renderer->SetOpacity(old_opacity);
 				}
@@ -874,7 +876,7 @@ void TBWidget::OnPaintChildren(const PaintProps &paint_props)
 		{
 			WIDGET_STATE state = focused_widget->GetAutoState();
 			if (state & SKIN_STATE_FOCUSED)
-				g_tb_skin->PaintSkin(focused_widget->m_rect, TBIDC("generic_focus"), static_cast<SKIN_STATE>(state), context);
+				GetContext()->GetSkin()->PaintSkin(focused_widget->m_rect, TBIDC("generic_focus"), static_cast<SKIN_STATE>(state), context);
 		}
 	}
 
@@ -1183,7 +1185,7 @@ float TBWidget::CalculateOpacityInternal(WIDGET_STATE state, TBSkinElement *skin
 	if (skin_element)
 		opacity *= skin_element->opacity;
 	if (state & WIDGET_STATE_DISABLED)
-		opacity *= g_tb_skin->GetDefaultDisabledOpacity();
+		opacity *= GetContext()->GetSkin()->GetDefaultDisabledOpacity();
 	return Clamp(opacity, 0.f, 1.f);
 }
 
@@ -1211,10 +1213,10 @@ void TBWidget::InvokePaint(const PaintProps &parent_paint_props)
 	// Paint background skin
 	TBRect local_rect(0, 0, m_rect.w, m_rect.h);
 	TBWidgetSkinConditionContext context(this);
-	TBSkinElement *used_element = g_tb_skin->PaintSkin(local_rect, skin_element, static_cast<SKIN_STATE>(state), context);
+	TBSkinElement *used_element = GetContext()->GetSkin()->PaintSkin(local_rect, skin_element, static_cast<SKIN_STATE>(state), context);
 	assert(!!used_element == !!skin_element);
 
-	TB_IF_DEBUG_SETTING(LAYOUT_BOUNDS, g_tb_skin->PaintRect(local_rect, TBColor(255, 255, 255, 50), 1));
+	TB_IF_DEBUG_SETTING(LAYOUT_BOUNDS, GetContext()->GetSkin()->PaintRect(local_rect, TBColor(255, 255, 255, 50), 1));
 
 	// Inherit properties from parent if not specified in the used skin for this widget.
 	PaintProps paint_props = parent_paint_props;
@@ -1240,12 +1242,12 @@ void TBWidget::InvokePaint(const PaintProps &parent_paint_props)
 		const double now = g_system_interface->GetTimeMS();
 		if (now < last_layout_time + debug_time)
 		{
-			g_tb_skin->PaintRect(local_rect, TBColor(255, 30, 30, 200), 1);
+			GetContext()->GetSkin()->PaintRect(local_rect, TBColor(255, 30, 30, 200), 1);
 			Invalidate();
 		}
 		if (now < last_measure_time + debug_time)
 		{
-			g_tb_skin->PaintRect(local_rect.Shrink(1, 1), TBColor(255, 255, 30, 200), 1);
+			GetContext()->GetSkin()->PaintRect(local_rect.Shrink(1, 1), TBColor(255, 255, 30, 200), 1);
 			Invalidate();
 		}
 	}

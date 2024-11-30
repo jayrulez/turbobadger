@@ -646,7 +646,7 @@ public:
 	class TB_API PaintProps
 	{
 	public:
-		PaintProps();
+		PaintProps(TBContext* context);
 
 		/** Text color as specified in the skin element, or inherited from parent. */
 		TBColor text_color;

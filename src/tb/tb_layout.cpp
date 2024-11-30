@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include "tb_context.h"
 #include "tb_layout.h"
 #include "platform/tb_system_interface.h"
 #include "tb_skin_util.h"
@@ -216,7 +217,7 @@ int TBLayout::CalculateSpacing()
 
 		assert(SPACING_FROM_SKIN == SKIN_VALUE_NOT_SPECIFIED);
 		if (spacing == SPACING_FROM_SKIN /*|| spacing == SKIN_VALUE_NOT_SPECIFIED*/)
-			spacing = g_tb_skin->GetDefaultSpacing();
+			spacing = GetContext()->GetSkin()->GetDefaultSpacing();
 	}
 	return spacing;
 }
@@ -443,7 +444,7 @@ void TBLayout::OnPaintChildren(const PaintProps &paint_props)
 
 		old_clip_rect = g_renderer->SetClipRect(clip_rect, true);
 
-		TB_IF_DEBUG_SETTING(LAYOUT_CLIPPING, g_tb_skin->PaintRect(clip_rect, TBColor(255, 0, 0, 200), 1));
+		TB_IF_DEBUG_SETTING(LAYOUT_CLIPPING, GetContext()->GetSkin()->PaintRect(clip_rect, TBColor(255, 0, 0, 200), 1));
 	}
 
 	// Paint children
@@ -459,7 +460,7 @@ void TBLayout::OnPaintChildren(const PaintProps &paint_props)
 		else
 			skin_y = TBIDC("TBLayout.fadeout_y");
 
-		DrawEdgeFadeout(padding_rect, skin_x, skin_y,
+		DrawEdgeFadeout(GetContext(), padding_rect, skin_x, skin_y,
 			m_overflow_scroll,
 			m_overflow_scroll,
 			m_overflow - m_overflow_scroll,
