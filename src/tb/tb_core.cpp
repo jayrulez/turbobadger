@@ -20,7 +20,7 @@ namespace tb {
 
 TB_API TBRenderer *g_renderer = nullptr;
 //TB_API TBSkin *g_tb_skin = nullptr;
-TB_API TBWidgetsReader *g_widgets_reader = nullptr;
+//TB_API TBWidgetsReader *g_widgets_reader = nullptr;
 TB_API TBLanguage *g_tb_lng = nullptr;
 TB_API TBFontManager *g_font_manager = nullptr;
 TB_API TBSystemInterface *g_system_interface = nullptr;
@@ -45,7 +45,7 @@ bool tb_core_init(
 	g_tb_lng = new TBLanguage(nullptr);
 	g_font_manager = new TBFontManager(nullptr);
 	//g_tb_skin = new TBSkin(nullptr);
-	g_widgets_reader = TBWidgetsReader::Create(nullptr);
+	//g_widgets_reader = TBWidgetsReader::Create(nullptr);
 #ifdef TB_IMAGE
 	//g_image_manager = new TBImageManager(nullptr);
 #endif
@@ -61,7 +61,7 @@ void tb_core_shutdown()
 #ifdef TB_IMAGE
 		//delete g_image_manager;
 #endif
-		delete g_widgets_reader;
+		//delete g_widgets_reader;
 		//delete g_tb_skin;
 		delete g_font_manager;
 		delete g_tb_lng;

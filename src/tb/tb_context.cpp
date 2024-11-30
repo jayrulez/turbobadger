@@ -19,8 +19,6 @@ namespace tb
 	{
 		m_skin = new TBSkin(this);
 		m_widgets_reader = TBWidgetsReader::Create(this);
-		m_language = new TBLanguage(this);
-		m_font_manager = new TBFontManager(this);
 #ifdef TB_IMAGE
 		m_image_manager = new TBImageManager(this);
 #endif
@@ -34,8 +32,6 @@ namespace tb
 #ifdef TB_IMAGE
 		delete m_image_manager;
 #endif
-		delete m_font_manager;
-		delete m_language;
 		delete m_widgets_reader;
 		delete m_skin;
 	}
@@ -50,15 +46,6 @@ namespace tb
 		return m_widgets_reader;
 	}
 
-	TBLanguage* TBContext::GetLanguage() const
-	{
-		return m_language;
-	}
-
-	TBFontManager* TBContext::GetFontManager() const
-	{
-		return m_font_manager;
-	}
 #ifdef TB_IMAGE
 	TBImageManager* TBContext::GetImageManager() const
 	{

@@ -34,7 +34,7 @@ public:
 	DebugSettingsWindow(TBWidget *root)
 	{
 		SetText("Debug settings");
-		g_widgets_reader->LoadData(this,
+		GetContext()->GetWidgetsReader()->LoadData(this,
 			"TBLayout: axis: y, distribution: available, position: left\n"
 			"	TBLayout: id: 'container', axis: y, size: available\n"
 			"	TBTextField: text: 'Event output:'\n"

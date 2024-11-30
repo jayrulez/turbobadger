@@ -37,8 +37,6 @@ namespace tb {
     class TBStr;
     class TBSkin;
     class TBWidgetsReader;
-    class TBLanguage;
-    class TBFontManager;
 #ifdef TB_IMAGE
     class TBImageManager;
 #endif
@@ -53,8 +51,6 @@ namespace tb {
 
         TBSkin* GetSkin() const;
         TBWidgetsReader* GetWidgetsReader() const;
-        TBLanguage* GetLanguage() const;
-        TBFontManager* GetFontManager() const;
 #ifdef TB_IMAGE
         TBImageManager* GetImageManager() const;
 #endif
@@ -115,8 +111,6 @@ namespace tb {
         TBStr m_name;
         TBSkin* m_skin;
         TBWidgetsReader* m_widgets_reader;
-        TBLanguage* m_language;
-        TBFontManager* m_font_manager;
 #ifdef TB_IMAGE
         TBImageManager* m_image_manager;
 #endif

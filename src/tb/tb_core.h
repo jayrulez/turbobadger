@@ -51,7 +51,7 @@ class TBClipboardInterface;
 
 TB_API extern TBRenderer *g_renderer;
 //TB_API extern TBSkin *g_tb_skin;
-TB_API extern TBWidgetsReader *g_widgets_reader;
+//TB_API extern TBWidgetsReader *g_widgets_reader;
 TB_API extern TBLanguage *g_tb_lng;
 TB_API extern TBFontManager *g_font_manager;
 TB_API extern TBSystemInterface* g_system_interface;
