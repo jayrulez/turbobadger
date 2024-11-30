@@ -37,7 +37,6 @@ TBEditField::TBEditField()
 	: m_edit_type(EDIT_TYPE_TEXT)
 	, m_adapt_to_content_size(false)
 	, m_virtual_width(250)
-	, m_style_edit(nullptr)// todo, fix this
 {
 	SetIsFocusable(true);
 	SetWantLongClick(true);
@@ -306,7 +305,7 @@ void TBEditField::OnPaint(const PaintProps &paint_props)
 
 	// Draw text content, caret etc.
 	visible_rect.x = visible_rect.y = 0;
-	m_style_edit.Paint(GetContext()->GetFontManager(), visible_rect, GetCalculatedFontDescription(), paint_props.text_color);
+	m_style_edit.Paint(visible_rect, GetCalculatedFontDescription(), paint_props.text_color);
 
 	// If empty, draw placeholder text with some opacity.
 	if (m_style_edit.IsEmpty())
@@ -339,12 +338,12 @@ void TBEditField::OnPaintChildren(const PaintProps &paint_props)
 
 void TBEditField::OnAdded()
 {
-	m_style_edit.SetFont(GetContext()->GetFontManager(), GetCalculatedFontDescription());
+	m_style_edit.SetFont(GetCalculatedFontDescription());
 }
 
 void TBEditField::OnFontChanged()
 {
-	m_style_edit.SetFont(GetContext()->GetFontManager(), GetCalculatedFontDescription());
+	m_style_edit.SetFont(GetCalculatedFontDescription());
 }
 
 void TBEditField::OnFocusChanged(bool focused)

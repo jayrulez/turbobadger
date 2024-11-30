@@ -13,7 +13,6 @@
 
 namespace tb {
 
-class TBFontManager;
 class TBStyleEdit;
 class TBBlock;
 class TBTextFragment;
@@ -159,7 +158,7 @@ public:
 	void Pop();
 
 	/** Get the font face from the current font description. */
-	TBFontFace *GetFont(TBFontManager* font_manager) const;
+	TBFontFace *GetFont() const;
 public:
 	int next_index;
 	TBListOf<Data> list;
@@ -217,9 +216,9 @@ public:
 	int32 CalculateBaseline(TBFontFace *font) const;
 
 	void Invalidate();
-	void BuildSelectionRegion(TBFontManager* font_manager, int32 translate_x, int32 translate_y, TBTextProps *props,
+	void BuildSelectionRegion(int32 translate_x, int32 translate_y, TBTextProps *props,
 		TBRegion &bg_region, TBRegion &fg_region);
-	void Paint(TBFontManager* font_manager, int32 translate_x, int32 translate_y, TBTextProps *props);
+	void Paint(int32 translate_x, int32 translate_y, TBTextProps *props);
 public:
 	TBStyleEdit *styledit;
 	TBLinkListOf<TBTextFragment> fragments;
@@ -317,8 +316,8 @@ public:
 
 	void UpdateContentPos(const TBBlock *block);
 
-	void BuildSelectionRegion(TBFontManager* font_manager, const TBPaintProps *props, TBRegion &bg_region, TBRegion &fg_region);
-	void Paint(TBFontManager* font_manager, const TBPaintProps *props);
+	void BuildSelectionRegion(const TBPaintProps *props, TBRegion &bg_region, TBRegion &fg_region);
+	void Paint(const TBPaintProps *props);
 	void Click(const TBBlock *block, int button, uint32 modifierkeys);
 
 	bool IsText() const					{ return !IsEmbedded(); }
@@ -365,16 +364,16 @@ public:
 class TB_API TBStyleEdit
 {
 public:
-	TBStyleEdit(TBFontManager* font_manager);
+	TBStyleEdit();
 	virtual ~TBStyleEdit();
 
 	void SetListener(TBStyleEditListener *listener);
 	void SetContentFactory(TBTextFragmentContentFactory *content_factory);
 	void SetSyntaxHighlighter(TBSyntaxHighlighter *syntax_highlighter);
 
-	void SetFont(TBFontManager* font_manager, const TBFontDescription &font_desc);
+	void SetFont(const TBFontDescription &font_desc);
 
-	void Paint(TBFontManager* font_manager, const TBRect &rect, const TBFontDescription &font_desc, const TBColor &text_color);
+	void Paint(const TBRect &rect, const TBFontDescription &font_desc, const TBColor &text_color);
 	bool KeyDown(int key, SPECIAL_KEY special_key, MODIFIER_KEYS modifierkeys);
 	bool MouseDown(const TBPoint &point, int button, int clicks, MODIFIER_KEYS modifierkeys, bool touch);
 	bool MouseUp(const TBPoint &point, int button, MODIFIER_KEYS modifierkeys, bool touch);

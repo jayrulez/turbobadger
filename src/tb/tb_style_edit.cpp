@@ -671,9 +671,9 @@ void TBTextProps::Pop()
 	data = next_index > 0 ? list.Get(next_index - 1) : &base;
 }
 
-TBFontFace *TBTextProps::GetFont(TBFontManager* font_manager) const
+TBFontFace *TBTextProps::GetFont() const
 {
-	return font_manager->GetFontFace(data->font_desc);
+	return g_font_manager->GetFontFace(data->font_desc);
 }
 
 // ============================================================================
@@ -1124,7 +1124,7 @@ void TBBlock::Invalidate()
 		styledit->listener->Invalidate(TBRect(0, - styledit->scroll_y + ypos, styledit->layout_width, height));
 }
 
-void TBBlock::BuildSelectionRegion(TBFontManager* font_manager, int32 translate_x, int32 translate_y, TBTextProps *props,
+void TBBlock::BuildSelectionRegion(int32 translate_x, int32 translate_y, TBTextProps *props,
 	TBRegion &bg_region, TBRegion &fg_region)
 {
 	if (!styledit->selection.IsBlockSelected(this))
@@ -1139,12 +1139,12 @@ void TBBlock::BuildSelectionRegion(TBFontManager* font_manager, int32 translate_
 	TBTextFragment *fragment = fragments.GetFirst();
 	while (fragment)
 	{
-		fragment->BuildSelectionRegion(font_manager, &paint_props, bg_region, fg_region);
+		fragment->BuildSelectionRegion(&paint_props, bg_region, fg_region);
 		fragment = fragment->GetNext();
 	}
 }
 
-void TBBlock::Paint(TBFontManager* font_manager, int32 translate_x, int32 translate_y, TBTextProps *props)
+void TBBlock::Paint(int32 translate_x, int32 translate_y, TBTextProps *props)
 {
 	TMPDEBUG(styledit->listener->DrawRect(TBRect(translate_x, translate_y + ypos, styledit->layout_width, height), TBColor(255, 200, 0, 128)));
 
@@ -1163,7 +1163,7 @@ void TBBlock::Paint(TBFontManager* font_manager, int32 translate_x, int32 transl
 		if (styledit->syntax_highlighter)
 			styledit->syntax_highlighter->OnBeforePaintFragment(&paint_props, fragment);
 
-		fragment->Paint(font_manager, &paint_props);
+		fragment->Paint(&paint_props);
 
 		if (styledit->syntax_highlighter)
 			styledit->syntax_highlighter->OnAfterPaintFragment(&paint_props, fragment);
@@ -1194,7 +1194,7 @@ void TBTextFragment::UpdateContentPos(const TBBlock *block)
 		content->UpdatePos(block, xpos, ypos + block->ypos);
 }
 
-void TBTextFragment::BuildSelectionRegion(TBFontManager* font_manager, const TBPaintProps *props, TBRegion &bg_region, TBRegion &fg_region)
+void TBTextFragment::BuildSelectionRegion(const TBPaintProps *props, TBRegion &bg_region, TBRegion &fg_region)
 {
 	const TBBlock *block = props->block;
 	if (!block->styledit->selection.IsFragmentSelected(block, this))
@@ -1202,7 +1202,7 @@ void TBTextFragment::BuildSelectionRegion(TBFontManager* font_manager, const TBP
 
 	const int x = props->translate_x + xpos;
 	const int y = props->translate_y + ypos;
-	TBFontFace *font = props->props->GetFont(font_manager);
+	TBFontFace *font = props->props->GetFont();
 
 	if (content)
 	{
@@ -1225,14 +1225,14 @@ void TBTextFragment::BuildSelectionRegion(TBFontManager* font_manager, const TBP
 	bg_region.IncludeRect(TBRect(x + s1x, y, s2x, GetHeight(block, font)));
 }
 
-void TBTextFragment::Paint(TBFontManager* font_manager, const TBPaintProps *props)
+void TBTextFragment::Paint(const TBPaintProps *props)
 {
 	TBStyleEditListener *listener = props->block->styledit->listener;
 
 	const int x = props->translate_x + xpos;
 	const int y = props->translate_y + ypos;
 	const TBColor color = props->props->data->text_color;
-	TBFontFace *font = props->props->GetFont(font_manager);
+	TBFontFace *font = props->props->GetFont();
 	TBBlock *block = props->block;
 
 	if (content)
@@ -1380,7 +1380,7 @@ bool TBTextFragment::GetAllowBreakAfter(const TBBlock *block) const
 
 // ============================================================================
 
-TBStyleEdit::TBStyleEdit(TBFontManager* font_manager)
+TBStyleEdit::TBStyleEdit()
 	: listener(nullptr)
 	, content_factory(&default_content_factory)
 	, syntax_highlighter(nullptr)
@@ -1402,8 +1402,8 @@ TBStyleEdit::TBStyleEdit(TBFontManager* font_manager)
 	selection.styledit = this;
 	TMPDEBUG(packed.show_whitespace = true);
 
-	font_desc = font_manager->GetDefaultFontDescription();
-	font = font_manager->GetFontFace(font_desc);
+	font_desc = g_font_manager->GetDefaultFontDescription();
+	font = g_font_manager->GetFontFace(font_desc);
 
 #ifdef TB_TARGET_WINDOWS
 	packed.win_style_br = 1;
@@ -1438,12 +1438,12 @@ void TBStyleEdit::SetSyntaxHighlighter(TBSyntaxHighlighter *syntax_highlighter)
 	Reformat(true);
 }
 
-void TBStyleEdit::SetFont(TBFontManager* font_manager, const TBFontDescription &font_desc)
+void TBStyleEdit::SetFont(const TBFontDescription &font_desc)
 {
 	if (this->font_desc == font_desc)
 		return;
 	this->font_desc = font_desc;
-	font = font_manager->GetFontFace(font_desc);
+	font = g_font_manager->GetFontFace(font_desc);
 	Reformat(true);
 }
 
@@ -1588,7 +1588,7 @@ int32 TBStyleEdit::GetContentHeight() const
 	return content_height;
 }
 
-void TBStyleEdit::Paint(TBFontManager* font_manager, const TBRect &rect, const TBFontDescription &font_desc, const TBColor &text_color)
+void TBStyleEdit::Paint(const TBRect &rect, const TBFontDescription &font_desc, const TBColor &text_color)
 {
 	text_props.Reset(font_desc, text_color);
 
@@ -1610,7 +1610,7 @@ void TBStyleEdit::Paint(TBFontManager* font_manager, const TBRect &rect, const T
 		{
 			if (block->ypos - scroll_y > rect.y + rect.h)
 				break;
-			block->BuildSelectionRegion(font_manager, -scroll_x, -scroll_y, &text_props, bg_region, fg_region);
+			block->BuildSelectionRegion(-scroll_x, -scroll_y, &text_props, bg_region, fg_region);
 			block = block->GetNext();
 		}
 
@@ -1625,7 +1625,7 @@ void TBStyleEdit::Paint(TBFontManager* font_manager, const TBRect &rect, const T
 	{
 		if (block->ypos - scroll_y > rect.y + rect.h)
 			break;
-		block->Paint(font_manager, -scroll_x, -scroll_y, &text_props);
+		block->Paint(-scroll_x, -scroll_y, &text_props);
 		block = block->GetNext();
 	}
 
