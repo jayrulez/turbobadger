@@ -3,6 +3,7 @@
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 
+#include <math.h>
 #include "tb_font_renderer.h"
 #include "tb_renderer.h"
 #include "platform/tb_system_interface.h"
