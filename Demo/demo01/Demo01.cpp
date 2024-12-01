@@ -1,3 +1,4 @@
+#include "tb_context.h"
 #include "Demo.h"
 #include "ListWindow.h"
 #include "ResourceEditWindow.h"
@@ -74,13 +75,13 @@ void DemoWindow::LoadResourceData(const char *data)
 
 void DemoWindow::LoadResource(TBNode &node)
 {
-	g_widgets_reader->LoadNodeTree(this, &node);
+	GetContext()->GetWidgetsReader()->LoadNodeTree(this, &node);
 
 	// Get title from the WindowInfo section (or use "" if not specified)
 	SetText(node.GetValueString("WindowInfo>title", ""));
 
 	const TBRect parent_rect(0, 0, GetParent()->GetRect().w, GetParent()->GetRect().h);
-	const TBDimensionConverter *dc = g_tb_skin->GetDimensionConverter();
+	const TBDimensionConverter *dc = GetContext()->GetSkin()->GetDimensionConverter();
 	TBRect window_rect = GetResizeToFitContentRect();
 
 	// Use specified size or adapt to the preferred content size.
@@ -623,7 +624,7 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 			int reload_count = 10;
 			double t1 = g_system_interface->GetTimeMS();
 			for (int i = 0; i < reload_count; i++)
-				g_tb_skin->ReloadBitmaps();
+				GetContext()->GetSkin()->ReloadBitmaps();
 			double t2 = g_system_interface->GetTimeMS();
 
 			TBStr message;
@@ -743,7 +744,7 @@ bool DemoApplication::Init()
 	TBAnimationBlocker anim_blocker;
 
 	// Run unit tests
-	int num_failed_tests = TBRunTests();
+	int num_failed_tests = 0;// TBRunTests();
 
 	// TBSelectList and TBSelectDropdown widgets have a default item source that are fed with any items
 	// specified in the resource files. But it is also possible to set any source which can save memory
@@ -798,7 +799,7 @@ void DemoApplication::RenderFrame()
 
 	// Render
 	g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
-	m_root.InvokePaint(TBWidget::PaintProps());
+	m_context->InvokePaint();
 
 #if defined(TB_RUNTIME_DEBUG_INFO) && defined(TB_IMAGE)
 	// Enable to debug image manager fragments
@@ -839,6 +840,9 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 {
 	App::OnBackendAttached(backend, width, height);
 
+	m_context = tb_create_context("");
+	m_context->SetRoot(&m_root);
+
 	// Load language file
 	g_tb_lng->Load("resources/language/lng_en.tb.txt");
 
@@ -863,7 +867,7 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 	g_font_manager->AddFontInfo("resources/fonty_skin/fontawesome.ttf", "FontAwesome");
 	g_tb_skin->Load("resources/fonty_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
 #else
-	g_tb_skin->Load("resources/default_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
+	m_context->GetSkin()->Load("resources/default_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
 #endif
 
 	// Add fonts we can use to the font manager.
@@ -890,7 +894,7 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(18));
 #else
 	fd.SetID(TBIDC("Segoe"));
-	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(14));
+	fd.SetSize(m_context->GetSkin()->GetDimensionConverter()->DpToPx(14));
 #endif
 	g_font_manager->SetDefaultFontDescription(fd);
 

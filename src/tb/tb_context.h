@@ -55,6 +55,7 @@ namespace tb {
         TBImageManager* GetImageManager() const;
 #endif
 
+        void SetRoot(TBWidget* widget);
         void AddWidget(TBWidget* widget);
         void RemoveWidget(TBWidget* widget);
 
@@ -70,7 +71,7 @@ namespace tb {
         void InvokeProcessStates(bool force_update = false);
 
         /** Invoke paint on the root widget of this context */
-        void InvokePaint(const TBWidget::PaintProps& paint_props);
+        void InvokePaint();
 
         /** Calls InvokeFontChanged on the root widget of this context */
         void InvokeFontChanged();

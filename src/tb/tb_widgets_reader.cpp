@@ -440,15 +440,18 @@ void TBWidgetFactory::Register()
 
 // == TBWidgetsReader ===================================
 
+TBWidgetsReader::TBWidgetsReader(TBContext* context)
+	: m_context(context)
+{}
+
 TBWidgetsReader *TBWidgetsReader::Create(TBContext* context)
 {
-	TBWidgetsReader *w_reader = new TBWidgetsReader;
+	TBWidgetsReader *w_reader = new TBWidgetsReader(context);
 	if (!w_reader || !w_reader->Init())
 	{
 		delete w_reader;
 		return nullptr;
 	}
-	w_reader->SetContext(context);
 	return w_reader;
 }
 
@@ -539,11 +542,6 @@ bool TBWidgetsReader::CreateWidget(TBWidget *target, TBNode *node)
 		new_widget->SetFocus(WIDGET_FOCUS_REASON_UNKNOWN);
 
 	return true;
-}
-
-void TBWidgetsReader::SetContext(TBContext* context)
-{
-	m_context = context;
 }
 
 } // namespace tb

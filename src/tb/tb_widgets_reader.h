@@ -158,10 +158,9 @@ public:
 	void LoadNodeTree(TBWidget *target, TBNode *node);
 private:
 	friend class TBContext;
-	TBWidgetsReader();
+	TBWidgetsReader(TBContext* context);
 	bool Init();
 	bool CreateWidget(TBWidget *target, TBNode *node);
-	void SetContext(TBContext* context);
 	TBContext* m_context;
 	TBLinkListOf<TBWidgetFactory> factories;
 };
