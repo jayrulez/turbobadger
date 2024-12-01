@@ -6,6 +6,7 @@
 #include "tb_editfield.h"
 #include "tb_tempbuffer.h"
 #include "tb_scroll_container.h"
+#include "tb_context.h"
 #include <stdio.h>
 
 // == ResourceItem ====================================================================================
@@ -27,7 +28,7 @@ ResourceEditWindow::ResourceEditWindow()
 	// Register as global listener to intercept events in the build container
 	TBWidgetListener::AddGlobalListener(this);
 
-	g_widgets_reader->LoadFile(this, "Demo/demo01/ui_resources/resource_edit_window.tb.txt");
+	GetContext()->GetWidgetsReader()->LoadFile(this, "Demo/demo01/ui_resources/resource_edit_window.tb.txt");
 
 	m_scroll_container = GetWidgetByIDAndType<TBScrollContainer>(TBIDC("scroll_container"));
 	m_build_container = m_scroll_container->GetContentRoot();
@@ -77,7 +78,7 @@ void ResourceEditWindow::RefreshFromSource()
 	}
 
 	// Create new widgets from source
-	g_widgets_reader->LoadData(m_build_container, m_source_edit->GetText());
+	GetContext()->GetWidgetsReader()->LoadData(m_build_container, m_source_edit->GetText());
 
 	// Force focus back in case the edited resource has autofocus.
 	// FIX: It would be better to prevent the focus change instead!
@@ -165,7 +166,7 @@ bool ResourceEditWindow::OnEvent(const TBWidgetEvent &ev)
 		if (TBWindow *win = new TBWindow())
 		{
 			win->SetText("Test window");
-			g_widgets_reader->LoadData(win->GetContentRoot(), m_source_edit->GetText());
+			GetContext()->GetWidgetsReader()->LoadData(win->GetContentRoot(), m_source_edit->GetText());
 			TBRect bounds(0, 0, GetParent()->GetRect().w, GetParent()->GetRect().h);
 			win->SetRect(win->GetResizeToFitContentRect().CenterIn(bounds).MoveIn(bounds).Clip(bounds));
 			GetParent()->AddChild(win);
@@ -192,9 +193,9 @@ void ResourceEditWindow::OnPaintChildren(const PaintProps &paint_props)
 	if (TBWidget *selected_widget = GetSelectedWidget())
 	{
 		TBRect widget_rect(0, 0, selected_widget->GetRect().w, selected_widget->GetRect().h);
-		selected_widget->ConvertToRoot(widget_rect.x, widget_rect.y);
+		selected_widget->GetContext()->ConvertToRoot(widget_rect.x, widget_rect.y);
 		ConvertFromRoot(widget_rect.x, widget_rect.y);
-		g_tb_skin->PaintRect(widget_rect, TBColor(255, 205, 0), 1);
+		GetContext()->GetSkin()->PaintRect(widget_rect, TBColor(255, 205, 0), 1);
 	}
 }
 

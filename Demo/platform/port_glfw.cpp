@@ -177,7 +177,7 @@ static bool InvokeKey(GLFWwindow *window, unsigned int key, SPECIAL_KEY special_
 {
 	if (InvokeShortcut(key, special_key, modifierkeys, down))
 		return true;
-	GetBackend(window)->GetRoot()->InvokeKey(key, special_key, modifierkeys, down);
+	GetBackend(window)->GetRoot()->GetContext()->InvokeKey(key, special_key, modifierkeys, down);
 	return true;
 }
 
@@ -282,17 +282,17 @@ static void mouse_button_callback(GLFWwindow *window, int button, int action, in
 			last_y = y;
 			last_time = time;
 
-			GetBackend(window)->GetRoot()->InvokePointerDown(x, y, counter, modifier, ShouldEmulateTouchEvent());
+			GetBackend(window)->GetRoot()->GetContext()->InvokePointerDown(x, y, counter, modifier, ShouldEmulateTouchEvent());
 		}
 		else
-			GetBackend(window)->GetRoot()->InvokePointerUp(x, y, modifier, ShouldEmulateTouchEvent());
+			GetBackend(window)->GetRoot()->GetContext()->InvokePointerUp(x, y, modifier, ShouldEmulateTouchEvent());
 	}
 	else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
 	{
-		GetBackend(window)->GetRoot()->InvokePointerMove(x, y, modifier, ShouldEmulateTouchEvent());
+		GetBackend(window)->GetRoot()->GetContext()->InvokePointerMove(x, y, modifier, ShouldEmulateTouchEvent());
 		if (TBWidget::hovered_widget)
 		{
-			TBWidget::hovered_widget->ConvertFromRoot(x, y);
+			TBWidget::hovered_widget->GetContext()->ConvertFromRoot(x, y);
 			TBWidgetEvent ev(EVENT_TYPE_CONTEXT_MENU, x, y, false, modifier);
 			TBWidget::hovered_widget->InvokeEvent(ev);
 		}
@@ -304,7 +304,7 @@ void cursor_position_callback(GLFWwindow *window, double x, double y)
 	mouse_x = (int)x;
 	mouse_y = (int)y;
 	if (GetBackend(window)->GetRoot() && !(ShouldEmulateTouchEvent() && !TBWidget::captured_widget)) {
-		GetBackend(window)->GetRoot()->InvokePointerMove(mouse_x, mouse_y, GetModifierKeys(), ShouldEmulateTouchEvent());
+		GetBackend(window)->GetRoot()->GetContext()->InvokePointerMove(mouse_x, mouse_y, GetModifierKeys(), ShouldEmulateTouchEvent());
 
 		// Update cursor.
 		TBWidget *active_widget = TBWidget::captured_widget ? TBWidget::captured_widget : TBWidget::hovered_widget;
@@ -319,7 +319,7 @@ void cursor_position_callback(GLFWwindow *window, double x, double y)
 static void scroll_callback(GLFWwindow *window, double x, double y)
 {
 	if (GetBackend(window)->GetRoot())
-		GetBackend(window)->GetRoot()->InvokeWheel(mouse_x, mouse_y, (int)x, -(int)y, GetModifierKeys());
+		GetBackend(window)->GetRoot()->GetContext()->InvokeWheel(mouse_x, mouse_y, (int)x, -(int)y, GetModifierKeys());
 }
 
 /** Reschedule the platform timer, or cancel it if fire_time is TB_NOT_SOON.

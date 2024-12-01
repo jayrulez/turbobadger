@@ -47,14 +47,14 @@ void App::ShutDown()
 void App::Process()
 {
 	TBAnimationManager::Update();
-	m_root.InvokeProcessStates();
-	m_root.InvokeProcess();
+	m_context->InvokeProcessStates();
+	m_context->InvokeProcess();
 }
 
 void App::RenderFrame()
 {
 	g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
-	m_root.InvokePaint(TBWidget::PaintProps());
+	m_context->InvokePaint();
 	g_renderer->EndPaint();
 
 	// If animations are running, reinvalidate immediately

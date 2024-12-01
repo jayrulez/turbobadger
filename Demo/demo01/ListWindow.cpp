@@ -13,7 +13,7 @@ AdvancedItemWidget::AdvancedItemWidget(AdvancedItem *item, AdvancedItemSource *s
 	SetLayoutDistributionPosition(LAYOUT_DISTRIBUTION_POSITION_LEFT_TOP);
 	SetPaintOverflowFadeout(false);
 
-	g_widgets_reader->LoadFile(GetContentRoot(), "Demo/demo01/ui_resources/test_list_item.tb.txt");
+	GetContext()->GetWidgetsReader()->LoadFile(GetContentRoot(), "Demo/demo01/ui_resources/test_list_item.tb.txt");
 	TBCheckBox *checkbox = GetWidgetByIDAndType<TBCheckBox>(TBIDC("check"));
 	TBTextField *name = GetWidgetByIDAndType<TBTextField>(TBIDC("name"));
 	TBTextField *info = GetWidgetByIDAndType<TBTextField>(TBIDC("info"));

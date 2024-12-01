@@ -53,6 +53,15 @@ namespace tb
 	}
 #endif
 
+	void TBContext::SetRoot(TBWidget* widget)
+	{
+		if (m_root)
+			m_root->Die();
+
+		m_root = widget;
+		m_root->SetContext(this);
+	}
+
 	void TBContext::AddWidget(TBWidget* widget)
 	{
 		m_root->AddChild(widget);
@@ -81,9 +90,9 @@ namespace tb
 		m_root->InvokeProcessStates(force_update);
 	}
 
-	void TBContext::InvokePaint(const TBWidget::PaintProps& paint_props)
+	void TBContext::InvokePaint()
 	{
-		m_root->InvokePaint(paint_props);
+		m_root->InvokePaint(TBWidget::PaintProps(this));
 	}
 
 	void TBContext::InvokeFontChanged()

@@ -63,7 +63,7 @@ public:
 	virtual void Process();
 	virtual void RenderFrame();
 protected:
-	TBContext m_context;
+	tb::TBContext* m_context;
 	AppBackend *m_backend;
 	AppRootWidget m_root;
 };
