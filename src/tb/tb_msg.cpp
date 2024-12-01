@@ -38,7 +38,7 @@ TBMessageHandler::~TBMessageHandler()
 	DeleteAllMessages();
 }
 
-bool TBMessageHandler::PostMessageDelayed(TBID message, TBMessageData *data, uint32 delay_in_ms)
+bool TBMessageHandler::PublishMessageDelayed(TBID message, TBMessageData *data, uint32 delay_in_ms)
 {
 	return PostMessageOnTime(message, data, g_system_interface->GetTimeMS() + (double)delay_in_ms);
 }
@@ -85,7 +85,7 @@ bool TBMessageHandler::PostMessageOnTime(TBID message, TBMessageData *data, doub
 	return false;
 }
 
-bool TBMessageHandler::PostMessage(TBID message, TBMessageData *data)
+bool TBMessageHandler::PublishMessage(TBID message, TBMessageData *data)
 {
 	if (TBMessage *msg = new TBMessage(message, data, 0, this))
 	{

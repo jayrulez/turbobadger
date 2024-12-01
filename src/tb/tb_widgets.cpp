@@ -61,7 +61,7 @@ class TBLongClickTimer : private TBMessageHandler
 public:
 	TBLongClickTimer(TBWidget *widget, bool touch) : m_widget(widget), m_touch(touch)
 	{
-		PostMessageDelayed(TBIDC("TBLongClickTimer"), nullptr, g_system_interface->GetLongClickDelayMS());
+		PublishMessageDelayed(TBIDC("TBLongClickTimer"), nullptr, g_system_interface->GetLongClickDelayMS());
 	}
 	virtual void OnMessageReceived(TBMessage *msg)
 	{

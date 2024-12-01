@@ -225,7 +225,7 @@ bool TBEditField::OnEvent(const TBWidgetEvent &ev)
 			1, ev.count, TB_MODIFIER_NONE, ev.touch))
 		{
 			// Post a message to start selection scroll
-			PostMessageDelayed(TBIDC("selscroll"), nullptr, SELECTION_SCROLL_DELAY);
+			PublishMessageDelayed(TBIDC("selscroll"), nullptr, SELECTION_SCROLL_DELAY);
 			return true;
 		}
 	}
@@ -423,7 +423,7 @@ void TBEditField::OnMessageReceived(TBMessage *msg)
 		m_style_edit.caret.Invalidate();
 
 		// Post another blink message so we blink again.
-		PostMessageDelayed(TBIDC("blink"), nullptr, CARET_BLINK_TIME);
+		PublishMessageDelayed(TBIDC("blink"), nullptr, CARET_BLINK_TIME);
 	}
 	else if (msg->message == TBIDC("selscroll") && captured_widget == this)
 	{
@@ -440,7 +440,7 @@ void TBEditField::OnMessageReceived(TBMessage *msg)
 
 		// Post another setscroll message so we continue scrolling if we still should.
 		if (m_style_edit.select_state)
-			PostMessageDelayed(TBIDC("selscroll"), nullptr, SELECTION_SCROLL_DELAY);
+			PublishMessageDelayed(TBIDC("selscroll"), nullptr, SELECTION_SCROLL_DELAY);
 	}
 }
 
@@ -516,7 +516,7 @@ void TBEditField::CaretBlinkStart()
 {
 	// Post the delayed blink message if we don't already have one
 	if (!GetMessageByID(TBIDC("blink")))
-		PostMessageDelayed(TBIDC("blink"), nullptr, CARET_BLINK_TIME);
+		PublishMessageDelayed(TBIDC("blink"), nullptr, CARET_BLINK_TIME);
 }
 
 void TBEditField::CaretBlinkStop()

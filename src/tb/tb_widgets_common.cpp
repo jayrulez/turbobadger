@@ -210,7 +210,7 @@ int TBButton::GetValue()
 void TBButton::OnCaptureChanged(bool captured)
 {
 	if (captured && m_auto_repeat_click)
-		PostMessageDelayed(TBIDC("auto_click"), nullptr, auto_click_first_delay);
+		PublishMessageDelayed(TBIDC("auto_click"), nullptr, auto_click_first_delay);
 	else if (!captured)
 	{
 		if (TBMessage *msg = GetMessageByID(TBIDC("auto_click")))
@@ -252,7 +252,7 @@ void TBButton::OnMessageReceived(TBMessage *msg)
 			captured_widget->InvokeEvent(ev);
 		}
 		if (auto_click_repeat_delay)
-			PostMessageDelayed(TBIDC("auto_click"), nullptr, auto_click_repeat_delay);
+			PublishMessageDelayed(TBIDC("auto_click"), nullptr, auto_click_repeat_delay);
 	}
 }
 
@@ -373,7 +373,7 @@ void TBProgressSpinner::SetValue(int value)
 		if (!GetMessageByID(TBID(1)))
 		{
 			m_frame = 0;
-			PostMessageDelayed(TBID(1), nullptr, spin_speed);
+			PublishMessageDelayed(TBID(1), nullptr, spin_speed);
 		}
 	}
 	else
@@ -404,7 +404,7 @@ void TBProgressSpinner::OnMessageReceived(TBMessage *msg)
 	m_frame++;
 	Invalidate();
 	// Keep animation running
-	PostMessageDelayed(TBID(1), nullptr, spin_speed);
+	PublishMessageDelayed(TBID(1), nullptr, spin_speed);
 }
 
 // == TBRadioCheckBox =======================================

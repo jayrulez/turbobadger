@@ -399,7 +399,7 @@ bool ScrollContainerWindow::OnEvent(const TBWidgetEvent &ev)
 				TBMessageData *data = new TBMessageData();
 				data->id1 = ev.target->GetParent()->GetID();
 				data->v1.SetInt(i);
-				PostMessageDelayed(TBIDC("new button"), data, 100 + i * 500);
+				PublishMessageDelayed(TBIDC("new button"), data, 100 + i * 500);
 			}
 			return true;
 		}
@@ -546,7 +546,7 @@ void MainWindow::OnMessageReceived(TBMessage *msg)
 	else if (msg->message == TBIDC("busy"))
 	{
 		// Keep the message queue busy by posting another "busy" message.
-		PostMessage(TBIDC("busy"), nullptr);
+		PublishMessage(TBIDC("busy"), nullptr);
 	}
 	else if (msg->message == TBIDC("delayedmsg"))
 	{
@@ -570,7 +570,7 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 		}
 		if (ev.target->GetID() == TBIDC("msg"))
 		{
-			PostMessage(TBIDC("instantmsg"), nullptr);
+			PublishMessage(TBIDC("instantmsg"), nullptr);
 			return true;
 		}
 		else if (ev.target->GetID() == TBIDC("busymsg"))
@@ -581,7 +581,7 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 				assert(!GetMessageByID(TBIDC("busy")));
 				if (!GetMessageByID(TBIDC("busy")))
 				{
-					PostMessage(TBIDC("busy"), nullptr);
+					PublishMessage(TBIDC("busy"), nullptr);
 					TBMessageWindow *msg_win = new TBMessageWindow(this, TBIDC("test_dialog"));
 					msg_win->Show("Message window", "The message loop is now constantly busy with messages to process.\n\n"
 								"The main thread should be working hard, but input & animations should still be running smoothly.");
@@ -598,7 +598,7 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 		}
 		else if (ev.target->GetID() == TBIDC("delayedmsg"))
 		{
-			PostMessageDelayed(TBIDC("delayedmsg"), nullptr, 2000);
+			PublishMessageDelayed(TBIDC("delayedmsg"), nullptr, 2000);
 			return true;
 		}
 		else if (ev.target->GetID() == TBIDC("TBWindow.close"))

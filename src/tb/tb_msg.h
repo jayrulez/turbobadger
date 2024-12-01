@@ -78,7 +78,7 @@ public:
 	/** Posts a message to the target after a delay.
 		data may be nullptr if no extra data need to be sent. It will be deleted
 		automatically when the message is deleted. */
-	bool PostMessageDelayed(TBID message, TBMessageData *data, uint32 delay_in_ms);
+	bool PublishMessageDelayed(TBID message, TBMessageData *data, uint32 delay_in_ms);
 
 	/** Posts a message to the target at the given time (relative to g_system_interface->GetTimeMS()).
 		data may be nullptr if no extra data need to be sent. It will be deleted
@@ -88,7 +88,7 @@ public:
 	/** Posts a message to the target.
 		data may be nullptr if no extra data need to be sent. It will be deleted
 		automatically when the message is deleted. */
-	bool PostMessage(TBID message, TBMessageData *data);
+	bool PublishMessage(TBID message, TBMessageData *data);
 
 	/** Check if this messagehandler has a pending message with the given id.
 		Returns the message if found, or nullptr.
