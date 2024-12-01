@@ -11,6 +11,7 @@
 #include <tb_config.h>
 
 #include <string.h>
+#include <cstdint>
 
 #include "tb_api.h"
 
