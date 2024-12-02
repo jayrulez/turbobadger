@@ -14,8 +14,7 @@ void AppRootWidget::OnInvalid()
 // == App =========================================================================================
 
 App::App(int width, int height)
-	: m_context()
-	, m_backend(nullptr)
+	: m_backend(nullptr)
 	, m_root(this)
 {
 	// Set initial size which suggest to the backend which size we want the window to be.
@@ -47,14 +46,14 @@ void App::ShutDown()
 void App::Process()
 {
 	TBAnimationManager::Update();
-	m_context->InvokeProcessStates();
-	m_context->InvokeProcess();
+	GetBackend()->GetContext()->InvokeProcessStates();
+	GetBackend()->GetContext()->InvokeProcess();
 }
 
 void App::RenderFrame()
 {
 	g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
-	m_context->InvokePaint();
+	GetBackend()->GetContext()->InvokePaint();
 	g_renderer->EndPaint();
 
 	// If animations are running, reinvalidate immediately

@@ -48,9 +48,14 @@ void const_expr_test()
 
 // == DemoWindow ==============================================================
 
+void DemoWindow::Initialize()
+{
+	m_root->AddChild(this);
+}
+
 DemoWindow::DemoWindow(TBWidget *root)
 {
-	root->AddChild(this);
+	m_root = root;
 }
 
 bool DemoWindow::LoadResourceFile(const char *filename)
@@ -76,6 +81,7 @@ void DemoWindow::LoadResourceData(const char *data)
 void DemoWindow::LoadResource(TBNode &node)
 {
 	GetContext()->GetWidgetsReader()->LoadNodeTree(this, &node);
+	Initialize();
 
 	// Get title from the WindowInfo section (or use "" if not specified)
 	SetText(node.GetValueString("WindowInfo>title", ""));
@@ -131,10 +137,13 @@ bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
 
 class EditWindow : public DemoWindow
 {
+protected:
+	void Initialize() override {
+		LoadResourceFile("Demo/demo01/ui_resources/test_textwindow.tb.txt");
+	}
 public:
 	EditWindow(TBWidget *root) : DemoWindow(root)
 	{
-		LoadResourceFile("Demo/demo01/ui_resources/test_textwindow.tb.txt");
 	}
 	virtual void OnProcessStates()
 	{
@@ -293,9 +302,14 @@ bool LayoutWindow::OnEvent(const TBWidgetEvent &ev)
 
 // == TabContainerWindow ============================================================
 
+void TabContainerWindow::Initialize()
+{
+	DemoWindow::Initialize();
+	LoadResourceFile("Demo/demo01/ui_resources/test_tabcontainer01.tb.txt");
+}
+
 TabContainerWindow::TabContainerWindow(TBWidget *root) : DemoWindow(root)
 {
-	LoadResourceFile("Demo/demo01/ui_resources/test_tabcontainer01.tb.txt");
 }
 
 bool TabContainerWindow::OnEvent(const TBWidgetEvent &ev)
@@ -530,11 +544,16 @@ bool AnimationsWindow::OnEvent(const TBWidgetEvent &ev)
 
 // == MainWindow ==============================================================
 
-MainWindow::MainWindow(TBWidget *root) : DemoWindow(root)
+void MainWindow::Initialize()
 {
+	DemoWindow::Initialize();
 	LoadResourceFile("Demo/demo01/ui_resources/test_ui.tb.txt");
 
 	SetOpacity(0.97f);
+}
+
+MainWindow::MainWindow(TBWidget *root) : DemoWindow(root)
+{
 }
 
 void MainWindow::OnMessageReceived(TBMessage *msg)
@@ -771,9 +790,9 @@ bool DemoApplication::Init()
 	// Give the first item a skin image
 	popup_menu_source.GetItem(0)->SetSkinImage(TBIDC("Icon16"));
 
-	new MainWindow(&m_root);
+	(new MainWindow(&m_root))->SetContext(GetBackend()->GetContext());
 
-	new EditWindow(&m_root);
+	(new EditWindow(&m_root))->SetContext(GetBackend()->GetContext());
 
 	new ListWindow(&m_root, &name_source);
 
@@ -799,7 +818,7 @@ void DemoApplication::RenderFrame()
 
 	// Render
 	g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
-	m_context->InvokePaint();
+	GetBackend()->GetContext()->InvokePaint();
 
 #if defined(TB_RUNTIME_DEBUG_INFO) && defined(TB_IMAGE)
 	// Enable to debug image manager fragments
@@ -840,8 +859,7 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 {
 	App::OnBackendAttached(backend, width, height);
 
-	m_context = tb_create_context("");
-	m_context->SetRoot(&m_root);
+	backend->GetContext()->SetRoot(&m_root);
 
 	// Load language file
 	g_tb_lng->Load("resources/language/lng_en.tb.txt");
@@ -867,7 +885,7 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 	g_font_manager->AddFontInfo("resources/fonty_skin/fontawesome.ttf", "FontAwesome");
 	g_tb_skin->Load("resources/fonty_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
 #else
-	m_context->GetSkin()->Load("resources/default_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
+	GetBackend()->GetContext()->GetSkin()->Load("resources/default_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
 #endif
 
 	// Add fonts we can use to the font manager.
@@ -894,7 +912,7 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(18));
 #else
 	fd.SetID(TBIDC("Segoe"));
-	fd.SetSize(m_context->GetSkin()->GetDimensionConverter()->DpToPx(14));
+	fd.SetSize(GetBackend()->GetContext()->GetSkin()->GetDimensionConverter()->DpToPx(14));
 #endif
 	g_font_manager->SetDefaultFontDescription(fd);
 

@@ -62,14 +62,19 @@ TBWidget *AdvancedItemSource::CreateItemWidget(int index, TBSelectItemViewer *vi
 
 // == ListWindow ==============================================================
 
-ListWindow::ListWindow(TBWidget *root, TBSelectItemSource *source) : DemoWindow(root)
+void ListWindow::Initialize()
 {
 	LoadResourceFile("Demo/demo01/ui_resources/test_select.tb.txt");
-	if (TBSelectList *select = GetWidgetByIDAndType<TBSelectList>("list"))
+	if (TBSelectList* select = GetWidgetByIDAndType<TBSelectList>("list"))
 	{
-		select->SetSource(source);
+		select->SetSource(m_source);
 		select->GetScrollContainer()->SetScrollMode(SCROLL_MODE_Y_AUTO);
 	}
+}
+
+ListWindow::ListWindow(TBWidget *root, TBSelectItemSource *source) : DemoWindow(root)
+{
+	m_source = source;
 }
 
 bool ListWindow::OnEvent(const TBWidgetEvent &ev)
@@ -85,16 +90,20 @@ bool ListWindow::OnEvent(const TBWidgetEvent &ev)
 
 // == AdvancedListWindow ==============================================================
 
+void AdvancedListWindow::Initialize()
+{
+	LoadResourceFile("Demo/demo01/ui_resources/test_select_advanced.tb.txt");
+	if (TBSelectList* select = GetWidgetByIDAndType<TBSelectList>("list"))
+	{
+		select->SetSource(m_source);
+		select->GetScrollContainer()->SetScrollMode(SCROLL_MODE_X_AUTO_Y_AUTO);
+	}
+}
+
 AdvancedListWindow::AdvancedListWindow(TBWidget *root, AdvancedItemSource *source)
 	: DemoWindow(root)
 	, m_source(source)
 {
-	LoadResourceFile("Demo/demo01/ui_resources/test_select_advanced.tb.txt");
-	if (TBSelectList *select = GetWidgetByIDAndType<TBSelectList>("list"))
-	{
-		select->SetSource(source);
-		select->GetScrollContainer()->SetScrollMode(SCROLL_MODE_X_AUTO_Y_AUTO);
-	}
 }
 
 bool AdvancedListWindow::OnEvent(const TBWidgetEvent &ev)

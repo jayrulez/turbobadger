@@ -18,6 +18,7 @@
 #include "tb_file_interface_posix.h"
 #include "tb_msg.h"
 #include "tb_editfield.h"
+#include "tb_context.h"
 #include "tb_renderer_gl.h"
 #include "tb_font_renderer.h"
 #include "Application.h"
@@ -463,6 +464,7 @@ bool AppBackendGLFW::Init(App *app)
 
 	m_renderer = new TBRendererGL();
 	tb_core_init(m_renderer, m_system_interface, &m_file_interface, m_clipboard_interface);
+	m_context = tb_create_context("");
 
 	// Create the App object for our demo
 	m_app = app;
@@ -475,6 +477,9 @@ AppBackendGLFW::~AppBackendGLFW()
 {
 	m_app->OnBackendDetached();
 	m_app = nullptr;
+
+	if(m_context)
+		tb_destroy_context(m_context);
 
 	tb_core_shutdown();
 

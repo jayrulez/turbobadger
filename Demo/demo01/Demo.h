@@ -25,6 +25,8 @@ public:
 
 class DemoWindow : public TBWindow
 {
+protected:
+	void Initialize() override;
 public:
 	DemoWindow(TBWidget *root);
 	bool LoadResourceFile(const char *filename);
@@ -32,10 +34,15 @@ public:
 	void LoadResource(TBNode &node);
 
 	virtual bool OnEvent(const TBWidgetEvent &ev);
+
+private:
+	TBWidget* m_root;
 };
 
 class MainWindow : public DemoWindow, public TBMessageHandler
 {
+protected:
+	void Initialize() override;
 public:
 	MainWindow(TBWidget *root);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
@@ -76,6 +83,8 @@ public:
 
 class TabContainerWindow : public DemoWindow
 {
+protected:
+	void Initialize() override;
 public:
 	TabContainerWindow(TBWidget *root);
 	virtual bool OnEvent(const TBWidgetEvent &ev);

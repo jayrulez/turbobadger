@@ -520,13 +520,21 @@ bool TBWidgetsReader::CreateWidget(TBWidget *target, TBNode *node)
 		return false;
 
 	// Set target context to reader's context
-	target->SetContext(m_context);
+	if (target->GetContext() == nullptr)
+	{
+		target->SetContext(m_context);
+	}
+	else {
+		assert(target->GetContext() == m_context);
+	}
 
 	// Create the widget
 	INFLATE_INFO info(this, target->GetContentRoot(), node, wc->sync_type);
 	TBWidget *new_widget = wc->Create(&info);
 	if (!new_widget)
 		return false;
+
+	new_widget->SetContext(target->GetContext());
 
 	// Read properties and add i to the hierarchy.
 	new_widget->OnInflate(info);
