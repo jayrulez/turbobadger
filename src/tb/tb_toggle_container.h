@@ -60,6 +60,8 @@ private:
 	header in TBSection that toggles the section. */
 class TBSectionHeader : public TBButton
 {
+protected:
+	void Initialize() override;
 public:
 	// For safe typecasting
 	TBOBJECT_SUBCLASS(TBSectionHeader, TBButton);

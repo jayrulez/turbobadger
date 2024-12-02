@@ -155,9 +155,7 @@ void TBTextField::OnPaint(const PaintProps &paint_props)
 const int auto_click_first_delay = 500;
 const int auto_click_repeat_delay = 100;
 
-TBButton::TBButton()
-	: m_auto_repeat_click(false)
-	, m_toggle_mode(false)
+void TBButton::Initialize()
 {
 	SetIsFocusable(true);
 	SetClickByKey(true);
@@ -171,6 +169,13 @@ TBButton::TBButton()
 	m_layout.SetRect(GetPaddingRect());
 	m_layout.SetGravity(WIDGET_GRAVITY_ALL);
 	m_layout.SetPaintOverflowFadeout(false);
+}
+
+TBButton::TBButton()
+	: m_auto_repeat_click(false)
+	, m_toggle_mode(false)
+{
+
 }
 
 TBButton::~TBButton()

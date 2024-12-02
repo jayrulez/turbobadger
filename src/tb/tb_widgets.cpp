@@ -147,6 +147,8 @@ void TBWidget::SetContext(TBContext* context)
 	{
 		child->SetContext(context);
 	}
+
+	Initialize();
 }
 
 TBContext* TBWidget::GetContext() const

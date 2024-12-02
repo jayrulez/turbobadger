@@ -38,6 +38,11 @@ public:
 	};
 	virtual ~AppBackend() {}
 	virtual void OnAppEvent(const EVENT &ev) = 0;
+
+	inline tb::TBContext* GetContext() { return m_context; }
+
+protected:
+	tb::TBContext* m_context;
 };
 
 /** Application interface, for setting up the application using turbo badger. */
@@ -63,7 +68,6 @@ public:
 	virtual void Process();
 	virtual void RenderFrame();
 protected:
-	tb::TBContext* m_context;
 	AppBackend *m_backend;
 	AppRootWidget m_root;
 };

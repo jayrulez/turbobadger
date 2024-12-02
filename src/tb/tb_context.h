@@ -115,7 +115,7 @@ namespace tb {
 #ifdef TB_IMAGE
         TBImageManager* m_image_manager;
 #endif
-        TBWidget* m_root;
+        TBWidget* m_root = nullptr;
     };
 
 } // namespace tb

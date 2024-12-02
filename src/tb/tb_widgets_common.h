@@ -92,6 +92,8 @@ protected:
 
 class TB_API TBButton : public TBWidget, protected TBMessageHandler
 {
+protected:
+	void Initialize() override;
 public:
 	// For safe typecasting
 	TBOBJECT_SUBCLASS(TBButton, TBWidget);

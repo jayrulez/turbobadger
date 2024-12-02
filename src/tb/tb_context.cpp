@@ -22,13 +22,13 @@ namespace tb
 #ifdef TB_IMAGE
 		m_image_manager = new TBImageManager(this);
 #endif
-		m_root = new TBWidget();
-		m_root->SetContext(this);
+		//m_root = new TBWidget();
+		//m_root->SetContext(this);
 	}
 
 	TBContext::~TBContext()
 	{
-		delete m_root;
+		//delete m_root;
 #ifdef TB_IMAGE
 		delete m_image_manager;
 #endif
@@ -55,7 +55,7 @@ namespace tb
 
 	void TBContext::SetRoot(TBWidget* widget)
 	{
-		if (m_root)
+		if (m_root != nullptr)
 			m_root->Die();
 
 		m_root = widget;

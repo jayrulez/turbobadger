@@ -370,6 +370,11 @@ public:
 	void SetContext(TBContext* context);
 	TBContext* GetContext() const;
 
+protected:
+	virtual void Initialize() {}
+
+public:
+
 	/** Set the rect for this widget in its parent. The rect is relative to the parent widget.
 		The skin may expand outside this rect to draw f.ex shadows. */
 	void SetRect(const TBRect &rect);

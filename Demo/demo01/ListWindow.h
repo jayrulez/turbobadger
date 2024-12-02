@@ -9,14 +9,20 @@ class AdvancedItemSource;
 /** Shows a list of items from *any* type of source. */
 class ListWindow : public DemoWindow
 {
+protected:
+	void Initialize() override;
 public:
 	ListWindow(TBWidget *root, TBSelectItemSource *source);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
+
+private:
+	TBSelectItemSource* m_source;
 };
 
 /** Shows a list of items from a source of type AdvancedItemSource. */
 class AdvancedListWindow : public DemoWindow
 {
+	void Initialize() override;
 public:
 	AdvancedListWindow(TBWidget *root, AdvancedItemSource *source);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
