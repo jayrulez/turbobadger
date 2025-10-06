@@ -68,11 +68,11 @@ bool TBWidgetSkinConditionContext::GetCondition(TBWidget *widget, const TBSkinCo
 	case TBSkinCondition::PROPERTY_VALUE:
 		return widget->GetValue() == (int) info.value;
 	case TBSkinCondition::PROPERTY_HOVER:
-		return TBWidget::hovered_widget && widget->IsAncestorOf(TBWidget::hovered_widget);
+		return g_tb_context->hovered_widget && widget->IsAncestorOf(g_tb_context->hovered_widget);
 	case TBSkinCondition::PROPERTY_CAPTURE:
-		return TBWidget::captured_widget && widget->IsAncestorOf(TBWidget::captured_widget);
+		return g_tb_context->captured_widget && widget->IsAncestorOf(g_tb_context->captured_widget);
 	case TBSkinCondition::PROPERTY_FOCUS:
-		return TBWidget::focused_widget && widget->IsAncestorOf(TBWidget::focused_widget);
+		return g_tb_context->focused_widget && widget->IsAncestorOf(g_tb_context->focused_widget);
 	case TBSkinCondition::PROPERTY_CUSTOM:
 		return widget->GetCustomSkinCondition(info);
 	}

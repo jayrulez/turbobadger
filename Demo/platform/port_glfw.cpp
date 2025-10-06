@@ -132,7 +132,7 @@ static bool InvokeShortcut(int key, SPECIAL_KEY special_key, MODIFIER_KEYS modif
 #else
 	bool shortcut_key = (modifierkeys & TB_CTRL) ? true : false;
 #endif
-	if (!TBWidget::focused_widget || !down || !shortcut_key)
+	if (!g_tb_context->focused_widget || !down || !shortcut_key)
 		return false;
 	bool reverse_key = (modifierkeys & TB_SHIFT) ? true : false;
 	int upper_key = toupr_ascii(key);
@@ -170,7 +170,7 @@ static bool InvokeShortcut(int key, SPECIAL_KEY special_key, MODIFIER_KEYS modif
 	TBWidgetEvent ev(EVENT_TYPE_SHORTCUT);
 	ev.modifierkeys = modifierkeys;
 	ev.ref_id = id;
-	return TBWidget::focused_widget->InvokeEvent(ev);
+	return g_tb_context->focused_widget->InvokeEvent(ev);
 }
 
 static bool InvokeKey(GLFWwindow *window, unsigned int key, SPECIAL_KEY special_key, MODIFIER_KEYS modifierkeys, bool down)
@@ -226,11 +226,11 @@ static void key_callback(GLFWwindow *window, int key, int scancode, int action, 
 	case GLFW_KEY_KP_ENTER:		InvokeKey(window, 0, TB_KEY_ENTER, modifier, down); break;
 	case GLFW_KEY_ESCAPE:		InvokeKey(window, 0, TB_KEY_ESC, modifier, down); break;
 	case GLFW_KEY_MENU:
-		if (TBWidget::focused_widget && !down)
+		if (g_tb_context->focused_widget && !down)
 		{
 			TBWidgetEvent ev(EVENT_TYPE_CONTEXT_MENU);
 			ev.modifierkeys = modifier;
-			TBWidget::focused_widget->InvokeEvent(ev);
+			g_tb_context->focused_widget->InvokeEvent(ev);
 		}
 		break;
 	case GLFW_KEY_LEFT_SHIFT:
@@ -290,11 +290,11 @@ static void mouse_button_callback(GLFWwindow *window, int button, int action, in
 	else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
 	{
 		GetBackend(window)->GetRoot()->InvokePointerMove(x, y, modifier, ShouldEmulateTouchEvent());
-		if (TBWidget::hovered_widget)
+		if (g_tb_context->hovered_widget)
 		{
-			TBWidget::hovered_widget->ConvertFromRoot(x, y);
+			g_tb_context->hovered_widget->ConvertFromRoot(x, y);
 			TBWidgetEvent ev(EVENT_TYPE_CONTEXT_MENU, x, y, false, modifier);
-			TBWidget::hovered_widget->InvokeEvent(ev);
+			g_tb_context->hovered_widget->InvokeEvent(ev);
 		}
 	}
 }
@@ -303,11 +303,11 @@ void cursor_position_callback(GLFWwindow *window, double x, double y)
 {
 	mouse_x = (int)x;
 	mouse_y = (int)y;
-	if (GetBackend(window)->GetRoot() && !(ShouldEmulateTouchEvent() && !TBWidget::captured_widget)) {
+	if (GetBackend(window)->GetRoot() && !(ShouldEmulateTouchEvent() && !g_tb_context->captured_widget)) {
 		GetBackend(window)->GetRoot()->InvokePointerMove(mouse_x, mouse_y, GetModifierKeys(), ShouldEmulateTouchEvent());
 
 		// Update cursor.
-		TBWidget *active_widget = TBWidget::captured_widget ? TBWidget::captured_widget : TBWidget::hovered_widget;
+		TBWidget *active_widget = g_tb_context->captured_widget ? g_tb_context->captured_widget : g_tb_context->hovered_widget;
 		if (TBSafeCast<TBEditField>(active_widget)) {
 			glfwSetCursor(window, GetBackend(window)->m_cursor_i_beam);
 		} else {
@@ -398,9 +398,9 @@ static void window_size_callback(GLFWwindow *window, int w, int h)
 static void drop_callback(GLFWwindow *window, int count, const char **files_utf8)
 {
 	AppBackendGLFW *backend = GetBackend(window);
-	TBWidget *target = TBWidget::hovered_widget;
+	TBWidget *target = g_tb_context->hovered_widget;
 	if (!target)
-		target = TBWidget::focused_widget;
+		target = g_tb_context->focused_widget;
 	if (!target)
 		target = backend->GetRoot();
 	if (target)

@@ -1872,7 +1872,7 @@ bool TBStyleEdit::MouseUp(const TBPoint &point, int button, MODIFIER_KEYS modifi
 	if (button != 1)
 		return false;
 
-	if (touch && !TBWidget::cancel_click)
+	if (touch && !g_tb_context->cancel_click)
 	{
 		selection.SelectNothing();
 		caret.Place(mousedown_point);
@@ -1881,7 +1881,7 @@ bool TBStyleEdit::MouseUp(const TBPoint &point, int button, MODIFIER_KEYS modifi
 	}
 
 	select_state = 0;
-	if (caret.pos.block && !TBWidget::cancel_click)
+	if (caret.pos.block && !g_tb_context->cancel_click)
 	{
 		TBTextFragment *fragment = caret.pos.block->FindFragment(point.x + scroll_x, point.y + scroll_y - caret.pos.block->ypos);
 		if (fragment && fragment == mousedown_fragment)

@@ -100,7 +100,7 @@ public:
 		// Draw font glyph fragments (the font of the hovered widget)
 		if (TB_DEBUG_SETTING(RENDER_FONT_BITMAP_FRAGMENTS))
 		{
-			TBWidget *widget = TBWidget::hovered_widget ? TBWidget::hovered_widget : TBWidget::focused_widget;
+			TBWidget *widget = g_tb_context->hovered_widget ? g_tb_context->hovered_widget : g_tb_context->focused_widget;
 			g_tb_context->GetFontManager()->GetFontFace(widget ?
 										widget->GetCalculatedFontDescription() :
 										g_tb_context->GetFontManager()->GetDefaultFontDescription())->Debug();

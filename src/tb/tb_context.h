@@ -45,6 +45,7 @@ namespace tb {
     class TBFileInterface;
     class TBClipboardInterface;
     class TBImageManager;
+    class TBWidget;
 
     class TB_API TBContext
     {
@@ -76,6 +77,19 @@ namespace tb {
 #ifdef TB_IMAGE
 		TBImageManager* GetImageManager() const { return m_image_manager; }
 #endif
+
+        // TBWidget related globals
+        TBWidget* hovered_widget = nullptr;	///< The currently hovered widget, or nullptr.
+        TBWidget* captured_widget = nullptr;	///< The currently captured widget, or nullptr.
+        TBWidget* focused_widget = nullptr;	///< The currently focused widget, or nullptr.
+        int pointer_down_widget_x = 0;	///< Pointer x position on down event, relative to the captured widget.
+        int pointer_down_widget_y = 0;	///< Pointer y position on down event, relative to the captured widget.
+        int pointer_move_widget_x = 0;	///< Pointer x position on last pointer event, relative to the captured widget (if any) or hovered widget.
+        int pointer_move_widget_y = 0;	///< Pointer y position on last pointer event, relative to the captured widget (if any) or hovered widget.
+        bool cancel_click = false;			///< true if the pointer up event should not generate a click event.
+        bool update_widget_states = true;	///< true if something has called InvalidateStates() and it still hasn't been updated.
+        bool update_skin_states = true;		///< true if something has called InvalidateStates() and skin still hasn't been updated.
+        bool show_focus_state = false;		///< true if the focused state should be painted automatically.
 
     private:
         TBStr m_name;
