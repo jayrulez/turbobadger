@@ -28,47 +28,7 @@ freely, subject to the following restrictions:
 #ifndef TB_CORE_H
 #define TB_CORE_H
 
-#include "tb_types.h"
-#include "tb_hash.h"
-#include "tb_debug.h"
-
-#define TB_VERSION_MAJOR 0
-#define TB_VERSION_MINOR 1
-#define TB_VERSION_REVISION 1
-#define TB_VERSION_STR "0.1.1"
-
 namespace tb {
-
-class TBRenderer;
-class TBSkin;
-class TBWidgetsReader;
-class TBLanguage;
-class TBFontManager;
-class TBSystemInterface;
-class TBFileInterface;
-class TBClipboardInterface;
-
-TB_API extern TBRenderer *g_renderer;
-TB_API extern TBSkin *g_tb_skin;
-TB_API extern TBWidgetsReader *g_widgets_reader;
-TB_API extern TBLanguage *g_tb_lng;
-TB_API extern TBFontManager *g_font_manager;
-TB_API extern TBSystemInterface* g_system_interface;
-TB_API extern TBFileInterface* g_file_interface;
-TB_API extern TBClipboardInterface* g_clipboard_interface;
-
-/** Initialize turbo badger. Call this before using any turbo badger API. */
-TB_API bool tb_core_init(
-    TBRenderer* renderer,
-    TBSystemInterface* system_interface,
-    TBFileInterface* file_interface,
-    TBClipboardInterface* clipboard_interface);
-
-/** Shutdown turbo badger. Call this after deleting the last widget, to free turbo badger internals. */
-TB_API void tb_core_shutdown();
-
-/** Returns true if turbo badger is initialized. */
-TB_API bool tb_core_is_initialized();
 
 } // namespace tb
 

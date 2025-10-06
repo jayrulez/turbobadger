@@ -26,7 +26,7 @@ class TBValue;
 class TB_API TBDimensionConverter
 {
 	int m_src_dpi; ///< The source DPI (Normally the base_dpi from skin).
-	int m_dst_dpi; ///< The destination DPI (Normally the supported skin DPI nearest to g_system_interface->GetDPI).
+	int m_dst_dpi; ///< The destination DPI (Normally the supported skin DPI nearest to g_tb_context->GetSystemInterface()->GetDPI).
 	TBStr m_dst_dpi_str; ///< The file suffix that should be used to load bitmaps in destinatin DPI.
 public:
 	TBDimensionConverter() : m_src_dpi(100), m_dst_dpi(100) {}

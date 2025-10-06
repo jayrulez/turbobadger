@@ -5,7 +5,7 @@
 
 #include "tb_test.h"
 #include "tb_dimension.h"
-#include "tb_core.h"
+#include "tb_context.h"
 
 #ifdef TB_UNIT_TESTING
 

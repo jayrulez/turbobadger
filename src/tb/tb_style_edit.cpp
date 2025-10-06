@@ -193,7 +193,7 @@ void TBSelection::CopyToClipboard()
 	{
 		TBStr text;
 		if (GetText(text))
-			g_clipboard_interface->SetText(text);
+			g_tb_context->GetClipboardInterface()->SetText(text);
 	}
 }
 
@@ -673,7 +673,7 @@ void TBTextProps::Pop()
 
 TBFontFace *TBTextProps::GetFont() const
 {
-	return g_font_manager->GetFontFace(data->font_desc);
+	return g_tb_context->GetFontManager()->GetFontFace(data->font_desc);
 }
 
 // ============================================================================
@@ -1402,8 +1402,8 @@ TBStyleEdit::TBStyleEdit()
 	selection.styledit = this;
 	TMPDEBUG(packed.show_whitespace = true);
 
-	font_desc = g_font_manager->GetDefaultFontDescription();
-	font = g_font_manager->GetFontFace(font_desc);
+	font_desc = g_tb_context->GetFontManager()->GetDefaultFontDescription();
+	font = g_tb_context->GetFontManager()->GetFontFace(font_desc);
 
 #ifdef TB_TARGET_WINDOWS
 	packed.win_style_br = 1;
@@ -1443,7 +1443,7 @@ void TBStyleEdit::SetFont(const TBFontDescription &font_desc)
 	if (this->font_desc == font_desc)
 		return;
 	this->font_desc = font_desc;
-	font = g_font_manager->GetFontFace(font_desc);
+	font = g_tb_context->GetFontManager()->GetFontFace(font_desc);
 	Reformat(true);
 }
 
@@ -1800,7 +1800,7 @@ void TBStyleEdit::Copy()
 void TBStyleEdit::Paste()
 {
 	TBStr text;
-	if (g_clipboard_interface->HasText() && g_clipboard_interface->GetText(text))
+	if (g_tb_context->GetClipboardInterface()->HasText() && g_tb_context->GetClipboardInterface()->GetText(text))
 	{
 		InsertText(text, text.Length());
 		ScrollIfNeeded(true, true);

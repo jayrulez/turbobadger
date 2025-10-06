@@ -6,7 +6,7 @@
 #ifndef TB_LIST_H
 #define TB_LIST_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 namespace tb {
 
 /** TBList is a list (array) of pointers to any kind of objects.

@@ -26,7 +26,7 @@ void TBWidgetString::ValidatCachedSize(TBWidget *widget)
 	if (!m_height || fd != m_fd)
 	{
 		m_fd = fd;
-		TBFontFace *font = g_font_manager->GetFontFace(fd);
+		TBFontFace *font = g_tb_context->GetFontManager()->GetFontFace(fd);
 		m_width = font->GetStringWidth(m_text);
 		m_height = font->GetHeight();
 	}
@@ -388,13 +388,13 @@ void TBProgressSpinner::OnPaint(const PaintProps &paint_props)
 {
 	if (IsRunning())
 	{
-		TBSkinElement *e = g_tb_skin->GetSkinElement(m_skin_fg);
+		TBSkinElement *e = g_tb_context->GetSkin()->GetSkinElement(m_skin_fg);
 		if (e && e->bitmap)
 		{
 			int size = e->bitmap->Height();
 			int num_frames = e->bitmap->Width() / e->bitmap->Height();
 			int current_frame = m_frame % num_frames;
-			g_renderer->DrawBitmap(GetPaddingRect(), TBRect(current_frame * size, 0, size, size), e->bitmap);
+			g_tb_context->GetRenderer()->DrawBitmap(GetPaddingRect(), TBRect(current_frame * size, 0, size, size), e->bitmap);
 		}
 	}
 }
@@ -563,7 +563,7 @@ bool TBScrollBar::OnEvent(const TBWidgetEvent &ev)
 	else if (ev.type == EVENT_TYPE_WHEEL)
 	{
 		double old_val = m_value;
-		SetValueDouble(m_value + ev.delta_y * g_system_interface->GetPixelsPerLine());
+		SetValueDouble(m_value + ev.delta_y * g_tb_context->GetSystemInterface()->GetPixelsPerLine());
 		return m_value != old_val;
 	}
 	return false;

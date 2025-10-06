@@ -9,6 +9,7 @@
 #include "tb_widgets_common.h"
 #include "tb_message_window.h"
 #include "tb_list.h"
+#include "tb_context.h"
 
 namespace tb {
 

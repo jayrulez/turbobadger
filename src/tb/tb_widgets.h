@@ -6,7 +6,7 @@
 #ifndef TB_WIDGETS_H
 #define TB_WIDGETS_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_geometry.h"
 #include "tb_skin.h"
 #include "tb_linklist.h"

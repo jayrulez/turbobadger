@@ -6,7 +6,7 @@
 #ifndef TB_FONT_RENDERER_H
 #define TB_FONT_RENDERER_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_bitmap_fragment.h"
 #include "tb_renderer.h"
 #include "tb_tempbuffer.h"
@@ -16,6 +16,7 @@
 
 namespace tb {
 
+class TBContext;
 class TBBitmap;
 class TBFontFace;
 
@@ -239,7 +240,7 @@ private:
 class TB_API TBFontManager
 {
 public:
-	TBFontManager();
+	TBFontManager(TBContext* context);
 	~TBFontManager();
 
 	/** Add a renderer so fonts supported by the renderer can be created. Ownership of the
@@ -275,6 +276,7 @@ public:
 	/** Return the glyph cache used for fonts created by this font manager. */
 	TBFontGlyphCache *GetGlyphCache() { return &m_glyph_cache; }
 private:
+	TBContext* m_context;
 	TBHashTableAutoDeleteOf<TBFontInfo> m_font_info;
 	TBHashTableAutoDeleteOf<TBFontFace> m_fonts;
 	TBLinkListAutoDeleteOf<TBFontRenderer> m_font_renderers;

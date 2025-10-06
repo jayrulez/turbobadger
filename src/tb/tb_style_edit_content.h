@@ -6,7 +6,7 @@
 #ifndef TB_STYLE_EDIT_CONTENT_H
 #define TB_STYLE_EDIT_CONTENT_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 
 namespace tb {
 

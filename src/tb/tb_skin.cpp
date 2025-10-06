@@ -8,6 +8,7 @@
 #include "platform/tb_system_interface.h"
 #include "tb_tempbuffer.h"
 #include "tb_font_renderer.h"
+#include "tb_context.h"
 #include <string.h>
 #include <assert.h>
 #include <stdio.h>
@@ -113,14 +114,15 @@ bool TBSkinCondition::GetCondition(TBSkinConditionContext &context) const
 
 // == TBSkin ================================================================
 
-TBSkin::TBSkin()
-	: m_listener(nullptr)
+TBSkin::TBSkin(TBContext* context)
+	: m_context(context)
+	, m_listener(nullptr)
 	, m_color_frag(nullptr)
 	, m_default_disabled_opacity(0.3f)
 	, m_default_placeholder_opacity(0.2f)
 	, m_default_spacing(0)
 {
-	g_renderer->AddListener(this);
+	g_tb_context->GetRenderer()->AddListener(this);
 
 	// Avoid filtering artifacts at edges when we draw fragments stretched.
 	m_frag_manager.SetAddBorder(true);
@@ -164,7 +166,7 @@ bool TBSkin::LoadInternal(const char *skin_file)
 			assert(supported_dpi_node->GetValue().IsArray() || supported_dpi_node->GetValue().GetInt() == base_dpi);
 			if (TBValueArray *arr = supported_dpi_node->GetValue().GetArray())
 			{
-				int screen_dpi = g_system_interface->GetDPI();
+				int screen_dpi = g_tb_context->GetSystemInterface()->GetDPI();
 				int best_supported_dpi = 0;
 				for (int i = 0; i < arr->GetLength(); i++)
 				{
@@ -396,7 +398,7 @@ void TBSkin::RasterizeShape(TBNode *node)
 
 TBSkin::~TBSkin()
 {
-	g_renderer->RemoveListener(this);
+	g_tb_context->GetRenderer()->RemoveListener(this);
 }
 
 TBSkinElement *TBSkin::GetSkinElement(const TBID &skin_id) const
@@ -482,8 +484,8 @@ TBSkinElement *TBSkin::PaintSkin(const TBRect &dst_rect, TBSkinElement *element,
 	}
 
 	// Paint ugly rectangles on invalid skin elements in debug builds.
-	TB_IF_DEBUG(if (paint_error_highlight) g_tb_skin->PaintRect(dst_rect.Expand(1, 1), TBColor(255, 205, 0), 1));
-	TB_IF_DEBUG(if (paint_error_highlight) g_tb_skin->PaintRect(dst_rect.Shrink(1, 1), TBColor(255, 0, 0), 1));
+	TB_IF_DEBUG(if (paint_error_highlight) g_tb_context->GetSkin()->PaintRect(dst_rect.Expand(1, 1), TBColor(255, 205, 0), 1));
+	TB_IF_DEBUG(if (paint_error_highlight) g_tb_context->GetSkin()->PaintRect(dst_rect.Shrink(1, 1), TBColor(255, 0, 0), 1));
 
 	element->is_painting = false;
 	return return_element;
@@ -563,7 +565,7 @@ void TBSkin::PaintRect(const TBRect &dst_rect, const TBColor &color, int thickne
 void TBSkin::PaintRectFill(const TBRect &dst_rect, const TBColor &color)
 {
 	if (!dst_rect.IsEmpty())
-		g_renderer->DrawBitmapColored(dst_rect, TBRect(), color, m_color_frag);
+		g_tb_context->GetRenderer()->DrawBitmapColored(dst_rect, TBRect(), color, m_color_frag);
 }
 
 void TBSkin::PaintElementBGColor(const TBRect &dst_rect, TBSkinElement *element)
@@ -586,7 +588,7 @@ void TBSkin::PaintElementImage(const TBRect &dst_rect, TBSkinElement *element)
 void TBSkin::PaintElementTile(const TBRect &dst_rect, TBSkinElement *element)
 {
 	TBRect rect = dst_rect.Expand(element->expand, element->expand);
-	g_renderer->DrawBitmapTile(rect, element->bitmap->GetBitmap());
+	g_tb_context->GetRenderer()->DrawBitmapTile(rect, element->bitmap->GetBitmap());
 }
 
 void TBSkin::PaintElementStretchImage(const TBRect &dst_rect, TBSkinElement *element)
@@ -650,9 +652,9 @@ void TBSkin::PaintElementStretchBox(const TBRect &dst_rect, TBSkinElement *eleme
 void TBSkin::PaintElementBitmap(const TBRect &dst_rect, const TBRect &src_rect, TBSkinElement *element)
 {
 	if (element->img_color != 0)
-		g_renderer->DrawBitmapColored(dst_rect, src_rect, element->img_color, element->bitmap);
+		g_tb_context->GetRenderer()->DrawBitmapColored(dst_rect, src_rect, element->img_color, element->bitmap);
 	else
-		g_renderer->DrawBitmap(dst_rect, src_rect, element->bitmap);
+		g_tb_context->GetRenderer()->DrawBitmap(dst_rect, src_rect, element->bitmap);
 }
 
 #ifdef TB_RUNTIME_DEBUG_INFO

@@ -1,5 +1,5 @@
 #include "tb_types.h"
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_msg.h"
 #include "tb_system_interface_glfw.h"
 #include <stdlib.h>
@@ -31,7 +31,7 @@ void tb::TBSystemInterfaceGlfw::ReschedulePlatformTimer(double fire_time, bool f
 	else if (fire_time != set_fire_time || force || fire_time == 0)
 	{
 		set_fire_time = fire_time;
-		double delay = fire_time - tb::g_system_interface->GetTimeMS();
+		double delay = fire_time - tb::g_tb_context->GetSystemInterface()->GetTimeMS();
 		unsigned int idelay = (unsigned int)tb::Max(delay, 0.0);
 		glfwRescheduleTimer(idelay);
 	}

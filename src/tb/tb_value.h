@@ -6,7 +6,7 @@
 #ifndef TB_VALUE_H
 #define TB_VALUE_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_list.h"
 
 namespace tb {

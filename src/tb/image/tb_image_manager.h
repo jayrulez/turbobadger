@@ -6,7 +6,7 @@
 #ifndef TB_IMAGE_MANAGER_H
 #define TB_IMAGE_MANAGER_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 
 #ifdef TB_IMAGE
 
@@ -17,6 +17,7 @@
 
 namespace tb {
 
+class TBContext;
 class TBImageManager;
 
 /** TBImageRep is the internal contents of a TBImage. Owned by reference counting from TBImage. */
@@ -82,7 +83,7 @@ private:
 class TBImageManager : private TBRendererListener
 {
 public:
-	TBImageManager();
+	TBImageManager(TBContext* context);
 	~TBImageManager();
 
 	/** Return a image object for the given filename.
@@ -99,15 +100,13 @@ public:
 	virtual void OnContextLost();
 	virtual void OnContextRestored();
 private:
+	TBContext* m_context;
 	TBBitmapFragmentManager m_frag_manager;
 	TBHashTableOf<TBImageRep> m_image_rep_hash;
 
 	friend class TBImageRep;
 	void RemoveImageRep(TBImageRep *image_rep);
 };
-
-/** The global TBImageManager. */
-extern TBImageManager *g_image_manager;
 
 } // namespace tb
 

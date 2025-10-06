@@ -4,7 +4,7 @@
 // ================================================================================
 
 #include "tb_tempbuffer.h"
-#include "tb_core.h"
+#include "tb_context.h"
 #include "platform/tb_system_interface.h"
 #include "platform/tb_file_interface.h"
 #include <assert.h>
@@ -115,18 +115,18 @@ bool TBTempBuffer::AppendPath(const char *full_path_and_filename)
 
 bool TBTempBuffer::AppendFile(const char *filename)
 {
-	if (TBFileHandle file = g_file_interface->Open(filename, TBFileInterface::MODE_READ))
+	if (TBFileHandle file = g_tb_context->GetFileInterface()->Open(filename, TBFileInterface::MODE_READ))
 	{
-		const size_t file_size = g_file_interface->Size(file);
-		if (Reserve(m_append_pos + file_size + 1) && g_file_interface->Read(file, m_data + m_append_pos, 1, file_size) == file_size)
+		const size_t file_size = g_tb_context->GetFileInterface()->Size(file);
+		if (Reserve(m_append_pos + file_size + 1) && g_tb_context->GetFileInterface()->Read(file, m_data + m_append_pos, 1, file_size) == file_size)
 		{
 			// Increase append position and null terminate
 			m_append_pos += file_size;
 			m_data[m_append_pos] = 0;
-			g_file_interface->Close(file);
+			g_tb_context->GetFileInterface()->Close(file);
 			return true;
 		}
-		g_file_interface->Close(file);
+		g_tb_context->GetFileInterface()->Close(file);
 	}
 	return false;
 }

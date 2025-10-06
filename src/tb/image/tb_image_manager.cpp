@@ -4,6 +4,7 @@
 // ================================================================================
 
 #include "image/tb_image_manager.h"
+#include "tb_context.h"
 
 #ifdef TB_IMAGE
 
@@ -98,16 +99,15 @@ void TBImage::SetImageRep(TBImageRep *image_rep)
 
 // == TBImageManager ====================================================================
 
-TBImageManager *g_image_manager = nullptr;
-
-TBImageManager::TBImageManager()
+TBImageManager::TBImageManager(TBContext* context)
+	: m_context(context)
 {
-	g_renderer->AddListener(this);
+	g_tb_context->GetRenderer()->AddListener(this);
 }
 
 TBImageManager::~TBImageManager()
 {
-	g_renderer->RemoveListener(this);
+	g_tb_context->GetRenderer()->RemoveListener(this);
 
 	// If there is TBImageRep objects live, we must unset the fragment pointer
 	// since the m_frag_manager is going to be destroyed very soon.
@@ -127,10 +127,10 @@ TBImage TBImageManager::GetImage(const char *filename)
 	{
 		// Load a fragment. Load a destination DPI bitmap if available.
 		TBBitmapFragment *fragment = nullptr;
-		if (g_tb_skin->GetDimensionConverter()->NeedConversion())
+		if (g_tb_context->GetSkin()->GetDimensionConverter()->NeedConversion())
 		{
 			TBTempBuffer filename_dst_DPI;
-			g_tb_skin->GetDimensionConverter()->GetDstDPIFilename(filename, &filename_dst_DPI);
+			g_tb_context->GetSkin()->GetDimensionConverter()->GetDstDPIFilename(filename, &filename_dst_DPI);
 			fragment = m_frag_manager.GetFragmentFromFile(filename_dst_DPI.GetData(), false);
 		}
 		if (!fragment)

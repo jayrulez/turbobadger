@@ -5,6 +5,7 @@
 
 #include "tb_font_renderer.h"
 #include "tb_renderer.h"
+#include "tb_context.h"
 #include "platform/tb_system_interface.h"
 #include "tb_skin.h"
 #include <math.h>
@@ -131,12 +132,12 @@ TBFontGlyphCache::TBFontGlyphCache()
 	m_frag_manager.SetNumMapsLimit(1);
 	m_frag_manager.SetDefaultMapSize(TB_GLYPH_CACHE_WIDTH, TB_GLYPH_CACHE_HEIGHT);
 
-	g_renderer->AddListener(this);
+	g_tb_context->GetRenderer()->AddListener(this);
 }
 
 TBFontGlyphCache::~TBFontGlyphCache()
 {
-	g_renderer->RemoveListener(this);
+	g_tb_context->GetRenderer()->RemoveListener(this);
 }
 
 TBFontGlyph *TBFontGlyphCache::GetGlyph(const TBID &hash_id, UCS4 cp)
@@ -372,7 +373,7 @@ void TBFontFace::DrawString(int x, int y, const TBColor &color, const char *str,
 	if (m_bgFont)
 		m_bgFont->DrawString(x + m_bgX, y + m_bgY, m_bgColor, str, len);
 
-	g_renderer->BeginBatchHint(TBRenderer::BATCH_HINT_DRAW_BITMAP_FRAGMENT);
+	g_tb_context->GetRenderer()->BeginBatchHint(TBRenderer::BATCH_HINT_DRAW_BITMAP_FRAGMENT);
 
 	int i = 0;
 	UCS4 prev_cp = 0xFFFF;
@@ -400,17 +401,17 @@ void TBFontFace::DrawString(int x, int y, const TBColor &color, const char *str,
 				TBRect dst_rect(x + glyph->metrics.x, y + glyph->metrics.y + GetAscent(), glyph->frag->Width(), glyph->frag->Height());
 				TBRect src_rect(0, 0, glyph->frag->Width(), glyph->frag->Height());
 				if (glyph->has_rgb)
-					g_renderer->DrawBitmap(dst_rect, src_rect, glyph->frag);
+					g_tb_context->GetRenderer()->DrawBitmap(dst_rect, src_rect, glyph->frag);
 				else
-					g_renderer->DrawBitmapColored(dst_rect, src_rect, color, glyph->frag);
+					g_tb_context->GetRenderer()->DrawBitmapColored(dst_rect, src_rect, color, glyph->frag);
 			}
 		}
 		else if (!m_font_renderer) // This is the test font. Use same glyph width as height and draw square.
-			g_tb_skin->PaintRect(TBRect(x, y, m_metrics.height / 3, m_metrics.height), color, 1);
+			g_tb_context->GetSkin()->PaintRect(TBRect(x, y, m_metrics.height / 3, m_metrics.height), color, 1);
 		prev_cp = cp;
 	}
 
-	g_renderer->EndBatchHint();
+	g_tb_context->GetRenderer()->EndBatchHint();
 }
 
 int TBFontFace::GetStringWidth(const char *str, int len)
@@ -449,7 +450,8 @@ void TBFontFace::Debug()
 
 // == TBFontManager ===============================================================================
 
-TBFontManager::TBFontManager()
+TBFontManager::TBFontManager(TBContext* context)
+	: m_context(context)
 {
 	// Add the test dummy font with empty name (Equals to ID 0)
 	AddFontInfo("-test-font-dummy-", "");

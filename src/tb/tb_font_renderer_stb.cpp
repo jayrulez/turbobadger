@@ -123,7 +123,7 @@ TBFontFace *STBFontRenderer::Create(TBFontManager *font_manager, const char *fil
 TB_API void register_stb_font_renderer()
 {
 	if (STBFontRenderer *fr = new STBFontRenderer)
-		g_font_manager->AddRenderer(fr);
+		g_tb_context->GetFontManager()->AddRenderer(fr);
 }
 
 #endif // TB_FONT_RENDERER_STB

@@ -378,7 +378,7 @@ bool TBBitmapFragmentMap::ValidateBitmap()
 		if (m_bitmap)
 			m_bitmap->SetData(m_bitmap_data);
 		else
-			m_bitmap = g_renderer->CreateBitmap(m_bitmap_w, m_bitmap_h, m_bitmap_data);
+			m_bitmap = g_tb_context->GetRenderer()->CreateBitmap(m_bitmap_w, m_bitmap_h, m_bitmap_data);
 		m_need_update = false;
 	}
 	return m_bitmap ? true : false;
@@ -478,7 +478,7 @@ void TBBitmapFragmentManager::FreeFragment(TBBitmapFragment *frag)
 {
 	if (frag)
 	{
-		g_renderer->FlushBitmapFragment(frag);
+		g_tb_context->GetRenderer()->FlushBitmapFragment(frag);
 
 		TBBitmapFragmentMap *map = frag->m_map;
 		frag->m_map->FreeFragmentSpace(frag);
@@ -549,7 +549,7 @@ void TBBitmapFragmentManager::Debug()
 	{
 		TBBitmapFragmentMap *fm = m_fragment_maps[i];
 		if (TBBitmap *bitmap = fm->GetBitmap())
-			g_renderer->DrawBitmap(TBRect(x, 0, fm->m_bitmap_w, fm->m_bitmap_h), TBRect(0, 0, fm->m_bitmap_w, fm->m_bitmap_h), bitmap);
+			g_tb_context->GetRenderer()->DrawBitmap(TBRect(x, 0, fm->m_bitmap_w, fm->m_bitmap_h), TBRect(0, 0, fm->m_bitmap_w, fm->m_bitmap_h), bitmap);
 		x += fm->m_bitmap_w + 5;
 	}
 }

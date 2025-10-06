@@ -6,7 +6,7 @@
 #ifndef TBStyleEdit_H
 #define TBStyleEdit_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_linklist.h"
 #include "tb_widgets_common.h"
 #include "tb_list.h"

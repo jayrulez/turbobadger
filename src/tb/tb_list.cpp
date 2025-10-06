@@ -4,7 +4,7 @@
 // ================================================================================
 
 #include "tb_list.h"
-#include "tb_core.h"
+#include "tb_context.h"
 #include <assert.h>
 #include <stdlib.h>
 #if !defined(__native_client__)

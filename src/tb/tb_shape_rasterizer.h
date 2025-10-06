@@ -6,7 +6,7 @@
 #ifndef TB_SHAPE_RASTERIZER_H
 #define TB_SHAPE_RASTERIZER_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_geometry.h"
 #include "tb_color.h"
 #include "tb_font_desc.h"

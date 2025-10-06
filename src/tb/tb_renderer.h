@@ -6,7 +6,7 @@
 #ifndef TB_RENDERER_H
 #define TB_RENDERER_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_geometry.h"
 #include "tb_color.h"
 #include "tb_linklist.h"

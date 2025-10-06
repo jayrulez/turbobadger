@@ -6,7 +6,7 @@
 #ifndef TB_MSG_H
 #define TB_MSG_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_linklist.h"
 #include "tb_value.h"
 #include "tb_object.h"
@@ -80,7 +80,7 @@ public:
 		automatically when the message is deleted. */
 	bool PublishMessageDelayed(TBID message, TBMessageData *data, uint32 delay_in_ms);
 
-	/** Posts a message to the target at the given time (relative to g_system_interface->GetTimeMS()).
+	/** Posts a message to the target at the given time (relative to g_tb_context->GetSystemInterface()->GetTimeMS()).
 		data may be nullptr if no extra data need to be sent. It will be deleted
 		automatically when the message is deleted. */
 	bool PostMessageOnTime(TBID message, TBMessageData *data, double fire_time);

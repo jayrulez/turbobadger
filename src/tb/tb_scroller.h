@@ -6,7 +6,7 @@
 #ifndef TB_SCROLLER_H
 #define TB_SCROLLER_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_msg.h"
 
 namespace tb {

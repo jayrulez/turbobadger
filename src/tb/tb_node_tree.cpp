@@ -139,7 +139,7 @@ const char *TBNode::GetValueString(const char *request, const char *def)
 		{
 			const char *string = node->GetValue().GetString();
 			if (*string == '@' && *TBNode::GetNextNodeSeparator(string) == 0)
-				string = g_tb_lng->GetString(string + 1);
+				string = g_tb_context->GetLanguage()->GetString(string + 1);
 			return string;
 		}
 		return node->GetValue().GetString();
@@ -158,17 +158,17 @@ class FileParser : public TBParserStream
 public:
 	bool Read(const char *filename, TBParserTarget *target)
 	{
-		f = g_file_interface->Open(filename, TBFileInterface::MODE_READ);
+		f = g_tb_context->GetFileInterface()->Open(filename, TBFileInterface::MODE_READ);
 		if (!f)
 			return false;
 		TBParser p;
 		TBParser::STATUS status = p.Read(this, target);
-		g_file_interface->Close(f);
+		g_tb_context->GetFileInterface()->Close(f);
 		return status == TBParser::STATUS_OK ? true : false;
 	}
 	virtual int GetMoreData(char *buf, int buf_len)
 	{
-		return g_file_interface->Read(f, buf, 1, buf_len);
+		return g_tb_context->GetFileInterface()->Read(f, buf, 1, buf_len);
 	}
 private:
 	TBFileHandle f;

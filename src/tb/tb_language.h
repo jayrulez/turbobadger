@@ -6,7 +6,7 @@
 #ifndef TB_LANGUAGE_H
 #define TB_LANGUAGE_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_hashtable.h"
 #include "tb_id.h"
 

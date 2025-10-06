@@ -6,7 +6,7 @@
 #ifndef TB_BLUR_H
 #define TB_BLUR_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 
 namespace tb {
 

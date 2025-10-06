@@ -1,5 +1,5 @@
 #include "tb_types.h"
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_clipboard_interface_glfw.h"
 #include <stdlib.h>
 

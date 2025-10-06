@@ -2,6 +2,7 @@
 #define APPLICATION_H
 
 #include "tb_widgets.h"
+#include "tb_context.h"
 
 // --------------------------------------------------------------------------------------
 // This file contains some platform glue that is optional. It may help you set up a TB UI
@@ -37,6 +38,11 @@ public:
 	};
 	virtual ~AppBackend() {}
 	virtual void OnAppEvent(const EVENT &ev) = 0;
+
+	inline tb::TBContext* GetContext() { return m_context; }
+
+protected:
+	tb::TBContext* m_context;
 };
 
 /** Application interface, for setting up the application using turbo badger. */

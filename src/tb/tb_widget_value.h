@@ -6,7 +6,7 @@
 #ifndef TB_WIDGET_VALUE_H
 #define TB_WIDGET_VALUE_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include "tb_linklist.h"
 #include "tb_hashtable.h"
 #include "tb_value.h"

@@ -6,7 +6,7 @@
 #ifndef TB_LINKLIST_H
 #define TB_LINKLIST_H
 
-#include "tb_core.h"
+#include "tb_context.h"
 #include <assert.h>
 
 namespace tb {
