@@ -770,15 +770,15 @@ bool DemoApplication::Init()
 	// Give the first item a skin image
 	popup_menu_source.GetItem(0)->SetSkinImage(TBIDC("Icon16"));
 
-	new MainWindow(&m_root);
+	new MainWindow(m_root);
 
-	new EditWindow(&m_root);
+	new EditWindow(m_root);
 
-	new ListWindow(&m_root, &name_source);
+	new ListWindow(m_root, &name_source);
 
-	new AdvancedListWindow(&m_root, &advanced_source);
+	new AdvancedListWindow(m_root, &advanced_source);
 
-	new TabContainerWindow(&m_root);
+	new TabContainerWindow(m_root);
 
 	if (num_failed_tests)
 	{
@@ -797,8 +797,8 @@ void DemoApplication::RenderFrame()
 	// Application::RenderFrame();
 
 	// Render
-	g_tb_context->GetRenderer()->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
-	m_root.InvokePaint(TBWidget::PaintProps());
+	g_tb_context->GetRenderer()->BeginPaint(m_root->GetRect().w, m_root->GetRect().h);
+	m_root->InvokePaint(TBWidget::PaintProps());
 
 #if defined(TB_RUNTIME_DEBUG_INFO) && defined(TB_IMAGE)
 	// Enable to debug image manager fragments
@@ -826,13 +826,13 @@ void DemoApplication::RenderFrame()
 		str.SetFormatted("FPS: %d Frame %d", fps, frame_counter_total);
 	else
 		str.SetFormatted("Frame %d", frame_counter_total);
-	m_root.GetFont()->DrawString(5, 5, TBColor(255, 255, 255), str);
+	m_root->GetFont()->DrawString(5, 5, TBColor(255, 255, 255), str);
 
 	g_tb_context->GetRenderer()->EndPaint();
 
 	// If we want continous updates or got animations running, reinvalidate immediately
 	if (continuous_repaint || TBAnimationManager::HasAnimationsRunning())
-		m_root.Invalidate();
+		m_root->Invalidate();
 }
 
 void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int height)
@@ -903,7 +903,7 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 		font->RenderGlyphs(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~•·åäöÅÄÖ");
 
 	// Give the root widget a background skin
-	m_root.SetSkinBg(TBIDC("background"));
+	m_root->SetSkinBg(TBIDC("background"));
 }
 
 App *app_create() {

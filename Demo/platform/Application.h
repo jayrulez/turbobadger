@@ -53,10 +53,10 @@ public:
 	virtual ~App() {}
 
 	virtual const char *GetTitle() const { return ""; }
-	int GetWidth() const { return m_root.GetRect().w; }
-	int GetHeight() const { return m_root.GetRect().h; }
+	int GetWidth() const { return m_root->GetRect().w; }
+	int GetHeight() const { return m_root->GetRect().h; }
 
-	tb::TBWidget *GetRoot() { return &m_root; }
+	tb::TBWidget *GetRoot() { return m_root; }
 	AppBackend *GetBackend() { return m_backend; }
 
 	virtual void OnBackendAttached(AppBackend *backend, int width, int height);
@@ -69,7 +69,7 @@ public:
 	virtual void RenderFrame();
 protected:
 	AppBackend *m_backend;
-	AppRootWidget m_root;
+	AppRootWidget* m_root;
 };
 
 /** Should return new instance of App. */

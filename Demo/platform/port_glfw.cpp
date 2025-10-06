@@ -476,11 +476,11 @@ AppBackendGLFW::~AppBackendGLFW()
 	m_app->OnBackendDetached();
 	m_app = nullptr;
 
-	tb_destroy_context(m_context);
-
 	glfwDestroyCursor(m_cursor_i_beam);
 
 	glfwTerminate();
+
+	tb_destroy_context(m_context);
 
 	delete m_renderer;
 }
