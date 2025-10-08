@@ -122,7 +122,7 @@ TBSkin::TBSkin(TBContext* context)
 	, m_default_placeholder_opacity(0.2f)
 	, m_default_spacing(0)
 {
-	g_tb_context->GetRenderer()->AddListener(this);
+	m_context->GetRenderer()->AddListener(this);
 
 	// Avoid filtering artifacts at edges when we draw fragments stretched.
 	m_frag_manager.SetAddBorder(true);
@@ -166,7 +166,7 @@ bool TBSkin::LoadInternal(const char *skin_file)
 			assert(supported_dpi_node->GetValue().IsArray() || supported_dpi_node->GetValue().GetInt() == base_dpi);
 			if (TBValueArray *arr = supported_dpi_node->GetValue().GetArray())
 			{
-				int screen_dpi = g_tb_context->GetSystemInterface()->GetDPI();
+				int screen_dpi = m_context->GetSystemInterface()->GetDPI();
 				int best_supported_dpi = 0;
 				for (int i = 0; i < arr->GetLength(); i++)
 				{
@@ -227,7 +227,7 @@ bool TBSkin::LoadInternal(const char *skin_file)
 			TBSkinElement *e = GetSkinElement(element_id);
 			if (!e)
 			{
-				e = new TBSkinElement;
+				e = new TBSkinElement(m_context);
 				if (!e)
 					return false;
 				m_elements.Add(element_id, e);
@@ -398,7 +398,7 @@ void TBSkin::RasterizeShape(TBNode *node)
 
 TBSkin::~TBSkin()
 {
-	g_tb_context->GetRenderer()->RemoveListener(this);
+	m_context->GetRenderer()->RemoveListener(this);
 }
 
 TBSkinElement *TBSkin::GetSkinElement(const TBID &skin_id) const
@@ -484,8 +484,8 @@ TBSkinElement *TBSkin::PaintSkin(const TBRect &dst_rect, TBSkinElement *element,
 	}
 
 	// Paint ugly rectangles on invalid skin elements in debug builds.
-	TB_IF_DEBUG(if (paint_error_highlight) g_tb_context->GetSkin()->PaintRect(dst_rect.Expand(1, 1), TBColor(255, 205, 0), 1));
-	TB_IF_DEBUG(if (paint_error_highlight) g_tb_context->GetSkin()->PaintRect(dst_rect.Shrink(1, 1), TBColor(255, 0, 0), 1));
+	TB_IF_DEBUG(if (paint_error_highlight) m_context->GetSkin()->PaintRect(dst_rect.Expand(1, 1), TBColor(255, 205, 0), 1));
+	TB_IF_DEBUG(if (paint_error_highlight) m_context->GetSkin()->PaintRect(dst_rect.Shrink(1, 1), TBColor(255, 0, 0), 1));
 
 	element->is_painting = false;
 	return return_element;
@@ -565,7 +565,7 @@ void TBSkin::PaintRect(const TBRect &dst_rect, const TBColor &color, int thickne
 void TBSkin::PaintRectFill(const TBRect &dst_rect, const TBColor &color)
 {
 	if (!dst_rect.IsEmpty())
-		g_tb_context->GetRenderer()->DrawBitmapColored(dst_rect, TBRect(), color, m_color_frag);
+		m_context->GetRenderer()->DrawBitmapColored(dst_rect, TBRect(), color, m_color_frag);
 }
 
 void TBSkin::PaintElementBGColor(const TBRect &dst_rect, TBSkinElement *element)
@@ -588,7 +588,7 @@ void TBSkin::PaintElementImage(const TBRect &dst_rect, TBSkinElement *element)
 void TBSkin::PaintElementTile(const TBRect &dst_rect, TBSkinElement *element)
 {
 	TBRect rect = dst_rect.Expand(element->expand, element->expand);
-	g_tb_context->GetRenderer()->DrawBitmapTile(rect, element->bitmap->GetBitmap());
+	m_context->GetRenderer()->DrawBitmapTile(rect, element->bitmap->GetBitmap());
 }
 
 void TBSkin::PaintElementStretchImage(const TBRect &dst_rect, TBSkinElement *element)
@@ -652,9 +652,9 @@ void TBSkin::PaintElementStretchBox(const TBRect &dst_rect, TBSkinElement *eleme
 void TBSkin::PaintElementBitmap(const TBRect &dst_rect, const TBRect &src_rect, TBSkinElement *element)
 {
 	if (element->img_color != 0)
-		g_tb_context->GetRenderer()->DrawBitmapColored(dst_rect, src_rect, element->img_color, element->bitmap);
+		m_context->GetRenderer()->DrawBitmapColored(dst_rect, src_rect, element->img_color, element->bitmap);
 	else
-		g_tb_context->GetRenderer()->DrawBitmap(dst_rect, src_rect, element->bitmap);
+		m_context->GetRenderer()->DrawBitmap(dst_rect, src_rect, element->bitmap);
 }
 
 #ifdef TB_RUNTIME_DEBUG_INFO
@@ -717,8 +717,9 @@ void TBSkin::GetPxFromNode4(TBNode *node, int *a, int *b, int *c, int *d) const
 
 // == TBSkinElement =========================================================
 
-TBSkinElement::TBSkinElement()
-	: bitmap(nullptr), cut(0), expand(0), type(SKIN_ELEMENT_TYPE_STRETCH_BOX)
+TBSkinElement::TBSkinElement(TBContext *context)
+	: skinContext(context)
+	, bitmap(nullptr), cut(0), expand(0), type(SKIN_ELEMENT_TYPE_STRETCH_BOX)
 	, is_painting(false), is_getting(false)
 	, padding_left(0), padding_top(0), padding_right(0), padding_bottom(0)
 	, width(SKIN_VALUE_NOT_SPECIFIED), height(SKIN_VALUE_NOT_SPECIFIED)

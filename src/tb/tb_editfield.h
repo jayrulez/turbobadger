@@ -12,6 +12,8 @@
 
 namespace tb {
 
+class TBContext;
+
 /** EDIT_TYPE - These types does not restrict input (may change in the future).
 	They are just hints for virtual keyboard, so it can show special keys. */
 enum EDIT_TYPE {
@@ -45,7 +47,7 @@ class TBEditFieldContentFactory : public TBTextFragmentContentFactory
 public:
 	class TBEditField *editfield;
 	virtual int GetContent(const char *text);
-	virtual TBTextFragmentContent *CreateFragmentContent(const char *text, int text_len);
+	virtual TBTextFragmentContent *CreateFragmentContent(TBContext* context, const char *text, int text_len);
 };
 
 /** TBEditFieldScrollRoot - Internal for TBEditField.

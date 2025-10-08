@@ -168,10 +168,11 @@ private:
 class TBSkinElement
 {
 public:
-	TBSkinElement();
+	TBSkinElement(TBContext *skinContext);
 	~TBSkinElement();
 
 	// Skin properties
+	TBContext *skinContext;
 	TBID id;			///< ID of the skin element
 	TBStr name;			///< Name of the skin element, f.ex "TBSelectDropdown.arrow"
 	TBStr path;			///< Path for bitmap file

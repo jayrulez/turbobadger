@@ -33,7 +33,7 @@ public:
 	DebugSettingsWindow(TBWidget *root)
 	{
 		SetText("Debug settings");
-		g_tb_context->GetWidgetsReader()->LoadData(this,
+		GetContext()->GetWidgetsReader()->LoadData(this,
 			"TBLayout: axis: y, distribution: available, position: left\n"
 			"	TBLayout: id: 'container', axis: y, size: available\n"
 			"	TBTextField: text: 'Event output:'\n"
@@ -91,22 +91,22 @@ public:
 	virtual void OnPaint(const PaintProps &paint_props)
 	{
 		// Draw stuff to the right of the debug window
-		g_tb_context->GetRenderer()->Translate(GetRect().w, 0);
+		GetContext()->GetRenderer()->Translate(GetRect().w, 0);
 
 		// Draw skin bitmap fragments
 		if (TB_DEBUG_SETTING(RENDER_SKIN_BITMAP_FRAGMENTS))
-			g_tb_context->GetSkin()->Debug();
+			GetContext()->GetSkin()->Debug();
 
 		// Draw font glyph fragments (the font of the hovered widget)
 		if (TB_DEBUG_SETTING(RENDER_FONT_BITMAP_FRAGMENTS))
 		{
-			TBWidget *widget = g_tb_context->hovered_widget ? g_tb_context->hovered_widget : g_tb_context->focused_widget;
-			g_tb_context->GetFontManager()->GetFontFace(widget ?
+			TBWidget *widget = GetContext()->hovered_widget ? GetContext()->hovered_widget : GetContext()->focused_widget;
+			GetContext()->GetFontManager()->GetFontFace(widget ?
 										widget->GetCalculatedFontDescription() :
-										g_tb_context->GetFontManager()->GetDefaultFontDescription())->Debug();
+										GetContext()->GetFontManager()->GetDefaultFontDescription())->Debug();
 		}
 
-		g_tb_context->GetRenderer()->Translate(-GetRect().w, 0);
+		GetContext()->GetRenderer()->Translate(-GetRect().w, 0);
 	}
 
 	TBStr GetIDString(const TBID &id)

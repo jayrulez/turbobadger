@@ -1,5 +1,5 @@
 // ================================================================================
-// ==      This file is a part of Turbo Badger. (C) 2011-2014, Emil Segerås      ==
+// ==      This file is a part of Turbo Badger. (C) 2011-2014, Emil Segerï¿½s      ==
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
 #pragma once
@@ -10,7 +10,7 @@
 #include "tb_str.h"
 
 #ifdef TB_RUNTIME_DEBUG_INFO
-#define TBDebugOut(str) { /*g_tb_context->GetSystemInterface()->DebugOut(str);*/ }
+#define TBDebugOut(str) { g_tb_context->GetSystemInterface()->DebugOut(str); }
 #define TBDebugPrint(str, ...) { tb::TBStr tmp; tmp.SetFormatted(str, __VA_ARGS__); TBDebugOut(tmp); }
 #else
 #define TBDebugOut(str) ((void)0)

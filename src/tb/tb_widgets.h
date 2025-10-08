@@ -366,6 +366,9 @@ public:
 	TBWidget();
 	virtual ~TBWidget();
 
+	/** Get the context this widget is in. */
+	TBContext *GetContext() const { return g_tb_context;/*m_context*/ }
+
 	/** Set the rect for this widget in its parent. The rect is relative to the parent widget.
 		The skin may expand outside this rect to draw f.ex shadows. */
 	void SetRect(const TBRect &rect);
@@ -451,7 +454,7 @@ public:
 	/** Set if the state WIDGET_STATE_FOCUSED should be set automatically for the focused widget.
 		This value is set to true when moving focus by keyboard, and set to off when clicking
 		with the pointer. */
-	static void SetAutoFocusState(bool on);
+	static void SetAutoFocusState( TBContext* context, bool on);
 
 	/** Set opacity for this widget and its children from 0.0 - 1.0.
 		If opacity is 0 (invisible), the widget won't receive any input. */
@@ -991,6 +994,7 @@ public:
 
 private:
 	friend class TBWidgetListener;	///< It does iteration of m_listeners for us.
+	TBContext *m_context;			///< The context this widget belongs to.
 	TBWidget *m_parent;				///< The parent of this widget
 	TBRect m_rect;					///< The rectangle of this widget, relative to the parent. See SetRect.
 	TBID m_id;						///< ID for GetWidgetByID and others.

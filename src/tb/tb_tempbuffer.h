@@ -10,6 +10,8 @@
 
 namespace tb {
 
+class TBContext;
+
 /** TBTempBuffer manages a buffer that will be deleted on destruction.
 
 	The buffer size can grow by calling Reserve or Append, but it

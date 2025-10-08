@@ -216,7 +216,7 @@ int TBLayout::CalculateSpacing()
 
 		assert(SPACING_FROM_SKIN == SKIN_VALUE_NOT_SPECIFIED);
 		if (spacing == SPACING_FROM_SKIN /*|| spacing == SKIN_VALUE_NOT_SPECIFIED*/)
-			spacing = g_tb_context->GetSkin()->GetDefaultSpacing();
+			spacing = GetContext()->GetSkin()->GetDefaultSpacing();
 	}
 	return spacing;
 }
@@ -305,7 +305,7 @@ void TBLayout::ValidateLayout(const SizeConstraints &constraints, PreferredSize 
 		return;
 	}
 
-	TB_IF_DEBUG_SETTING(LAYOUT_PS_DEBUGGING, last_layout_time = g_tb_context->GetSystemInterface()->GetTimeMS());
+	TB_IF_DEBUG_SETTING(LAYOUT_PS_DEBUGGING, last_layout_time = GetContext()->GetSystemInterface()->GetTimeMS());
 
 	// Pre Layout step (calculate distribution position)
 	int missing_space = Max(total_preferred_w - layout_rect.w, 0);
@@ -413,7 +413,7 @@ bool TBLayout::OnEvent(const TBWidgetEvent &ev)
 	if (ev.type == EVENT_TYPE_WHEEL && ev.modifierkeys == TB_MODIFIER_NONE)
 	{
 		int old_scroll = GetOverflowScroll();
-		SetOverflowScroll(m_overflow_scroll + ev.delta_y * g_tb_context->GetSystemInterface()->GetPixelsPerLine());
+		SetOverflowScroll(m_overflow_scroll + ev.delta_y * GetContext()->GetSystemInterface()->GetPixelsPerLine());
 		return m_overflow_scroll != old_scroll;
 	}
 	return false;
@@ -441,9 +441,9 @@ void TBLayout::OnPaintChildren(const PaintProps &paint_props)
 			clip_rect = clip_rect.Expand(fluff, m_overflow_scroll == 0 ? fluff : 0,
 										fluff, m_overflow_scroll == m_overflow ? fluff : 0);
 
-		old_clip_rect = g_tb_context->GetRenderer()->SetClipRect(clip_rect, true);
+		old_clip_rect = GetContext()->GetRenderer()->SetClipRect(clip_rect, true);
 
-		TB_IF_DEBUG_SETTING(LAYOUT_CLIPPING, g_tb_context->GetSkin()->PaintRect(clip_rect, TBColor(255, 0, 0, 200), 1));
+		TB_IF_DEBUG_SETTING(LAYOUT_CLIPPING, GetContext()->GetSkin()->PaintRect(clip_rect, TBColor(255, 0, 0, 200), 1));
 	}
 
 	// Paint children
@@ -459,7 +459,10 @@ void TBLayout::OnPaintChildren(const PaintProps &paint_props)
 		else
 			skin_y = TBIDC("TBLayout.fadeout_y");
 
-		DrawEdgeFadeout(padding_rect, skin_x, skin_y,
+		DrawEdgeFadeout(GetContext(), 
+			padding_rect, 
+			skin_x, 
+			skin_y,
 			m_overflow_scroll,
 			m_overflow_scroll,
 			m_overflow - m_overflow_scroll,
@@ -468,7 +471,7 @@ void TBLayout::OnPaintChildren(const PaintProps &paint_props)
 
 	// Restore clipping
 	if (m_overflow)
-		g_tb_context->GetRenderer()->SetClipRect(old_clip_rect, false);
+		GetContext()->GetRenderer()->SetClipRect(old_clip_rect, false);
 }
 
 void TBLayout::OnProcess()
